@@ -12,7 +12,7 @@ function buildMenu($menuList)
         //Running array for Main parent links
         if (! empty($node['children'])) 
         {
-          echo " <li class='submenu ". $active ."'><a class='dropdown' href='" . $node['link']. "' data-original-title='" . $node['title'] . "'><i class='fa fa-".$node['icon']."'></i><span class='hidden-minibar'> " . $node['title'] . "  <span class='badge bg-primary pull-right'>".count($node['children'])."</span></span></a>";
+          echo " <li class='submenu ". $active ."'><a class='dropdown' href='" . $node['link']. "' data-original-title='" . $node['title'] . "'><i class='fa fa-".$node['icon']."'></i><span class='hidden-minibar'> " . $node['title'] . "  <span class='badge bg-success2 pull-right'>".count($node['children'])."</span></span></a>";
         }
         else
         {

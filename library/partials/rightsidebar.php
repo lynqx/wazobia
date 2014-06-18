@@ -3,31 +3,7 @@
 	<div class="right-sidebar-holder">
 
 		<!-- @Demo part only The part from here can be removed till end of the @demo  -->
-		<a href="screens.php" class="btn btn-danger btn-block">Logout </a>
-
-
-		<h4 class="page-header text-primary text-center">
-			Theme Options
-			<a  href="#"  class="theme-panel-close text-primary pull-right"><strong><i class="fa fa-times"></i></strong></a>
-		</h4>
-
-		<ul class="list-group theme-options">
-			<li class="list-group-item" href="#">	
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" id="fixedNavbar" value="" checked> Fixed Top Navbar
-					</label>
-				</div>
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" id="fixedNavbarBottom" value=""> Fixed Bottom Navbar
-					</label>
-				</div>
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" id="boxed" value=""> Boxed Version
-					</label>
-				</div>
+	
 				
 					<div class="form-group backgroundImage hidden" >
 						<label class="control-label">Paste Image Url and then hit enter</label>

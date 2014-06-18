@@ -8,11 +8,6 @@
   									<li class="active"><a href="language.php">Language</a></li>
   								</ul>
 
-  								<div class="form-group hiddn-minibar pull-right">
-  									<input type="text" class="form-control form-cascade-control nav-input-search" size="20" placeholder="Search through library" />
-
-  									<span class="input-icon fui-search"></span>
-  								</div>
 
   								<h3 class="page-header"> Select Your Language <i class="fa fa-info-circle animated bounceInDown show-info"></i> </h3>
 
