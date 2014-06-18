@@ -15,7 +15,7 @@
 			<li class="list-group-item" href="#">	
 				<div class="checkbox">
 					<label>
-						<input type="checkbox" id="fixedNavbar" value=""> Fixed Top Navbar
+						<input type="checkbox" id="fixedNavbar" value="" checked> Fixed Top Navbar
 					</label>
 				</div>
 				<div class="checkbox">
@@ -54,28 +54,28 @@
 		<li class="list-group-item" href="#">Change Primary Color
 			<div class="input-group colorpicker-component bscp" data-color="#54728c" data-color-format="hex" id="colr">
 				<span class="input-group-addon"><i style="background-color: #54728c"></i></span>
-				<input type="text" value="#54728c" id="primaryColor" readonly class="form-control" />
+				<input type="text" value="#54728c" id="primaryColor"  class="form-control" />
 
 			</div>
 		</li>
 		<li class="list-group-item" href="#">Change LeftSidebar Background
 			<div class="input-group colorpicker-component bscp" data-color="#f9f9f9" data-color-format="hex" id="Scolr">
 				<span class="input-group-addon"><i style="background-color: #f9f9f9"></i></span>
-				<input type="text" value="#f9f9f9" id="secondaryColor" readonly class="form-control" />
+				<input type="text" value="#f9f9f9" id="secondaryColor"  class="form-control" />
 
 			</div>
 		</li>
 		<li class="list-group-item" href="#">Change Leftsidebar Link Color
 			<div class="input-group colorpicker-component bscp" data-color="#54728c" data-color-format="hex" id="Lcolr">
 				<span class="input-group-addon"><i style="background-color: #54728c"></i></span>
-				<input type="text" value="#54728c" id="linkColor" readonly class="form-control" />
+				<input type="text" value="#54728c" id="linkColor"  class="form-control" />
 
 			</div>
 		</li>
 		<li class="list-group-item" href="#">Change RightSidebar Background
 			<div class="input-group colorpicker-component bscp" data-color="#f9f9f9" data-color-format="hex" id="Rcolr">
 				<span class="input-group-addon"><i style="background-color: #f9f9f9"></i></span>
-				<input type="text" value="#f9f9f9" id="rightsidebarColor" readonly class="form-control" />
+				<input type="text" value="#f9f9f9" id="rightsidebarColor" class="form-control" />
 
 			</div>
 		</li>
