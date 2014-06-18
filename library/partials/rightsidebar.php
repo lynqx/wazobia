@@ -6,57 +6,9 @@
 	
 				
 					<div class="form-group backgroundImage hidden" >
-						<label class="control-label">Paste Image Url and then hit enter</label>
 							<input type="text" class="form-control" id="backgroundImageUrl" />
 					</div>
-				<!-- 
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" id="responsive" value=""> Disable Responsiveness
-					</label>
-				</div> 
-			-->			
-		</li>
-		<li class="list-group-item" href="#">Predefined Themes
-			<ul class="list-inline predefined-themes"> 
-				<li><a class="badge" style="background-color:#54b5df" data-color-primary="#54b5df" data-color-secondary="#2f4051" data-color-link="#FFFFFF"> &nbsp; </a></li>
-				<li><a class="badge" style="background-color:#d85f5c" data-color-primary="#d85f5c" data-color-secondary="#f0f0f0" data-color-link="#474747"> &nbsp; </a></li>
-				<li><a class="badge" style="background-color:#3d4a5d" data-color-primary="#3d4a5d" data-color-secondary="#edf0f1" data-color-link="#777e88"> &nbsp; </a></li>
-				<li><a class="badge" style="background-color:#A0B448" data-color-primary="#A0B448" data-color-secondary="#485257" data-color-link="#AFB5AA"> &nbsp; </a></li>
-				<li><a class="badge" style="background-color:#2FA2D1" data-color-primary="#2FA2D1" data-color-secondary="#484D51" data-color-link="#A5B1B7"> &nbsp; </a></li>
-				<li><a class="badge" style="background-color:#2f343b" data-color-primary="#2f343b" data-color-secondary="#525a65" data-color-link="#FFFFFF"> &nbsp; </a></li>
-			</ul>
-		</li>
-		<li class="list-group-item" href="#">Change Primary Color
-			<div class="input-group colorpicker-component bscp" data-color="#54728c" data-color-format="hex" id="colr">
-				<span class="input-group-addon"><i style="background-color: #54728c"></i></span>
-				<input type="text" value="#54728c" id="primaryColor"  class="form-control" />
-
-			</div>
-		</li>
-		<li class="list-group-item" href="#">Change LeftSidebar Background
-			<div class="input-group colorpicker-component bscp" data-color="#f9f9f9" data-color-format="hex" id="Scolr">
-				<span class="input-group-addon"><i style="background-color: #f9f9f9"></i></span>
-				<input type="text" value="#f9f9f9" id="secondaryColor"  class="form-control" />
-
-			</div>
-		</li>
-		<li class="list-group-item" href="#">Change Leftsidebar Link Color
-			<div class="input-group colorpicker-component bscp" data-color="#54728c" data-color-format="hex" id="Lcolr">
-				<span class="input-group-addon"><i style="background-color: #54728c"></i></span>
-				<input type="text" value="#54728c" id="linkColor"  class="form-control" />
-
-			</div>
-		</li>
-		<li class="list-group-item" href="#">Change RightSidebar Background
-			<div class="input-group colorpicker-component bscp" data-color="#f9f9f9" data-color-format="hex" id="Rcolr">
-				<span class="input-group-addon"><i style="background-color: #f9f9f9"></i></span>
-				<input type="text" value="#f9f9f9" id="rightsidebarColor" class="form-control" />
-
-			</div>
-		</li>
-	</li>
-</ul>
+				
 		<!-- /.@Demo part only The part to here can be removed   -->
 <div id="bic_calendar_right" class="bg-white"></div>
 

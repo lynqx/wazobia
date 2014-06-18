@@ -64,7 +64,7 @@ if (!isset($page_title)) {
             <li <?php if ($page == 'index') echo 'class="active"'; ?>><a href="index.php">Home</a></li>
             <li <?php if ($page == 'about') echo 'class="active"'; ?>><a href="about-us.php">About Us</a></li>
             <li><a href="library/index.php">Library</a>
-            <ul class="dropdown-menu">
+            <!-- <ul class="dropdown-menu">
 
             	<?php
             	$q = "SELECT language.lang_id, language.language
@@ -79,8 +79,10 @@ if (!isset($page_title)) {
 											?>
                 
               </ul>
+             -->
+             
             </li>
-            <li <?php if ($page == 'download') echo 'class="active"'; ?>><a href="download.php">Download<b class="caret"></b></a></li>
+            <li <?php if ($page == 'download') echo 'class="active"'; ?>><a href="download.php">Forum<b class="caret"></b></a></li>
                        
             <li <?php if ($page == 'report' || $page == 'comment' || $page == 'faq') echo 'class="active"'; ?>><a href="#">Help</a>
             	<ul class="dropdown-menu">
