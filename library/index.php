@@ -1,61 +1,121 @@
-<?php include('partials/header.php'); ?>  
-  						<!-- /header -->
-  						<div class="row">
-  							<div class="col-mod-12">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Wazobia Academy | Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  								<ul class="breadcrumb">
-  									<li><a href="index.php">Library</a></li>
-  									<li class="active"><a href="language.php">Language</a></li>
-  								</ul>
+  <!-- Loading Bootstrap -->
+  <link href="css/bootstrap.css" rel="stylesheet">
+
+  <!-- Loading Stylesheets -->    
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/login.css" rel="stylesheet">
+  
+  <!-- Loading Custom Stylesheets -->    
+  <link href="css/custom.css" rel="stylesheet">
+
+  <link rel="shortcut icon" href="images/favicon.ico">
+
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+      <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <![endif]-->
+    </head>
+    <body >
+      <div class="list-group side-menu ">
+        <a class="list-group-item" href="#login">Login</a>
+        <a class="list-group-item" href="#register">Register</a>
+        <a class="list-group-item" href="#forgot-password">Forgot Password?</a>
+      </div>
+
+   <section id="login">
+    <div class="row animated fadeILeftBig">
+     <div class="login-holder col-md-6 col-md-offset-3">
+       <h2 class="page-header text-center text-primary"> Login </h2>
+       <form role="form" action="index.php" method="post">
+        <div class="form-group">
+          <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+        </div>
+        <div class="form-group">
+          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        </div>
+        <div class="form-footer">   
+          <button type="submit" class="btn btn-success pull-right btn-submit">Login</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</section>
+<section id="register">
+  <div class="row animated fadeILeftBig">
+   <div class="login-holder col-md-6 col-md-offset-3">
+     <h2 class="page-header text-center text-primary"> Register </h2>
+     <form role="form" action="index.php" method="post">
+      <div class="form-group">
+        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Full Name">
+      </div>
+      <div class="form-group">
+        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+      </div>
+      <div class="form-group">
+        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="City">
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+      </div>
+      <div class="form-footer">
+        <label>
+          <input type="checkbox" class="hidden" id="input-checkbox" value="0" >  <i class="fa fa-check-square-o input-checkbox fa-square-o"></i> I agree to the Terms &amp; Conditions
+        </label>
+        <button type="submit" class="btn btn-success pull-right btn-submit">Register</button>
+      </div>
+    </form>
+  </div>
+</div>
+</section>
+<section id="forgot-password">
+  <div class="row animated fadeILeftBig">
+   <div class="login-holder col-md-6 col-md-offset-3">
+     <h2 class="page-header text-center text-primary"> Forgot Password </h2>
+     <form role="form" action="index.php" method="post">
+      <div class="form-group">
+        <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter Username / Email">
+      </div>
+      <div class="form-footer">
+        
+        <button type="submit" class="btn btn-success pull-right btn-submit">Send Instructions</button>
+      </div>
+    </form>
+  </div>
+</div>
+</section>
 
 
-  								<h3 class="page-header"> Select Your Language <i class="fa fa-info-circle animated bounceInDown show-info"></i> </h3>
-
-  								<blockquote class="page-information hidden">
-  									<p>
-  										<b>Language Page</b> is the basic page where you can select your language.
-  									</p>
-  								</blockquote>
-
-  							</div>
-  						</div>
-
-  						<!-- Demo Panel -->
-  						<div class="row">
-  							<div class="col-md-12">
-  								<div class="panel panel-cascade">
-  									<div class="panel-heading">
-  										<h3 class="panel-title text-primary">
-  											Welcome! Please select your preferred language
-  											
-  										</h3>
-  									</div>
-  									<div class="panel-body panel-border">
-  										<div class="list-group demo-list-group">
-				          					<?php
-							            	$q = "SELECT language.lang_id, language.language
-												FROM  `language` 
-												JOIN  `lesson` ON language.lang_id = lesson.lang_id
-												ORDER BY language.lang_id";
-												$r = @mysqli_query ($conn, $q) or trigger_error("Query: $q\n<br />MySQL Error: " . mysqli_error($conn));
-												while ($row = mysqli_fetch_array($r, MYSQLI_ASSOC)) {
-														?>
-
-														<a class="list-group-item " href="language/?lang=<?php echo $row['lang_id']; ?>"><?php echo ucwords($row['language']); ?></a>
-															   			<?php
-																			}
-																		?>
-							              
-
-									</div> <!-- /panel body -->	
-									</div>
-							  
-  								</div>	
-  							</div>
-  						</div>
-
-  					</div> <!-- /.content -->
+<!-- Load JS here for Faster site load =============================-->
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="js/jquery.ui.touch-punch.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap-select.js"></script>
+<script src="js/bootstrap-switch.js"></script>
+<script src="js/jquery.tagsinput.js"></script>
+<script src="js/jquery.placeholder.js"></script>
+<script src="js/bootstrap-typeahead.js"></script>
+<script src="js/application.js"></script>
+<script src="js/moment.min.js"></script>
+<script src="js/jquery.dataTables.min.js"></script>
+<script src="js/jquery.sortable.js"></script>
+<script type="text/javascript" src="js/jquery.gritter.js"></script>
+<script src="js/jquery.nicescroll.min.js"></script>
+<script src="js/skylo.js"></script>
+<script src="js/prettify.min.js"></script>
+<script src="js/jquery.noty.js"></script>
+<script src="js/scroll.js"></script>
+<script src="js/jquery.panelSnap.js"></script>
+<script src="js/login.js"></script>
 
 
-<?php include('partials/footer.php'); ?>
-
+</body>
+</html>
