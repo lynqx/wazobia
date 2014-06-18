@@ -1,0 +1,115 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300);
+body
+{
+	margin:0px;
+}
+.carousel{
+	background-color: #efefef;
+}
+/*--------------------carousel------------------------*/
+
+.carousel-inner
+{
+	height:400px;
+}
+.slider-desc
+{
+	margin-top: 120px;
+	width: 466px;
+	margin-left: 50px;
+}
+.slider-desc h1, p
+{
+	font-family: "Source Sans Pro";
+	max-width: 450px;
+	color: #a4a4a4;
+	margin-bottom: 10px;
+}
+.slider-desc p
+{
+	font-family: "Source Sans Pro";
+	max-width: 450px;
+	color: #a4a4a4;
+	margin-bottom: 30px;
+}
+.slider-image img
+{
+	max-height: 350px;
+	padding-top: 20px;
+	padding-left: 0px;
+	background-color: #efefef;
+}
+.carousel-control.left{
+	background-image: none;
+	margin-left: -20px;
+}
+.carousel-control.right
+{
+	background-image: none;
+	margin-right: -20px;
+}
+
+.carousel-control {
+	position: absolute;
+	width: 15%;
+	font-size: 30px;
+	color: #ffffff;
+	text-align: center;
+	line-height: 400px;
+	font-family: "Source Sans Pro";
+	opacity: 0.5;
+	filter: alpha(opacity=50);
+}
+.slider-button 
+{
+	margin-left: 150px;
+	background-color: #2ac4ea;
+	padding: 10px;
+	margin-top: 25px;
+}
+.slider-desc a.slider-button
+{
+	color: #FFFFFF;
+	text-decoration: none;
+	border-radius: none;
+	font-family: "Open Sans Light";
+	font-size: 14px;
+	border: none;
+}
+
+						/*--------------------carousel------------------------*/
+
+
+
+						/*---------------------Features-----------------------*/
+
+		.row
+		{
+			margin-top: 20px;
+		}
+
+		.list1
+		{
+			background-image: url("../images/carousel/service-bubble.png");
+			height: 58px;
+			width: 58px;
+		}
+		.toto
+		{
+			text-align: center;
+			padding-top: 20px;
+
+
+		}
+		.toto .fa-user
+		{
+			color: #cccccc;
+		}
+		
+		
+
+
+
+
+
+						/*---------------------Features-----------------------*/

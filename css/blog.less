@@ -1,0 +1,292 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800);
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans:400,700);
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic);
+
+
+@import "animate.css";
+
+@primary:#27292f;
+
+
+
+body 
+{
+	background-color: #FFFFFF;
+	font-family: "Source Sans Pro";
+}
+
+
+.navbar 
+{
+	min-height: 80px !important;
+	margin-bottom: 0px;
+	&.navbar-default 
+	{
+		background-color: @primary;
+		border-color: @primary;
+		border-radius: 0px;
+		border-bottom:4px solid #2bc4ea;
+		.navbar-brand 
+		{
+			color: #777777;
+		}
+		.navbar-nav
+		{
+			&.navbar-social-links
+			{
+				margin-left: 40px;
+			}
+			> li
+			{
+				> a
+				{
+					color: #8093a3;
+					font-weight: 800;
+					font-family: "Droid Sans";
+					line-height: 44px;
+					font-size: 12px;
+					text-transform: uppercase;
+					&:hover
+					{
+						color:white;
+					}
+
+
+				}
+				&:hover > a:after, &.active > a:after
+				{
+					content: "";
+					position: absolute;
+					bottom: -5px;
+					left: 50%;
+					border:5px solid #2bc4ea;
+					border-radius: 8px;
+					display: block;
+					width: 0;
+				}
+				&.active > a,&.active > a:focus,&.active > a:hover 
+				{
+					background-color: @primary;
+					color: white;
+				}
+				&.open 
+				{
+					.dropdown-menu
+					{
+						margin-top: 5px;
+					}
+					> a,&.open > a:hover,&.open > a:focus
+					{
+						background-color: @primary;
+						color: white;
+					}
+				}
+			}
+		}
+	}
+
+}
+
+.navbar-brand
+{
+	color: white !important;
+	font-size: 32px;
+	line-height: 40px;
+	font-family: 'Droid Sans', sans-serif;
+	font-weight: 700;
+	span.logo
+	{
+		border:2px solid lighten(@primary,30%);
+		padding: 5px;
+		border-radius: 8px;
+	}
+	&:hover
+	{
+		color: lighten(@primary,30%);
+	}
+	strong
+	{
+		color:lighten(@primary,30%);
+	}
+}
+
+
+/*----------blog-------------*/
+
+.blog-content
+{
+	
+	background-color:#FFFFFF;
+	min-height:1400px;
+	.article
+	{
+		margin-top:60px;
+	}
+	.article-image
+	{
+		
+		height:350px;
+		margin-top: 30px;
+		width:100%;
+	}
+	
+	.article-info h2
+	{
+		color:#a8a8a8;
+      font-size:26px;
+      font-family:"Source Sans Pro";
+      margin-top:30px;
+
+	}
+	.article-info p
+	{
+		 color:#b5b5b5;
+      font-size:16px;
+      font-family:"Source Sans Pro";
+	}
+	.article-info li a
+	{
+		color:#b5b5b5;
+		text-decoration: none;
+
+	}
+	.article-info li a:hover
+	{
+		color:#7a7880;
+
+	}
+	.learn a
+	{
+		color:#7a7880;
+		text-decoration: none;
+
+	}
+	.learn a:hover
+	{
+		color:#2ac4ea;
+	}
+	.learn i
+	{
+		color:#2ac4ea;
+	}
+
+}
+
+
+/*--------------blog-----------*/
+.pagelink
+	{
+		text-align: center;
+	}
+
+/*----------mini-footer------*/
+
+.mini-footer
+{
+	background:#fbfbfb;
+	height: 150px;
+.bottom-pics
+{
+	width:100px;
+	height:100px;
+	overflow: hidden;
+	margin-top: 30px;
+
+}
+
+}
+/*----------mini-footer------*/
+
+
+
+
+
+
+.footer
+{
+	background: url(../images/footerBg.jpg);
+	min-height: 502px;
+	-webkit-background-size:cover;
+	background-size:cover;
+	.twitter-feed
+	{
+		background-color: #373d3f;
+		min-height: 100px; 
+		opacity: 0.7;
+		padding-top: 40px;
+		color: white;
+		font-size: 18px;
+		font-family: "Source Sans Pro";
+		text-align: center;
+		i
+		{
+			font-size: 24px;
+			padding-right: 20px;
+			color: #5dd7fc;
+		}
+	}
+	.footer-content
+	{
+		margin-top: 50px;
+		font-size: 16px;
+		color: white;
+		.navbar-brand
+		{
+			display: block !important;
+			padding-left: 0px;
+		}
+		.site-description
+		{
+			display: block;
+			float: left;
+			margin-top: 30px;
+			padding-right: 80px;
+			font-size: 16px;
+			font-weight: 300;
+			font-family: "Source Sans Pro";
+		}
+		.footer-heading
+		{
+			font-size: 20px;
+			font-family: "Source Sans Pro";
+		}
+		ul.footer-tags
+		{
+			li
+			{
+				height: 28px;
+				margin: 10px 5px;
+				a
+				{
+					background: white;
+					color: #6e6e6e;
+					padding: 5px;
+					padding-bottom: 6px !important;
+					padding-right: 20px;
+					border:2px solid #494e51;
+					background-color: #f9f9f9;
+					line-height: 28px;
+					font-size: 12px;
+									
+				}
+				&:after
+				{
+					content: url(../images/tag.png);
+					top:10px;
+					left: -3px;
+					position: relative;
+					right: 0px;
+					border-radius: 8px;
+					width: 0;
+					
+				}
+			}
+
+		}
+	}
+
+}
+
+
+
+

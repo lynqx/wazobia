@@ -1,0 +1,147 @@
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans:400,700);
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,400italic,600italic);
+body {
+  background-color: #FFFFFF;
+  font-family: 'Open Sans', sans-serif;
+}
+.navbar {
+  min-height: 90px !important;
+  margin-bottom: 0px;
+}
+.navbar.navbar-default {
+  background-color: #fbfbfb;
+  border-bottom: 1px solid #d8d8d8;
+}
+.navbar .navbar-brand {
+  margin-top: 9px;
+}
+.navbar.navbar-default .navbar-nav > li > a {
+  color: #b5b5b5;
+  font-weight: 600;
+  font-family: "Droid Sans";
+  line-height: px;
+  font-size: 12px;
+  text-transform: uppercase;
+  padding-left: 50px;
+  line-height: 58px;
+}
+.navbar.navbar-default .navbar-nav > li > a:hover {
+  color: #7a7880;
+}
+.navbar.navbar-default .navbar-nav > li.active > a,
+.navbar.navbar-default .navbar-nav > li.active > a:focus,
+.navbar.navbar-default .navbar-nav > li.active > a:hover {
+  background-color: #fbfbfb;
+  color: #7a7880;
+}
+.navbar.navbar-default .navbar-nav > li.open .dropdown-menu {
+  margin-top: 5px;
+}
+/*-------------header-discription-----*/
+.header-discription {
+  height: 100px;
+  background: #fbfbfb;
+}
+.header-discription h2 {
+  color: #a8a8a8;
+  font-size: 26px;
+  font-family: "Source Sans Pro";
+  margin-top: 30px;
+}
+.header-discription p {
+  color: #b5b5b5;
+  font-size: 16px;
+  font-family: "Source Sans Pro";
+}
+/*--------- header-discription---------*/
+/*--------content------*/
+.content {
+  margin-top: 50px;
+  height: 330px;
+}
+.content .box {
+  background: #000000;
+  height: 240px;
+  overflow: hidden;
+  margin-right: 20px;
+}
+.content .box img {
+  margin-top: -50px;
+}
+.content .content-discription > h3 {
+  color: #7a7880;
+  margin-top: 0px !important;
+  font-size: 30px;
+  font-family: "Source Sans Pro";
+}
+.content .content-discription p {
+  color: #b5b5b5;
+  margin-top: 0px !important;
+  font-size: 16px;
+  font-family: "Source Sans Pro";
+  line-height: 26px;
+}
+/*---------content-------*/
+/*----------team--------*/
+.team {
+  height: 525px;
+  background: #fbfbfb;
+}
+.team .box-holder {
+  background: #ffffff;
+}
+.team .pic-box {
+  background: black;
+  height: 220px;
+  margin-top: 20px;
+  overflow: hidden;
+  padding-bottom: 0px !important;
+}
+.team .about-member {
+  text-align: center;
+}
+.team .about-member h4 {
+  font-size: 19px;
+  color: #b5b5b5;
+}
+.team .about-member h6 {
+  font-size: 15px;
+  color: #b5b5b5;
+}
+.team .social-links > li a {
+  color: #b5b5b5;
+}
+.team .social-links > li a:hover {
+  display: none;
+}
+/*------clients-----*/
+.clients {
+  height: 350px;
+  background: #FFFFFF;
+}
+.clients h2 {
+  color: #7a7880;
+}
+.clients .percentage {
+  margin-top: 100px;
+}
+.clients .percentage-discription {
+  margin-top: 20px;
+  color: #b5b5b5;
+  font-family: "Source Sans Pro";
+  font-size: 18px;
+}
+/*------clients-----*/
+/*----trusted clients----*/
+.trusted {
+  background: #fbfbfb;
+  height: 250px;
+}
+.trusted p {
+  color: #7a7880;
+  font-size: 24px;
+  text-align: center;
+  font-family: "Source Sans Pro";
+  margin-bottom: 75px;
+  margin-top: 70px;
+}
