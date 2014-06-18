@@ -181,68 +181,6 @@ include ('includes/header.php');
       </div>
     </div>
 
-    <div class="team">
-      <div class="container">
-        <div class="heading">
-          <h3>Meet Our Team</h3>
-          <p>A quick talk with our designers and developers, feel free to follow them on socials</p>
-        </div>
-        <div class="row">
-          <div class="col-md-3">
-            <div class="team-member">
-              <img src="images/team/one.png" alt="">  
-              <h3>John Deo</h3>
-              UI/UX Designer
-              <ul class="list-inline">
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                <li><a href="#"><i class="fa fa-tumblr"></i></a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="team-member">
-              <img src="images/team/two.png" alt="">  
-              <h3>John Deo</h3>
-              UI/UX Designer
-              <ul class="list-inline">
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                <li><a href="#"><i class="fa fa-tumblr"></i></a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="team-member">
-              <img src="images/team/three.png" alt="">  
-              <h3>John Deo</h3>
-              UI/UX Designer
-              <ul class="list-inline">
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                <li><a href="#"><i class="fa fa-tumblr"></i></a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="team-member">
-              <img src="images/team/four.png" alt="">  
-              <h3>John Deo</h3>
-              UI/UX Designer
-              <ul class="list-inline">
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                <li><a href="#"><i class="fa fa-tumblr"></i></a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <div class="clients">
       <div class="container">
