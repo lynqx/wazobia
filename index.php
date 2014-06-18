@@ -1,4 +1,7 @@
-
+<?php
+$page = 'index';
+include ('includes/header.php'); 
+ ?>
  
  
     <!-- carousel -->
