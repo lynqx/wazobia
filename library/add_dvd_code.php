@@ -1,4 +1,6 @@
-<?php include('partials/header.php'); ?>
+<?php $path = "";
+include('partials/header.php'); ?>
+
 
 
             <div class="row">
