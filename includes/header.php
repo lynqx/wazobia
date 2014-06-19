@@ -5,6 +5,7 @@
 		<?php	
 		
 require_once ('init_connect.php');
+							$baseurl = "";
 								
 // Check for a $page_title value:
  $pagetitle = 'Wazobia Academy';
@@ -63,7 +64,7 @@ if (!isset($page_title)) {
           <ul class="nav navbar-nav navbar-right ">
             <li <?php if ($page == 'index') echo 'class="active"'; ?>><a href="index.php">Home</a></li>
             <li <?php if ($page == 'about') echo 'class="active"'; ?>><a href="about-us.php">About Us</a></li>
-            <li><a href="library/index.php">Library</a>
+            <li><a href="library/index.php">Classroom</a>
             <!-- <ul class="dropdown-menu">
 
             	<?php

@@ -4,7 +4,6 @@ session_start();
 // You can easily build the menu with php predefined function written by me (@bootstrapguru). It is located in root folder with file name called menu-builder.php
 include('menu-builder.php');
 include('../init_connect.php'); 
-
 ?>
 
 <!DOCTYPE html>

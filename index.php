@@ -23,7 +23,7 @@ include ('includes/header.php');
                 <h1 class="animated flash text-info">Proudly Nigeria</h1>
                 <p class="animated fadeIn">Wazobia Academy is built with all the tribes in Nigeria in mind. 
                 	Education is a right for all not minding tribal or cultural differences</p>
-                <a href="/library/index.php" class=" btn btn-info animated fadeInUpBig ">Access Library</a>
+                <a href="/library/index.php" class=" btn btn-info animated fadeInUpBig ">Access Classroom</a>
                 
               </div>
               <div class="col-md-6">
@@ -53,7 +53,7 @@ include ('includes/header.php');
               <div class="col-md-6 slider-caption animated ">
                 <h1 class="animated flash">Think... Learn... Grow...</h1>
                 <p class="animated fadeIn">Accessible to all and sundry</p>
-                <a href="/library/index.php" class=" btn btn-info animated fadeInUpBig ">Access Library</a>
+                <a href="<?php echo $baseurl; ?>library/index.php#register" class=" btn btn-info animated fadeInUpBig ">Register For Free</a>
                 
               </div>
               <div class="col-md-6">
