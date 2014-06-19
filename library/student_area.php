@@ -1,4 +1,14 @@
-<?php include('partials/header.php'); ?>  
+<?php 
+//* Student Area */
+/* Doubleakins*/
+/* 08063777394*/
+/* 19062014*/
+/* redirected to when student logs in */
+
+$path = "";
+$inc_path = $path."partials/";
+include($inc_path . 'header.php'); ?> 
+
   						<!-- /header -->
   						<div class="row">
   							<div class="col-mod-12">

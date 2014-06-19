@@ -2,8 +2,8 @@
 ob_start();
 session_start();
 // You can easily build the menu with php predefined function written by me (@bootstrapguru). It is located in root folder with file name called menu-builder.php
-include('menu-builder.php');
 include('../init_connect.php'); 
+include('functions/functions.php'); 
 ?>
 
 <!DOCTYPE html>
@@ -27,25 +27,25 @@ if (!isset($page_title)) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Loading Bootstrap -->
-  <link href="css/bootstrap.css" rel="stylesheet">
+  <link href="<?php echo $path; ?>css/bootstrap.css" rel="stylesheet">
 
   <!-- Loading Stylesheets -->    
-  <link href="css/font-awesome.css" rel="stylesheet">
-   <link href="css/style.css" rel="stylesheet" type="text/css"> 
+  <link href="<?php echo $path; ?>css/font-awesome.css" rel="stylesheet">
+   <link href="<?php echo $path; ?>css/style.css" rel="stylesheet" type="text/css"> 
    
    <?php 
      $pieces = explode('/',$_SERVER['REQUEST_URI']);  
   $page=end($pieces); 
 if(strpos($page,"extended-modals") !== false ) { ?>
-   <link href="css/bootstrap-modal-bs3fix.css" rel="stylesheet" type="text/css"> 
+   <link href="<?php echo $path; ?>css/bootstrap-modal-bs3fix.css" rel="stylesheet" type="text/css"> 
    <?php } ?>
 
-  <link href="less/style.less" rel="stylesheet"  title="lessCss" id="lessCss">
+  <link href="<?php echo $path; ?>less/style.less" rel="stylesheet"  title="lessCss" id="lessCss">
   
   <!-- Loading Custom Stylesheets -->    
-  <link href="css/custom.css" rel="stylesheet">
+  <link href="<?php echo $path; ?>css/custom.css" rel="stylesheet">
 
-  <link rel="shortcut icon" href="images/favicon.ico">
+  <link rel="shortcut icon" href="<?php echo $path; ?>images/favicon.ico">
 
   <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
       <!--[if lt IE 9]>

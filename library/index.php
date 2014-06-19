@@ -1,121 +1,87 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Wazobia Academy | Login</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<?php # Script 16.5 - index.php
+// This is the main page for the site.
+// Set the page title and include the HTML header:
 
-  <!-- Loading Bootstrap -->
-  <link href="css/bootstrap.css" rel="stylesheet">
+session_start();
+include('functions/functions.php'); 
 
-  <!-- Loading Stylesheets -->    
-  <link href="css/style.css" rel="stylesheet">
-  <link href="css/login.css" rel="stylesheet">
-  
-  <!-- Loading Custom Stylesheets -->    
-  <link href="css/custom.css" rel="stylesheet">
+ $page_title = 'Student Login || Wazobia';
+// you need to login again if you enter this page
+if (isset($_SESSION['student_id'])) {
+// Redirect:
+	redirect_to("student_area.php");
+}
 
-  <link rel="shortcut icon" href="images/favicon.ico">
+ ?>
 
-  <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
-      <!--[if lt IE 9]>
-      <script src="js/html5shiv.js"></script>
-      <![endif]-->
-    </head>
-    <body >
-      <div class="list-group side-menu ">
-        <a class="list-group-item" href="#login">Login</a>
-        <a class="list-group-item" href="#register">Register</a>
-        <a class="list-group-item" href="#forgot-password">Forgot Password?</a>
-      </div>
+<?php # Script 11.3 - login.php
 
-   <section id="login">
-    <div class="row animated fadeILeftBig">
-     <div class="login-holder col-md-6 col-md-offset-3">
-       <h2 class="page-header text-center text-primary"> Login </h2>
-       <form role="form" action="index.php" method="post">
-        <div class="form-group">
-          <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-        </div>
-        <div class="form-group">
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-        </div>
-        <div class="form-footer">   
-          <button type="submit" class="btn btn-success pull-right btn-submit">Login</button>
-        </div>
+// This page processes the login form submission.
+// Upon successful login, the user is redirected.
+// Two included files are necessary.
+// Send NOTHING to the Web browser prior to the setcookie() lines!
 
-      </form>
-    </div>
-  </div>
-</section>
-<section id="register">
-  <div class="row animated fadeILeftBig">
-   <div class="login-holder col-md-6 col-md-offset-3">
-     <h2 class="page-header text-center text-primary"> Register </h2>
-     <form role="form" action="index.php" method="post">
-      <div class="form-group">
-        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Full Name">
-      </div>
-      <div class="form-group">
-        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-      </div>
-      <div class="form-group">
-        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="City">
-      </div>
-      <div class="form-group">
-        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-      </div>
-      <div class="form-footer">
-        <label>
-          <input type="checkbox" class="hidden" id="input-checkbox" value="0" >  <i class="fa fa-check-square-o input-checkbox fa-square-o"></i> I agree to the Terms &amp; Conditions
-        </label>
-        <button type="submit" class="btn btn-success pull-right btn-submit">Register</button>
-      </div>
-    </form>
-  </div>
-</div>
-</section>
-<section id="forgot-password">
-  <div class="row animated fadeILeftBig">
-   <div class="login-holder col-md-6 col-md-offset-3">
-     <h2 class="page-header text-center text-primary"> Forgot Password </h2>
-     <form role="form" action="index.php" method="post">
-      <div class="form-group">
-        <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter Username / Email">
-      </div>
-      <div class="form-footer">
-        
-        <button type="submit" class="btn btn-success pull-right btn-submit">Send Instructions</button>
-      </div>
-    </form>
-  </div>
-</div>
-</section>
+// Check if the form has been submitted:
+if (isset($_POST['submitted'])) {
 
 
-<!-- Load JS here for Faster site load =============================-->
-<script src="js/jquery-1.10.2.min.js"></script>
-<script src="js/jquery-ui-1.10.3.custom.min.js"></script>
-<script src="js/jquery.ui.touch-punch.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/bootstrap-select.js"></script>
-<script src="js/bootstrap-switch.js"></script>
-<script src="js/jquery.tagsinput.js"></script>
-<script src="js/jquery.placeholder.js"></script>
-<script src="js/bootstrap-typeahead.js"></script>
-<script src="js/application.js"></script>
-<script src="js/moment.min.js"></script>
-<script src="js/jquery.dataTables.min.js"></script>
-<script src="js/jquery.sortable.js"></script>
-<script type="text/javascript" src="js/jquery.gritter.js"></script>
-<script src="js/jquery.nicescroll.min.js"></script>
-<script src="js/skylo.js"></script>
-<script src="js/prettify.min.js"></script>
-<script src="js/jquery.noty.js"></script>
-<script src="js/scroll.js"></script>
-<script src="js/jquery.panelSnap.js"></script>
-<script src="js/login.js"></script>
+// For processing the login:
+require_once ('partials/login_functions.inc.php');
+
+// Need the database connection:
+require_once ('../init_connect.php');
+
+// Check the login:
+list ($check, $data) = check_login($conn, $_POST['email'], $_POST['pass']);
+if ($check) { // OK!
 
 
-</body>
-</html>
+// Set the session data:.
+session_start();
+$_SESSION['student_id'] = $data ['student_id'];
+$_SESSION['firstname'] = $data ['first_name'];
+$_SESSION['lastname'] = $data ['last_name'];
+$_SESSION['email'] = $data ['email'];
+$_SESSION['phone'] = $data ['phone'];
+
+// Set the cookies:
+setcookie ('user_id', $data['user_id'], time()+86400, '/', '', 0, 0);
+setcookie ('firstname', $data['first_name'], time()+86400, '/', '', 0, 0);
+setcookie ('lastname', $data['last_name'], time()+86400, '/', '', 0, 0);
+
+if (isset ($_SESSION['student_id'])){
+	 
+	 $student = $_SESSION['student_id'];
+	 $datetime = strtotime(date("Y-m-d H:i:s"));
+// update the last login time	
+$q4 = "UPDATE student_register SET last_login='$datetime' WHERE student_id='$student' LIMIT 1";
+$r4 = mysqli_query ($conn, $q4) or trigger_error("Query: $q4\n<br />MySQL Error: " . mysqli_error($dbc));
+	
+$_SESSION['start'] = time();
+
+// Store the HTTP_USER_AGENT:
+$_SESSION['agent'] = md5($_SERVER ['HTTP_USER_AGENT']);
+
+//if ($_SESSION['user_level'] == 1) {
+// Redirect:
+$url = absolute_url ('student_area.php');
+header("Location: $url");
+exit();
+
+} 
+
+} else { // Unsuccessful!
+
+// Assign $data to $errors for error reporting
+// in the login_page.inc.php file.
+$errors = $data;
+
+ }
+
+
+} // End of the main submit conditional.
+
+// Create the page:
+include ('partials/login_page.inc.php');
+?>
+
