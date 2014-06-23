@@ -43,6 +43,7 @@ $_SESSION['firstname'] = $data ['first_name'];
 $_SESSION['lastname'] = $data ['last_name'];
 $_SESSION['email'] = $data ['email'];
 $_SESSION['phone'] = $data ['phone'];
+$_SESSION['image'] = $data ['image'];
 
 // Set the cookies:
 setcookie ('user_id', $data['user_id'], time()+86400, '/', '', 0, 0);
@@ -80,6 +81,181 @@ $errors = $data;
 
 
 } // End of the main submit conditional.
+
+
+// Check if the registeration form has been submitted:
+if (isset($_POST['registered'])) {
+require_once ('../init_connect.php');
+
+$errorss = array(); // Initialize error array.
+
+// Trim all the incoming data:
+$trimmed = array_map('trim', $_POST);
+
+// Assume invalid values:
+$fn = $ln = $mb = $ad = $ct = $em = $p = FALSE;
+
+// Check for a first name:
+if (preg_match ('/^[A-Z \'.-]{2,20}$/i', $trimmed['firstname'])) {
+$fn = mysqli_real_escape_string ($conn, $trimmed['firstname']);
+} else {
+	$errorss[] = 'Please enter a first name!';
+
+}
+
+// Check for a last name:
+if (preg_match ('/^[A-Z \'.-]{2,40}$/i', $trimmed['lastname'])) {
+$ln = mysqli_real_escape_string ($conn, $trimmed['lastname']);
+} else {
+		$errorss[] = 'Please enter a last name!';
+}
+
+//check for a mobile no
+if ( (isset($_POST['mobile'])) && (is_numeric($_POST['mobile'])) ) {
+$mb = mysqli_real_escape_string ($conn, $trimmed['mobile']);
+} else {
+			$errorss[] = 'Please enter a valid mobile number.';
+	}
+
+// Check for an address:
+if ($_POST['address']) {
+$ad = mysqli_real_escape_string ($conn, $trimmed['address']);
+} else {
+			$errorss[] = 'Please enter your address!';
+}
+
+//check for a city
+if ($_POST['city']) {
+$ct = mysqli_real_escape_string ($conn, $trimmed['city']);
+} else {
+					$errorss[] = 'Please enter a city!';
+}
+
+// Check for an email address:
+if (preg_match ('/^[\w.-]+@[\w.-]+\.[AZa-z]{2,6}$/', $trimmed['email'])) {
+$em = mysqli_real_escape_string ($conn, $trimmed['email']);
+} else {
+						$errorss[] = 'Please enter a valid email address!';
+}
+
+ // Check for a password and match against the confirmed password:
+if (preg_match ('/^\w{4,20}$/', $trimmed['password1']) ) {
+if ($trimmed['password1'] == $trimmed['password2']) {
+$p = mysqli_real_escape_string ($conn, $trimmed['password1']);
+} else {
+							$errorss[] = 'Your password did not match the confirmed password!';
+	}
+} else {
+								$errorss[] = 'Please enter a valid password!';
+	}
+
+
+if ($fn && $ln && $mb && $ad && $ct && $em && $p) { // If everything's OK...
+
+// Make sure the email address is available:
+$q = "SELECT student_id FROM student_register WHERE email='$em'";
+$r = mysqli_query ($conn, $q);
+
+if (mysqli_num_rows($r) == 0) { // Available.
+
+// Add the user to the database:
+$q = "INSERT INTO student_register (email, password, first_name, last_name, phone, address, city, time_register) 
+						VALUES ('$em', SHA1('$p'), '$fn', '$ln', '$mb', '$ad', '$ct', NOW())";
+$r = mysqli_query ($conn, $q);
+
+
+// Send the email:
+
+$body = "You have been registered on the Wazobia Portal";
+$body .= "Below are you login details<br /><br />";
+$body .= 'Email - ' . $em . '<br />';
+$body .= 'Password - ' . $p . '<br /><br />';
+$body .= "Please change your password regularly <br /><br /> Best Regards";
+
+ mail($trimmed['email'],
+'Registration on Wazobia', $body,
+'From: Wazobia Academy');
+
+ 					// Finish the page:
+					 //Set display property and confirmation message of the message container to 'block'
+					$success_display = 'block';
+					$success_msg = '<h4 style="color: #008080"> SUCCESS! Your Account has been created successfully.</h4>';
+					
+					} else { // The email address is not available.
+							$err_msg = 'The student has already been registered. Please use a unique email address</p>';
+					}
+
+								} else { // If one of the data tests failed.
+								$errorss[] = 'Please re-enter the details appropriately and try again.</p>';
+								}
+
+} // End of the if submitted conditional.
+
+// Forgot password
+
+if (isset($_POST['forgotten'])) {
+require_once ('../init_connect.php');
+	
+	$errorss = array(); // Initialize error array.
+	
+
+// Assume nothing:
+$uid = FALSE;
+
+// Validate the email address...
+if (!empty($_POST['email'])) {
+
+// Check for the existence of that email address...
+$q = 'SELECT student_id FROM student_register WHERE email="'. mysqli_real_escape_string ($conn, $_POST['email']) . '"';
+$r = mysqli_query ($conn, $q) or trigger_error("Query: $q\n<br />MySQL Error: " . mysqli_error($conn));
+
+if (mysqli_num_rows($r) == 1) { //Email available in db:
+//Retrieve the user ID:
+
+list($uid) = mysqli_fetch_array ($r, MYSQLI_NUM);
+
+// Create a new, random password:
+$p = substr ( md5(uniqid(rand(), true)), 3, 10);
+
+// Update the database:
+$q = "UPDATE student_register SET password=SHA1('$p') WHERE student_id=$uid LIMIT 1";
+$r = mysqli_query ($conn, $q) or trigger_error("Query: $q\n<br />MySQL Error: " . mysqli_error($dbc));
+
+if (mysqli_affected_rows($conn) == 1) {
+// If it ran OK.
+
+/*
+// Send an email:
+ $body = "Your password to log into www.zelsroarkep.com has been temporarily changed to '$p'. Please log in using
+this password and this email address. Then you may change your password to something more familiar.";
+ $body .= "Please login and change the password immediately as this temporary password expires in two (2) hours.";
+ $body .= "Regards from Zels Roarke Productions";
+mail ($_POST['email'], 'Your temporary password.', $body, 'From: admin@zelsroarkep.com');
+
+ */
+
+// Print a message and wrap up:
+					// Finish the page:
+					 //Set display property and confirmation message of the message container to 'block'
+					$success_display = 'block';
+					$success_msg = '<h4 style="color: #008080"> SUCCESS! Your password has been changed to - ' . $p . '. 
+					You will receive the new, temporary password at the email address with which you registered.</h4>';
+					
+					} else { // The email address is not available.
+							$err_msg = 'Your password could not be reset for technical reasons. We apologize for any inconviniences</p>';
+					}
+
+} else { // No database match made.
+$errorsss[] = 'The submitted email address does not match those on file!</p>';
+}
+
+} else { // No email!
+$errorsss[] = 'You forgot to enter your email address!</p>';
+
+} // End of empty($_POST['email']) IF.
+
+}
+
 
 // Create the page:
 include ('partials/login_page.inc.php');

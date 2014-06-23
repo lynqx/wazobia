@@ -5,6 +5,7 @@
 /* 19062014*/
 /* redirected to when student logs in */
 
+$page_title = "Classroom";
 $path = "";
 $inc_path = $path."partials/";
 include($inc_path . 'header.php'); ?> 

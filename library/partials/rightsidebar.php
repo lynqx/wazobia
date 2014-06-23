@@ -1,3 +1,5 @@
+
+</div>
 <!-- .right-sidebar -->
 <div class="right-sidebar right-sidebar-hidden">
 	<div class="right-sidebar-holder">
