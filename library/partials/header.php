@@ -4,7 +4,6 @@ session_start();
 include('../init_connect.php'); 
 include('functions/functions.php'); 
 
-
 ?>
 
 <!DOCTYPE html>
