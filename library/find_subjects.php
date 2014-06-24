@@ -18,11 +18,10 @@
 		{
 			while($row = mysqli_fetch_row($rslt))
 			{
-				$sbjt = $row[0];
+				$sbjt = ucwords($row[0]);
 				$sbjtid = $row[1];
 		
-				echo 
-				"<li class=\"submenu\"><a class=\"dropdown\" href=\"\" data-original-title=\"\"> <i class=\"fa fa-cog\"></i><span class=\"hidden-minibar\"> ".ucwords($sbjt)."<span class=\"badge bg-success2 pull-right\">1</span></span></a></li>";
+				echo '<li class= "submenu"><a class="dropdown" href="classroom.php?subj='. $sbjtid . '&subject='. $sbjt . '" data-original-title="' . $sbjt . '" title="' . ($sbjt) . '"> <i class="fa fa-cog"></i><span class="hidden-minibar"> ' .ucwords($sbjt). '<span class="badge bg-success2 pull-right">1</span></span></a></li>';
 			}
 		}
 	
