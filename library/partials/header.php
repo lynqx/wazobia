@@ -1,10 +1,13 @@
 <?php 
 ob_start();
 session_start();
-// You can easily build the menu with php predefined function written by me (@bootstrapguru). It is located in root folder with file name called menu-builder.php
 include('../init_connect.php'); 
 include('functions/functions.php'); 
+<<<<<<< HEAD
 include('functions/fns.php'); 
+=======
+
+>>>>>>> 28e6b2bb4f579dbf431e1dab0d9a4b02f6e694a4
 ?>
 
 <!DOCTYPE html>
@@ -17,8 +20,12 @@ include('functions/fns.php');
 if (!isset($page_title)) {
  $page_title = 'Wazobia Academy';
 }
-
-	 echo $page_title;
+if(isset($_SESSION['firstname'])) {
+	$student = $_SESSION['firstname'] . "  " . $_SESSION['lastname'];
+} else {
+	$student = "";
+}
+	 echo $page_title . " | | " . $student;
 
 	 ?>
 
@@ -71,13 +78,19 @@ if(strpos($page,"extended-modals") !== false ) { ?>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav user-menu navbar-right " id="user-menu">
 
-            <li><a href="#" class="user dropdown-toggle" data-toggle="dropdown"><span class="username"><img src="images/profiles/eleven.png" class="user-avatar" alt="">  Vijay Kumar </span></a>
+            <li><a href="#" class="user dropdown-toggle" data-toggle="dropdown"><span class="username">
+            	<img src="images/profiles/<?php echo $_SESSION['image']; ?>" class="user-avatar" alt="<?php echo $_SESSION['firstname'] . "  " . $_SESSION['lastname'] ; ?>"> <?php echo $_SESSION['firstname'] . "  " . $_SESSION['lastname'] ; ?>  </span></a>
               <ul class="dropdown-menu">
                 <li><a href="#"><i class="fa fa-user"></i> My Profile</a></li>
                 <li><a href="#"><i class="fa fa-envelope"></i> Inbox</a></li>
+                <li><a href="password.php"><i class="fa fa-edit"></i> Change Password</a></li>
                 <li><a href="#"><i class="fa fa-cogs"></i> Settings</a></li>
                 <li class="divider"></li>
-                <li><a href="#" class="text-danger"><i class="fa fa-lock"></i> Logout</a></li>
+                <?php 
+                if(isset($_SESSION['student_id'])) {
+                echo '<li><a href="logout.php" class="text-danger"><i class="fa fa-lock"></i> Logout</a></li>';
+				}
+				?>
               </ul>
               <li><a href="#" class="settings dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i><span class="badge bg-pink">4</span></a>
                 <ul class="dropdown-menu inbox">
@@ -211,9 +224,42 @@ if(strpos($page,"extended-modals") !== false ) { ?>
           <!-- .box-holder -->
           <div class="box-holder">
 
+<<<<<<< HEAD
             <?php
 				include('leftsidebar.php');
 			?>
+=======
+            <!-- .left-sidebar -->
+            <div class="left-sidebar">
+              <div class="sidebar-holder">
+                <ul class="nav  nav-list">
+
+                  <!-- sidebar to mini Sidebar toggle -->
+                  <li class="nav-toggle">
+                    <button class="btn  btn-nav-toggle text-primary"><i class="fa fa-angle-double-left toggle-left"></i> </button>
+                  </li>
+
+                    <?php //buildMenu($menuList); ?>
+                    <li class="submenu"><a class="dropdown" href="" data-original-title="Dashboard"> <i class="fa fa-user"></i><span class="hidden-minibar"> Dashboard <span class="badge bg-success2 pull-right">5</span></span></a></li>
+                    <li class="submenu"><a class="dropdown" href="" data-original-title="Heart"> <i class="fa fa-heart"></i><span class="hidden-minibar"> Heart <span class="badge bg-success2 pull-right">5</span></span></a></li>
+                    <li class="submenu"><a class="dropdown" href="" data-original-title="Settings"> <i class="fa fa-cog"></i><span class="hidden-minibar"> Settings <span class="badge bg-success2 pull-right">5</span></span></a></li>
+
+                    <li class="submenu"><a class="dropdown" href="#" data-original-title="Details"> <i class="fa fa-wrench"></i><span class="hidden-minibar"> Details <span class="badge bg-success2 pull-right">5</span></span></a>
+                    	<ul>
+                 	<li class="submenu"><a class="dropdown" href="" data-original-title=""> <i class="fa fa-cog"></i><span class="hidden-minibar"> Settings <span class="badge bg-success2 pull-right">5</span></span></a></li>
+                    <li class="submenu"><a class="dropdown" href="" data-original-title=""> <i class="fa fa-cog"></i><span class="hidden-minibar"> Settings <span class="badge bg-success2 pull-right">5</span></span></a></li>
+
+                    <li class="submenu"><a class="dropdown" href="#" data-original-title="Details"> <i class="fa fa-wrench"></i><span class="hidden-minibar"> Subjects <span class="badge bg-success2 pull-right">5</span></span></a>
+                    	<ul>
+						<?php include('find_subjects.php'); ?>
+
+                    	</ul>
+                    </li>
+
+                </ul>
+              </div>
+            </div> <!-- /.left-sidebar -->
+>>>>>>> 28e6b2bb4f579dbf431e1dab0d9a4b02f6e694a4
 
             <!-- .content -->
             <div class="content">

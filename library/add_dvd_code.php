@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 <?php
 $path = "";
@@ -48,6 +49,11 @@ header('location: index.php');
 	
 	
 ?>
+=======
+<?php $path = "";
+include('partials/header.php'); ?>
+
+>>>>>>> 28e6b2bb4f579dbf431e1dab0d9a4b02f6e694a4
 
 
             <div class="row">
