@@ -42,23 +42,8 @@ include($inc_path . 'header.php'); ?>
   										</h3>
   									</div>
   									<div class="panel-body panel-border">
-  										<div class="list-group demo-list-group">
-				          					<?php
-							            	$q = "SELECT language.language_id, language.language
-												FROM  `language` 
-												JOIN  `lesson` ON language.language_id = lesson.language_id
-												ORDER BY language.language_id";
-												$r = @mysqli_query ($conn, $q) or trigger_error("Query: $q\n<br />MySQL Error: " . mysqli_error($conn));
-												while ($row = mysqli_fetch_array($r, MYSQLI_ASSOC)) {
-														?>
-
-														<a class="list-group-item " href="language/?lang=<?php echo $row['language_id']; ?>"><?php echo ucwords($row['language']); ?></a>
-															   			<?php
-																			}
-																		?>
-							              
-
-									</div> <!-- /panel body -->	
+  										
+										
 									</div>
 							  
   								</div>	
