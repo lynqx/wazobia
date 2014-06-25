@@ -5,7 +5,7 @@
 /* 23062014*/
 
 if(!empty($_GET['subject']))
-$page_title = "Classroom-".$_GET['subject'];
+$page_title = $_GET['subject'] . " - Classroom";
 else
 $page_title = "Classroom";
 
@@ -163,7 +163,7 @@ include($inc_path . 'header.php');
 									$filename = $row7['file_name'];
 											
 											echo '<div class="panel-body">';
-											echo '<a href="lessons.php?lesson=' . $lesson_id . '">' . $lesson . '</a>';
+											echo '<a href="lessons.php?id=' . $lesson_id . '&lesson=' . $lesson . '">' . $lesson . '</a>';
 											echo '</div>';
 								}
 				echo '</div>';

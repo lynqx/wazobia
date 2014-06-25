@@ -1,0 +1,266 @@
+@import url(http://fonts.googleapis.com/css?family=Raleway:400,200,300,100,600);
+body {
+  background: #396;
+}
+.login-box {
+  background: #FFFFFF;
+  min-height: 400px;
+  width: 350px;
+  margin: 0px auto;
+  margin-top: 100px;
+  -moz-border-radius: 8px; -webkit-border-radius: 8px;
+  padding:0 0 20px 0;
+}
+
+img { padding:10px; border: 3px #0F4F0F solid; margin: 10px 0 10px 50px;
+-moz-border-radius: 8px; -webkit-border-radius: 8px;
+background-color:#396; 
+}
+
+.login-box h1 {
+  color: #0F4F0F;
+  font-size: 25px;
+  padding-top: 10px;
+  font-family: 'Raleway', Helvetica, Arial;
+  font-weight: 600;
+  text-align: center;
+  padding-top: 20px;
+}
+.login-box hr {
+  border-width: 1px;
+  border-color: #0b1d30;
+  opacity: 0.3;
+}
+.login-box h5 {
+  text-align: center;
+  font-family: 'Raleway';
+  font-weight: 600;
+  color: #0F4F0F;
+  font-size: 13px;
+}
+.login-box h5 strong {
+  color: #dd636d;
+}
+.login-box .input-box {
+  margin-top: 20px;
+}
+.login-box .input-box .input-group-addon {
+  background: #0F4F0F;
+  border: 0px;
+  color: #FFFFFF;
+  border-radius: 0px;
+}
+.login-box .input-box input {
+  background: #D0E9C6;
+  border-radius: 0px;
+  border: none;
+  color: #0F4F0F !important;
+}
+.login-box .input-box .form-control:-moz-placeholder {
+  color: #0F4F0F;
+}
+.login-box .input-box .form-control::-moz-placeholder {
+  color: #0F4F0F;
+}
+.login-box .input-box .form-control:-ms-input-placeholder {
+  color: #0F4F0F;
+}
+.login-box .input-box .form-control::-webkit-input-placeholder {
+  color: #0F4F0F;
+}
+.login-box .input-box .form-control:focus {
+  box-shadow: none;
+}
+.login-box .input-box .btn {
+  background: #0FBD71;
+  color: #FFFFFF;
+  border-radius: 0px;
+  outline: none !important;
+}
+
+.login-helpers a { color:#0F4F0F; padding:10px 0 0 0; }
+
+.visible {
+  display: block !important;
+}
+
+#login,
+#register,
+#forgot {
+  display: none;
+}
+
+@media (max-width: 400px) {
+  .login-box {
+    width: 260px;
+  }
+}
+
+
+/* Forgot password starts here */
+
+.pass-box {
+  background: #FFFFFF;
+  min-height: 300px;
+  width: 350px;
+  margin: 0px auto;
+  margin-top: 200px;
+  -moz-border-radius: 8px; -webkit-border-radius: 8px;
+}
+.pass-box h1 {
+  color: #0F4F0F;
+  font-size: 25px;
+  padding-top: 10px;
+  font-family: 'Raleway', Helvetica, Arial;
+  font-weight: 600;
+  text-align: center;
+  padding-top: 20px;
+}
+.pass-box hr {
+  border-width: 1px;
+  border-color: #0b1d30;
+  opacity: 0.3;
+}
+.pass-box h5 {
+  text-align: center;
+  font-family: 'Raleway';
+  font-weight: 600;
+  color: #0F4F0F;
+  font-size: 13px;
+}
+.pass-box h5 strong {
+  color: #dd636d;
+}
+.pass-box .pass-rec-box {
+  margin-top: 20px;
+}
+.pass-box .pass-rec-box .input-group-addon {
+  background: #0F4F0F;
+  border: 0px;
+  color: #FFFFFF;
+  border-radius: 0px;
+}
+.pass-box .pass-rec-box input {
+  background: #D0E9C6;
+  border-radius: 0px;
+  border: none;
+  color: #0F4F0F !important;
+}
+.pass-box .pass-rec-box .form-control:-moz-placeholder {
+  color: #0F4F0F;
+}
+.pass-box .pass-rec-box .form-control::-moz-placeholder {
+  color: #0F4F0F;
+}
+.pass-box .pass-rec-box .form-control:-ms-input-placeholder {
+  color: #0F4F0F;
+}
+.pass-box .pass-rec-box .form-control::-webkit-input-placeholder {
+  color: #0F4F0F;
+}
+.pass-box .pass-rec-box .form-control:focus {
+  box-shadow: none;
+}
+.pass-box .pass-rec-box .btn {
+  background: #0FBD71;
+  color: #FFFFFF;
+  border-radius: 0px;
+}
+@media (max-width: 400px) {
+  .pass-box {
+    width: 260px;
+  }
+}
+
+/* register */
+
+.reg-box {
+  background: #FFFFFF;
+  min-height: 400px;
+  width: 350px;
+  margin: 0px auto;
+  margin-top: 50px;
+  -moz-border-radius: 8px; -webkit-border-radius: 8px;
+}
+.reg-box a {
+  padding-left: 5px;
+  text-decoration: none;
+  color: #0F4F0F;
+}
+.reg-box h1 {
+  color: #0F4F0F;
+  font-size: 25px;
+  padding-top: 10px;
+  font-family: 'Raleway', Helvetica, Arial;
+  font-weight: 600;
+  text-align: center;
+  padding-top: 20px;
+}
+.reg-box hr {
+  border-width: 1px;
+  border-color: #0b1d30;
+  opacity: 0.3;
+}
+.reg-box h5 {
+  text-align: center;
+  font-family: 'Raleway';
+  font-weight: 600;
+  color: #0F4F0F;
+  font-size: 13px;
+}
+.reg-box h5 strong {
+  color: #dd636d;
+}
+.reg-box .reg-submit-box {
+  margin-top: 20px;
+}
+.reg-box .reg-submit-box .input-group-addon {
+  background: #0F4F0F;
+  border: 0px;
+  color: #FFFFFF;
+  border-radius: 0px;
+}
+.reg-box .reg-submit-box input {
+  background: #D0E9C6;
+  border-radius: 0px;
+  border: none;
+  color: #000 !important;
+}
+.reg-box .reg-submit-box .form-control:-moz-placeholder {
+  color: #0F4F0F;
+}
+.reg-box .reg-submit-box .form-control::-moz-placeholder {
+  color: #0F4F0F;
+}
+.reg-box .reg-submit-box .form-control:-ms-input-placeholder {
+  color: #0F4F0F;
+}
+.reg-box .reg-submit-box .form-control::-webkit-input-placeholder {
+  color: #0F4F0F;
+}
+.reg-box .reg-submit-box .form-control:focus {
+  box-shadow: none;
+}
+.reg-box .reg-submit-box .btn {
+  background: #0FBD71;
+  color: #FFFFFF;
+  border-radius: 0px;
+  outline: none !important;
+}
+.reg-box .reg-submit-box h6 {
+  font-family: 'Raleway';
+  font-weight: 600;
+  font-size: 13px;
+}
+.reg-box .reg-submit-box h6 a {
+  color: #cccccc;
+}
+.reg-box .reg-submit-box h6 a:hover {
+  color: #0F4F0F;
+  text-decoration: underline;
+}
+@media (max-width: 400px) {
+  .reg-box {
+    width: 260px;
+  }
+}
