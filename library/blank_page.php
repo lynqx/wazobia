@@ -35,7 +35,7 @@
 				</h3>
 			</div>
 			<div class="panel-body ">
-				<div class="ro">
+				<div class="row">
 					<div class="col-mol-md-offset-2">
 						<form class="form-horizontal cascade-forms" method="post" action="#" name="signup_form" id="signup_form" novalidate="novalidate">
 							<div class="form-group">

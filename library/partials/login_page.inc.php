@@ -247,10 +247,7 @@
           
             <h6><input type="checkbox"><a href="#" data-toggle="modal" data-target="#myModal">I agree to terms &amp; Services</a></h6>
 
-          
-
-
-         
+   
             <div class="form-group">
               <input type="hidden" name="registered" value="TRUE" />
               <button type="submit" class="btn  btn-block  btn-submit pull-right">Register</button>

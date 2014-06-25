@@ -69,10 +69,21 @@
   <script src="js/bootstrap-datatables.js"></script>
 <script src="js/dataTables-custom.js"></script>
 
+<script src="js/jquery.pulsate.min.js"></script>
+<script src="js/forms-custom.js"></script>
+
+<script src="js/bootstrap-modalmanager.js"></script>
+<script src="js/bootstrap-modal.js"></script>
+<script src="js/bootstrap-modal-custom.js"></script>
+
+<!--icheck-->
+<script src="js/icheck/icheck.js"></script>
+
 <!-- Core Jquery File  =============================-->
 <script src="<?php echo $path; ?>js/core.js"></script>
 <!-- <script src="<?php echo $path; ?>js/dashboard-custom.js"></script> -->
 
+<script src="js/chosen.jquery.js"></script>
 
 <?php
 			// close database connection if open 

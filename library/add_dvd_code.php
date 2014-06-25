@@ -18,9 +18,9 @@ header('location: index.php');
 			//is code available?
 			$dvd_avail = getColumnValue($conn, 'dvd_available', 'dvd_code', 'dvd_code', $dvd_code);
 			if($dvd_avail=="")
-			$code_err = "<span style=\"color: red;\">INVALID CODE!</span>";
+			$code_err = "Invalid Code!";
 			elseif($dvd_avail=='0')
-			$code_err = "<span style=\"color: red;\">SORRY! DVD CODE ALREADY USED</span>";
+			$code_err = "SORRY! Dvd code already used";
 			else
 			{
 				//register dvd against user
@@ -31,7 +31,7 @@ header('location: index.php');
 				$insert = "INSERT INTO dvd_code_user (dvd_code_id, time_use, student_id) VALUES ('$dvd_code_id', '$time_use', '$student_id')";
 				mysqli_query($conn, $insert) or die(mysqli_error($conn)."Sorry! Cannot complete operation: DVD CODE USR");
 				
-				//update dvd user
+				//update dvd code table
 				$update = "UPDATE dvd_code SET dvd_available='0' WHERE dvd_code='$dvd_code'";
 				mysqli_query($conn, $update) or die(mysqli_error($conn)."Sorry! Cannot complete operation: DVD AVAIL");
 				
@@ -41,6 +41,7 @@ header('location: index.php');
 				?>
 					<script>window.location.reload();</script>
 				<?php
+				$success_msg = 'DVD code added successfully';
 				}
 				
 			}	
@@ -56,19 +57,29 @@ header('location: index.php');
                   <ul class="breadcrumb">
                    <li><a href="index.php">Dashboard</a></li>
                    <li><a href="#">Library</a></li>
-                   <li class="active">Lesson Notes</li>
+                   <li class="active">Add DVD code</li>
                  </ul>
-                 
-                 <div class="form-group hiddn-minibar pull-right">
-                   <!-- SEARCHBOX -->
-                 </div>
-                 <h3 class="page-header"><i class="fa fa-warning"></i> Access Lesson Notes<i class="fa fa-info-circle animated bounceInDown show-info"></i> </h3>
+
+                 <h3 class="page-header"><i class="fa fa-warning"></i> Add DVD Code <i class="fa fa-info-circle animated bounceInDown show-info"></i> </h3>
+					
+					        <div class="panel-body">
+
 					<?php
+					
+					if(!empty($success_msg)) {
+												echo '<div class="alert alert-info alert-dismissable">
+           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+														<p><h4><i class="fa fa-heart"></i> Successful!</h4>' . $success_msg . '</p></div>';
+											 }
+					
 						if(!empty($code_err))
-						echo "<span style=\"text-align: center; padding-left: 30px; font-weight: bold;\"> ".$code_err."</span>";
+						echo '<div class="alert alert-danger alert-dismissable">
+          					 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+							 <p><h4><i class="fa fa-asterisk"></i> Error!</h4>' .$code_err. '</div>';
 					?>
 
 				</div>
+			</div>
 			</div>
 
 
@@ -87,10 +98,8 @@ header('location: index.php');
 					</span>
 				</h3>
 			</div>
-			<div class="panel-body ">
-				<div class="ro">
-					<div class="col-mol-md-offset-2">
-					
+			<div class="panel-body">
+
 						<form class="form-horizontal cascade-forms" method="POST" action="" novalidate="novalidate">
 							<div class="form-group">
 								<label class="col-lg-2 col-md-3 control-label">DVD Code</label>
@@ -108,8 +117,7 @@ header('location: index.php');
 
 			</div>
 		</div>
-	</div>
-</div>
+
 
 
 <?php
