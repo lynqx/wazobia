@@ -1,50 +1,70 @@
 <?php 
-/* Classroom */
-/* Doubleakins*/
-/* 08063777394*/
-/* 23062014*/
+/*-------------------------// coded by: Tope Omomo (08134053081) /----------------------------------*/
+/*-------------------------//		topeomomo@gmail.com			 //---------------------------------*/
 
 if(!empty($_GET['lesson']))
-$page_title = $_GET['lesson']." - Classroom";
+{
+	$page_title = "Lessons-".$_GET['lesson'];
+	$pagehd = $_GET['lesson'];
+	$lesson_id = $_GET['id'];
+}
 else
-$page_title = "Classroom";
+{
+	$page_title = "Lessons";
+	$pagehd = "Lessons";
+	$lesson_id = "";
+}
+
 
 $path = "";
 $inc_path = $path."partials/";
 include($inc_path . 'header.php');
 
-	/* redirect when student not log in */
-	if (!isset($_SESSION['student_id']))
+//verify lesson_id and get info
+if(!empty($lesson_id))
+{
+	//confirm validity of lesson_id
+	$dur = getColumnValue($conn, 'duration', 'lesson', 'lesson_id', $lesson_id);
+	
+	if(empty($dur))
 	{
-		// Redirect:
-		redirect_to("index.php");
+		//if invalid lesson_id, redirect
+		header('location: classroom.php');
+		exit();
 	}
-	else
-	{
-		$student = $_SESSION['student_id'];
-	}
+	$doc_folder = "docs";
+	
+	$lesson_html = getColumnValue($conn, 'file_name_html', 'lesson_note', 'lesson_id', $lesson_id);
+	$lesson_pdf = getColumnValue($conn, 'file_name', 'lesson_note', 'lesson_id', $lesson_id);
+	$lesson_title = ucwords(getColumnValue($conn, 'lesson', 'lesson', 'lesson_id', $lesson_id));
 
-	// Check for a valid Category ID, through GET or POST:
-	if ( isset($_GET['less']) && is_numeric($_GET['less']))
-	{ 
-		$less = $_GET['less'];
-	}
-	elseif (isset($_POST['less']) && is_numeric($_POST['less']))
-	{
-		$less = $_POST['less'];
-	}
-	else
-	{ // No valid ID, kill the script.
-		redirect_to("student_area.php");
-	}
+	$html_file = $doc_folder."/".$lesson_html;
+	$pdf_file = $doc_folder."/".$lesson_pdf;
+	$test_link = "test.php?lesson=$lesson_title&id=$lesson_id";
+	$pdf_link = "$doc_folder/$lesson_pdf";
 
-	// get subject name
-	$q = "SELECT lesson FROM lesson WHERE lesson_id=$less";
-	$r = mysqli_query ($conn, $q);
-	$row = mysqli_fetch_array ($r, MYSQLI_ASSOC);
-	$lesson = $row['lesson'];
 
+}
+else
+{
+	//if empty lesson_id, redirect to classroom
+	header('location: classroom.php');
+	exit();
+}
 ?>
+
+<style>
+	<!--
+	.mylinks1
+	{
+		font-size: small;
+		text-align: right;
+		padding-right: 10px;
+	}
+
+	//-->
+</style>
+
 
   						<!-- /header -->
   						<div class="row">
@@ -52,15 +72,15 @@ include($inc_path . 'header.php');
 
   								<ul class="breadcrumb">
   									<li><a href="index.php">Classroom</a></li>
-  									<li class="active"><a href="language.php"><?php echo ucwords($lesson) ?></a></li>
+  									<li class="active"><a href="lessons.php">Lessons</a></li>
   								</ul>
 
 
-  								<h3 class="page-header"> <?php echo ucwords($lesson) ?> <i class="fa fa-info-circle animated bounceInDown show-info"></i> </h3>
+  								<h3 class="page-header">Lesson Note   <i class="fa fa-info-circle animated bounceInDown show-info"></i> </h3>
 
   								<blockquote class="page-information hidden">
   									<p>
-  										<b><?php echo ucwords($lesson) ?></b> classroom page for <?php echo ucwords($lesson) ?>.
+  										<b>Lesson Note</b> Here you can read your lesson online, download pdf version and click on links to perform online exercises.
   									</p>
   								</blockquote>
 
@@ -71,13 +91,28 @@ include($inc_path . 'header.php');
   						<div class="row">
   							<div class="col-md-12">
   								<div class="panel panel-cascade">
+  									<div class="panel-heading">
+  										<h3 class="panel-title text-primary">
+  											<?php echo ucwords($lesson_title); ?>
+  										</h3>
+  									</div>
   									<div class="panel-body panel-border">
-  										Select the lessons and the lesson notes and the pdf file and the exercises to do
+										<div class="mylinks1">
+											<a target="_blank" href="<?php echo $pdf_link; ?>" class="btn btn-success btn-animate-demo">Download PDF Version</a> &nbsp; 
+											<a href="<?php echo $test_link; ?>" class="btn btn-info btn-animate-demo">Take Test</a>
+										</div>
+											<!-- CONTENT GOES IN HERE -->
+											<?php include($html_file); ?>
+										
+										<div class="mylinks1">
+											<a target="_blank" href="<?php echo $pdf_link; ?>" class="btn btn-success btn-animate-demo">Download PDF Version</a> &nbsp; 
+											<a href="<?php echo $test_link; ?>" class="btn btn-info btn-animate-demo">Take Test</a>
+										</div>
   									</div> <!-- /panel body -->	
   								</div>	
   							</div>
   						</div>
-  						
-  						
+
+
 <?php include('partials/footer.php'); ?>
 

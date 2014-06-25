@@ -36,12 +36,12 @@ header('location: index.php');
 				mysqli_query($conn, $update) or die(mysqli_error($conn)."Sorry! Cannot complete operation: DVD AVAIL");
 				
 				
-				if(!mysqli_error($conn))
+			if(!mysqli_error($conn))
 				{
+					$success_msg = "Dvd Code Added Successfully!";
 				?>
-					<script>window.location.reload();</script>
+					<meta http-equiv="refresh" content="10" >
 				<?php
-				$success_msg = 'DVD code added successfully';
 				}
 				
 			}	
