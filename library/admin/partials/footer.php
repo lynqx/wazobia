@@ -66,6 +66,9 @@
 
 <script src="<?php echo $path; ?>js/bootstrap-tour.js"></script>
 
+  <script src="js/bootstrap-datatables.js"></script>
+<script src="js/dataTables-custom.js"></script>
+
 <!-- Core Jquery File  =============================-->
 <script src="<?php echo $path; ?>js/core.js"></script>
 <!-- <script src="<?php echo $path; ?>js/dashboard-custom.js"></script> -->
