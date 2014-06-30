@@ -191,6 +191,7 @@ if (mysqli_affected_rows($conn) == 1)
             <tr>
              <th>Organisation</th>
              <th>Language</th>
+             <th>Add Subject</th>
              <th>Edit</th>
              <th>Delete</th>
            </tr>
@@ -204,9 +205,15 @@ if (mysqli_affected_rows($conn) == 1)
           <tr class="odd gradeX">
            <td><?php echo $row1['organisation']; ?></td>
             <td><?php echo $row1['language']; ?></td>
-            <td class="center"> <a href="<?php echo $path; ?>organisation.php?id=<?php echo urlencode($row1['organisation_id']); ?>"
+            
+            <td class="center"> <a href="<?php echo $path; ?>subjects.php?org=<?php echo urlencode($row1['organisation_id']); ?>"
+								class="btn btn-info btn-animate-demo" title="Edit"><i class="fa fa-plus"></i> Add </a>
+			</td>
+			
+			<td class="center"> <a href="<?php echo $path; ?>organisation.php?id=<?php echo urlencode($row1['organisation_id']); ?>"
 								class="btn btn-info btn-animate-demo" title="Edit"><i class="fa fa-pencil-square-o"></i> Edit </a>
 			</td>
+			
             <td class="center">	<a href="<?php echo $path; ?>orgdelete.php?id=<?php echo urlencode($row1['organisation_id']); ?>" 
 								onclick="return confirm('Are you sure you want to delete this organisation ?')" 
 								class="btn btn-danger btn-animate-demo" title="Delete"><i class="fa fa-times"></i> Delete </a>
@@ -220,6 +227,7 @@ if (mysqli_affected_rows($conn) == 1)
             <tr>
              <th>Organisation</th>
              <th>Language</th>
+             <th>Add Subject</th>
              <th>Edit</th>
              <th>Delete</th>
            </tr>	

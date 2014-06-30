@@ -17,20 +17,20 @@ require_once ('../../init_connect.php');
 
 // Make the query:
 
-$q = "DELETE FROM organisation WHERE organisation_id=$id LIMIT 1";
+$q = "DELETE FROM dvd_subject_pack WHERE dvd_pack_id=$id LIMIT 1";
 $r = @mysqli_query ($conn, $q);
 
 // If it ran OK.
 if (mysqli_affected_rows($conn) == 1) {
 	
 	// Do redirection.
-redirect_to("organisation.php?success=yes");
+	redirect_to("view_dvd_pack.php?success=yes");
 	
 
 } else { // If the query did not run OK.
 
 // Do redirection.
-	redirect_to("organisation.php?error=yes");
+	redirect_to("view_dvd_pack.php?error=yes");
 	//echo 'Not';
 }
 

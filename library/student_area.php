@@ -48,9 +48,8 @@ include($inc_path . 'header.php'); ?>
 							  
   								</div>	
   							</div>
-  						</div>
-
-  					</div> <!-- /.content -->
+  						 
+  					</div><!-- /.content -->
 
 
 <?php include('partials/footer.php'); ?>

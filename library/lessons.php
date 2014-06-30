@@ -40,7 +40,7 @@ if(!empty($lesson_id))
 
 	$html_file = $doc_folder."/".$lesson_html;
 	$pdf_file = $doc_folder."/".$lesson_pdf;
-	$test_link = "test.php?lesson=$lesson_title&id=$lesson_id";
+	$test_link = "test.php?lesson=$lesson_title&id=$lesson_id&t_start=YES";
 	$pdf_link = "$doc_folder/$lesson_pdf";
 
 
@@ -53,17 +53,6 @@ else
 }
 ?>
 
-<style>
-	<!--
-	.mylinks1
-	{
-		font-size: small;
-		text-align: right;
-		padding-right: 10px;
-	}
-
-	//-->
-</style>
 
 
   						<!-- /header -->
@@ -97,14 +86,15 @@ else
   										</h3>
   									</div>
   									<div class="panel-body panel-border">
-										<div class="mylinks1">
+										<div class="pull-right">
 											<a target="_blank" href="<?php echo $pdf_link; ?>" class="btn btn-success btn-animate-demo">Download PDF Version</a> &nbsp; 
 											<a href="<?php echo $test_link; ?>" class="btn btn-info btn-animate-demo">Take Test</a>
 										</div>
+										<div style="clear:both;"></div>
 											<!-- CONTENT GOES IN HERE -->
 											<?php include($html_file); ?>
 										
-										<div class="mylinks1">
+										<div class="pull-right">
 											<a target="_blank" href="<?php echo $pdf_link; ?>" class="btn btn-success btn-animate-demo">Download PDF Version</a> &nbsp; 
 											<a href="<?php echo $test_link; ?>" class="btn btn-info btn-animate-demo">Take Test</a>
 										</div>

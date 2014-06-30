@@ -5,10 +5,10 @@
 				FROM dvd_code_user 
 				JOIN dvd_code 
 				ON dvd_code_user.dvd_code_id=dvd_code.dvd_code_id 
-				JOIN subject_code 
-				ON dvd_code.subject_code_id=subject_code.subject_code_id 
+				JOIN dvd 
+				ON dvd_code.dvd_id=dvd.dvd_id 
 				JOIN subject 
-				ON subject_code.subject_id=subject.subject_id 
+				ON dvd.subject_id=subject.subject_id 
 				WHERE student_id='$student_id'";
 		
 		
