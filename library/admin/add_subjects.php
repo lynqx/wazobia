@@ -10,6 +10,9 @@ $path = "";
 $inc_path = $path."partials/";
 include($inc_path . 'header.php');
 
+if (isset($_SESSION['work_id']) && $_SESSION['roles'] != 'admin') {
+	redirect_to('error.php');
+}
  ?> 
  <?php // code to add or edit a new organisation 
 if (isset($_POST['submitted'])) { // Handle the form.

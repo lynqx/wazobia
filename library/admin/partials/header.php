@@ -87,7 +87,8 @@ if(strpos($page,"extended-modals") !== false ) { ?>
           <ul class="nav navbar-nav user-menu navbar-right " id="user-menu">
 
             <li><a href="#" class="user dropdown-toggle" data-toggle="dropdown"><span class="username">
-            	<img src="images/profiles/<?php echo $_SESSION['image']; ?>" class="user-avatar" alt="<?php echo $_SESSION['firstname'] . "  " . $_SESSION['lastname'] ; ?>"> <?php echo $_SESSION['firstname'] . "  " . $_SESSION['lastname'] ; ?>  </span></a>
+            	<img src="images/profiles/<?php echo $_SESSION['image']; ?>" class="user-avatar" alt="<?php echo $_SESSION['firstname'] . "  " . $_SESSION['lastname'] ; ?>">
+            	 <?php echo $_SESSION['firstname'] . '  ' . $_SESSION['lastname'] ; ?>  </span></a>
               <ul class="dropdown-menu">
                 <li><a href="#"><i class="fa fa-user"></i> My Profile</a></li>
                 <li><a href="#"><i class="fa fa-envelope"></i> Inbox</a></li>
@@ -243,6 +244,10 @@ if(strpos($page,"extended-modals") !== false ) { ?>
                   </li>
 
                     <?php //buildMenu($menuList); ?>
+                    
+                    <?php 
+                    if (isset($_SESSION['work_id']) && $_SESSION['roles'] == 'admin') { // admin access panel
+                    ?>
                     <li class="submenu"><a class="dropdown" href="admin_area.php" data-original-title="Dashboard"> <i class="fa fa-dashboard"></i><span class="hidden-minibar"> Dashboard </span></a></li>
                     <li class="submenu"><a class="dropdown" href="organisation.php" data-original-title="Add Organisation"> <i class="fa fa-briefcase"></i><span class="hidden-minibar"> Organization </span></a></li>
                     <li class="submenu"><a class="dropdown" href="#" data-original-title="Subject"> <i class="fa fa-folder-open"></i><span class="hidden-minibar"> Subjects <span class="badge bg-success2 pull-right">2</span></span></a>
@@ -273,7 +278,16 @@ if(strpos($page,"extended-modals") !== false ) { ?>
                    		<li class="submenu"><a class="dropdown" href="view_dvd_pack.php" data-original-title="View DVD Pack"> <i class="fa fa-plus"></i><span class="hidden-minibar"> View DVD Pack </span></a></li>
                     	</ul>
                     </li>
-                    
+                    <?php 
+                    } elseif (isset($_SESSION['work_id']) && $_SESSION['roles'] == 'lecturer') { // lecturer sidebar panel acces
+                    ?>
+                    <li class="submenu"><a class="dropdown" href="lecturer_area.php" data-original-title="Dashboard"> <i class="fa fa-dashboard"></i><span class="hidden-minibar"> Dashboard </span></a></li>
+                    <li class="submenu"><a class="dropdown" href="organisation.php" data-original-title="Add Organisation"> <i class="fa fa-briefcase"></i><span class="hidden-minibar"> View Payments </span></a></li>
+                    <li class="submenu"><a class="dropdown" href="#" data-original-title="Subject"> <i class="fa fa-folder-open"></i><span class="hidden-minibar"> Account Details <span class="badge bg-success2 pull-right">2</span></span></a>
+                    	
+					<?php	
+                    }
+                    ?>
                     
                 </ul>
               </div>

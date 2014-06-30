@@ -7,9 +7,12 @@ include('functions/functions.php');
 
  $page_title = 'Admin Login || Wazobia';
 // you need to login again if you enter this page
-if (isset($_SESSION['work_id'])) {
+if (isset($_SESSION['work_id']) && $_SESSION['roles'] == 'admin') {
 // Redirect:
 	redirect_to("admin_area.php");
+} elseif (isset($_SESSION['work_id']) && $_SESSION['roles'] == 'lecturer') {
+	
+	redirect_to("lecturer_area.php");
 }
 
  ?>
@@ -44,6 +47,7 @@ $_SESSION['lastname'] = $data ['work_last_name'];
 $_SESSION['email'] = $data ['work_email'];
 $_SESSION['phone'] = $data ['work_phone'];
 $_SESSION['image'] = $data ['work_image'];
+$_SESSION['roles'] = $data ['roles'];
 
 // Set the cookies:
 setcookie ('work_id', $data['work_id'], time()+86400, '/', '', 0, 0);
@@ -63,11 +67,19 @@ $_SESSION['start'] = time();
 // Store the HTTP_USER_AGENT:
 $_SESSION['agent'] = md5($_SERVER ['HTTP_USER_AGENT']);
 
-//if ($_SESSION['user_level'] == 1) {
+if ($_SESSION['roles'] == 'admin') {
 // Redirect:
 $url = absolute_url ('admin_area.php');
 header("Location: $url");
 exit();
+
+} elseif ($_SESSION['roles'] == 'lecturer') {
+	// Redirect:
+$url = absolute_url ('lecturer_area.php');
+header("Location: $url");
+exit();
+	
+}
 
 } 
 

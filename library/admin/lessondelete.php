@@ -1,6 +1,9 @@
 <?php 
 
   include ('../functions/functions.php');
+if (isset($_SESSION['work_id']) && $_SESSION['roles'] != 'admin') {
+	redirect_to('error.php');
+}
 
 
 // Check for a valid image ID, through GET or POST:

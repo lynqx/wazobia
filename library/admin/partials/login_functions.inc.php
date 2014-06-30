@@ -54,9 +54,10 @@ $pass = mysqli_real_escape_string($conn, trim($pass));
 
 if (empty($errors)) { // If everything's OK.
 
-$q = "SELECT * 
-FROM  `worker_register` 
-WHERE worker_register.work_email='$email' AND worker_register.work_password=sha1('$pass')";
+$q = "SELECT * FROM worker_register 
+  		JOIN worker_roles ON worker_roles.work_id = worker_register.work_id
+  		JOIN roles ON roles.role_id = worker_roles.role_id
+		WHERE worker_register.work_email='$email' AND worker_register.work_password=sha1('$pass')";
 
 $r = mysqli_query ($conn, $q); // Run the query.
 

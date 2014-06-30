@@ -7,12 +7,16 @@
 
  
 
-$page_title = "Admin Dashboard";
+$page_title = "Lecturer Dashboard";
 $path = "";
 $inc_path = $path."partials/";
 include($inc_path . 'header.php'); 
+if (!isset($_SESSION['work_id']))
+{
+	 redirect_to('index.php');
+ }
 
-if (isset($_SESSION['work_id']) && $_SESSION['roles'] != 'admin') {
+if (isset($_SESSION['work_id']) && $_SESSION['roles'] != 'lecturer') {
 	redirect_to('error.php');
 }
 
@@ -28,7 +32,7 @@ if (isset($_SESSION['work_id']) && $_SESSION['roles'] != 'admin') {
   								</ul>
 
 
-  								<h3 class="page-header animated bounceInRight show-info"> Administrator Dashboard <i class="fa fa-dashboard animated bounceInDown show-info"></i> </h3>
+  								<h3 class="page-header animated bounceInRight show-info"> Lecturer Dashboard <i class="fa fa-dashboard animated bounceInDown show-info"></i> </h3>
 
   								<blockquote class="page-information hidden">
   									<p>
