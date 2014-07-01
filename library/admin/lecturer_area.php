@@ -1,8 +1,8 @@
 <?php 
-//* Student Area */
+/* Lecturer Area */
 /* Doubleakins*/
 /* 08063777394*/
-/* 19062014*/
+/* 30062014*/
 /* redirected to when student logs in */
 
  
@@ -28,7 +28,7 @@ if (isset($_SESSION['work_id']) && $_SESSION['roles'] != 'lecturer') {
 
   								<ul class="breadcrumb">
   									<li><a href="index.php">Home</a></li>
-  									<li class="active"><a href="language.php">Dashboard</a></li>
+  									<li class="active"><a href="lecturer_area.php">Dashboard</a></li>
   								</ul>
 
 
@@ -61,7 +61,7 @@ if (isset($_SESSION['work_id']) && $_SESSION['roles'] != 'lecturer') {
 		<div class="panel text-primary">
 			<div class="panel-heading">
 				<h3 class="panel-title text-primary">
-					General Academy Summary
+					Lecturers Profile
 					<span class="pull-right">
 						<a href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>
 					</span>
@@ -76,10 +76,14 @@ if (isset($_SESSION['work_id']) && $_SESSION['roles'] != 'lecturer') {
 								<i class="fa fa-folder-open fa-spin fa-2x"></i>
 							</div>
 							<div class="info-details">
-								<h4>Total Subjects :  
+								<h4>My Subjects : 
 								<span class="pull-right">
 									<?php
-									$q1 = "SELECT * FROM subject";
+									$lecturer = $_SESSION['work_id'];
+									$q1 = "SELECT lesson.lesson_id, subject.subject_id, subject.subject FROM lesson
+											JOIN subject on subject.subject_id = lesson.subject_id
+											WHERE lesson.work_id = '$lecturer'
+											ORDER BY lesson.lesson_id ASC";
 									$r1 = mysqli_query ($conn, $q1);
 									echo $numofSubjects = mysqli_num_rows($r1);
 									?>
@@ -93,9 +97,10 @@ if (isset($_SESSION['work_id']) && $_SESSION['roles'] != 'lecturer') {
 								<i class="fa fa-book fa-spin fa-2x"></i>
 							</div>
 							<div class="info-details">
-								<h4>Total Topics :  
+								<h4>My Topics :  
 									<span class="pull-right"><?php
-									$q2 = "SELECT * FROM topic";
+									$q2 = "SELECT DISTINCT lesson.topic_id FROM lesson
+											WHERE lesson.work_id = '$lecturer'";
 									$r2 = mysqli_query ($conn, $q2);
 									echo $numofTopics = mysqli_num_rows($r2);
 									?></span></h4>
@@ -108,9 +113,10 @@ if (isset($_SESSION['work_id']) && $_SESSION['roles'] != 'lecturer') {
 								<i class="fa fa-edit fa-spin fa-2x"></i>
 							</div>
 							<div class="info-details">
-								<h4>Total Lessons :  
+								<h4>My Lessons :  
 									<span class="pull-right"><?php
-									$q3 = "SELECT * FROM lesson";
+									$q3 = "SELECT * FROM lesson
+											WHERE work_id = '$lecturer'";
 									$r3 = mysqli_query ($conn, $q3);
 									echo $numofLessons = mysqli_num_rows($r3);
 									?></span></h4>
@@ -126,12 +132,12 @@ if (isset($_SESSION['work_id']) && $_SESSION['roles'] != 'lecturer') {
 
 
 <div class="row">
-  							<div class="col-md-6">
+  							<div class="col-md-10">
   								<div class="panel panel-cascade">
   									<div class="panel-heading">
   										<h3 class="panel-title">
   											<i class="fa fa-user"></i>
-  											Latest 10 Recently Joined Students
+  											Latest Lessons Taken
   											<span class="pull-right">
   												<a  href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>
   											</span>
@@ -139,120 +145,42 @@ if (isset($_SESSION['work_id']) && $_SESSION['roles'] != 'lecturer') {
   									</div>
   									<div class="panel-body nopadding">
   										<?php 
-  										$q4 = "SELECT * FROM student_register ORDER BY student_id DESC LIMIT 10";
+  										$q4 = "SELECT * FROM lesson
+  												JOIN topic ON topic.topic_id = lesson.topic_id
+  												JOIN subject ON subject.subject_id = lesson.subject_id
+  												JOIN organisation ON organisation.organisation_id = lesson.organisation_id
+  												WHERE lesson.work_id = '$lecturer'
+  												ORDER BY lesson.lesson_id DESC LIMIT 10";
 										$r4 = mysqli_query($conn, $q4);
   										?>
   										<table class="table">
   											<thead>
   												<tr>
-  													<th><i class="fa fa-caret-right"></i> Students</th>
-  													<th><i class="fa fa-caret-right"></i> Email</th>
-  													<th><i class="fa fa-caret-right"></i> Date Registered</th>
+  													<th><i class="fa fa-caret-right"></i> Lesson</th>
+  													<th><i class="fa fa-caret-right"></i> Topic</th>
+  													<th><i class="fa fa-caret-right"></i> Subject</th>
+  													<th><i class="fa fa-caret-right"></i> Organisation</th>
+  													<th><i class="fa fa-caret-right"></i> Duration (secs)</th>
   												</tr>
   											</thead>
   											<?php
   											while ($row4 = mysqli_fetch_array($r4, MYSQLI_ASSOC) ) {
   											?>
   											<tr>
-  												<td><?php echo $row4['first_name'] . '  ' . $row4['last_name']; ?></td>
-  												<td><?php echo $row4['email']; ?> </td>
-  												<td><label class="label label-success"><?php echo $row4['time_register']; ?> </label></td>
+  												<td><?php echo $row4['lesson']; ?></td>
+  												<td><?php echo $row4['topic']; ?> </td>
+  												<td><?php echo $row4['subject']; ?> </td>
+  												<td><?php echo $row4['organisation']; ?> </td>
+  												<td><label class="label label-success"><?php echo $row4['duration']; ?> </label></td>
   											</tr>
   											<?php } ?>
   										</table>
-  										<div class="row visitors-list-summary text-center">
-  											<div class="col-md-4 col-sm-4 col-xs-4 visitor-item ">
-  												<h4>  Total Students </h4>
-  												<label class="label label-big label-info"> <i class="fa fa-user text-white"></i>
-												<?php
-												$q5 = "SELECT * FROM student_register";
-												$r5 = mysqli_query ($conn, $q5);
-												echo $numofStudents = mysqli_num_rows($r5);
-												?>
-												</label>
-  											</div>
-  											<div class="col-md-3 col-sm-3 col-xs-3 visitor-item ">
-  												<h4>  Pending </h4>
-  												<label class="label label-big label-success"> <i class="fa fa-bullhorn text-white"></i> 5</label>
-  											</div>
-  											<div class="col-md-3 col-sm-3 col-xs-3 visitor-item ">
-  												<h4>  Blocked </h4>
-  												<label class="label label-big label-warning"> <i class="fa fa-times-circle"></i> 2</label>
-  											</div>
-  										</div>
+  										
 
   									</div>
   								</div>
   							</div>	
   							
-  							
-  							<div class="col-md-6">
-  								<div class="panel panel-cascade">
-  									<div class="panel-heading">
-  										<h3 class="panel-title">
-  											<i class="fa fa-user"></i>
-  											Recently Added Lecturers
-  											<span class="pull-right">
-  												<a  href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>
-  											</span>
-  										</h3>
-  									</div>
-  									<div class="panel-body nopadding">
-  										<?php 
-  										$q6 = "SELECT * FROM worker_register 
-  												JOIN worker_roles ON worker_roles.work_id = worker_register.work_id
-  												JOIN roles ON roles.role_id = worker_roles.role_id
-  												WHERE roles.role_id = 3
-  												LIMIT 10";
-										$r6 = mysqli_query ($conn, $q6);  										?>
-  										<table class="table">
-  											<thead>
-  											
-  												<tr>
-  													<th><i class="fa fa-caret-right"></i> Lecturer</th>
-  													<th><i class="fa fa-caret-right"></i> Email</th>
-  													<th><i class="fa fa-caret-right"></i> Role</th>
-  												</tr>
-  											</thead>
-  												<?php
-  												while ($row6 = mysqli_fetch_array($r6, MYSQLI_ASSOC) ) {
-  												?>
-  											<tr>
-  												<td><?php echo $row6['work_first_name'] . '  ' . $row6['work_last_name']; ?></td>
-  												<td><?php echo $row6['work_email']; ?></td>
-  												<td><label class="label label-success"><?php echo ucwords($row6['roles']); ?></label></td>
-  											</tr>
-  											<?php } ?>
-  											
-  										</table>
-  										<div class="row visitors-list-summary text-center">
-  											<div class="col-md-4 col-sm-4 col-xs-4 visitor-item ">
-  												<h4>  Total Lecturers </h4>
-  												<label class="label label-big label-info"> <i class="fa fa-user text-white"></i>
-												<?php
-												$q7 = "SELECT * FROM worker_register 
-  												JOIN worker_roles ON worker_roles.work_id = worker_register.work_id
-  												JOIN roles ON roles.role_id = worker_roles.role_id
-  												WHERE roles.role_id = 3";
-												$r7 = mysqli_query ($conn, $q7);
-												echo $numofLecturers = mysqli_num_rows($r7);
-												?>
-												</label>
-  											</div>
-  											<div class="col-md-3 col-sm-3 col-xs-3 visitor-item ">
-  												<h4>  Total Agents </h4>
-  												<label class="label label-big label-success"> <i class="fa fa-calendar text-white"></i> 5,435</label>
-  											</div>
-  											<div class="col-md-4 col-sm-4 col-xs-4 visitor-item ">
-  												<h4>  Pending Agents</h4>
-  												<label class="label label-big label-warning"> <i class="fa fa-bullhorn text-white"></i> 854</label>
-  											</div>
-  											
-  										</div>
-
-  									</div>
-  								</div>
-  							</div>
   						</div>
   						
   						<div class="row">

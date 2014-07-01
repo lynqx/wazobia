@@ -283,7 +283,7 @@ if(strpos($page,"extended-modals") !== false ) { ?>
                     ?>
                     <li class="submenu"><a class="dropdown" href="lecturer_area.php" data-original-title="Dashboard"> <i class="fa fa-dashboard"></i><span class="hidden-minibar"> Dashboard </span></a></li>
                     <li class="submenu"><a class="dropdown" href="organisation.php" data-original-title="Add Organisation"> <i class="fa fa-briefcase"></i><span class="hidden-minibar"> View Payments </span></a></li>
-                    <li class="submenu"><a class="dropdown" href="#" data-original-title="Subject"> <i class="fa fa-folder-open"></i><span class="hidden-minibar"> Account Details <span class="badge bg-success2 pull-right">2</span></span></a>
+                    <li class="submenu"><a class="dropdown" href="account_details.php" data-original-title="Account Details"> <i class="fa fa-folder-open"></i><span class="hidden-minibar"> Account Details </span></a>
                     	
 					<?php	
                     }

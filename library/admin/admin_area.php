@@ -1,8 +1,8 @@
 <?php 
-//* Student Area */
+//* Admin Area */
 /* Doubleakins*/
 /* 08063777394*/
-/* 19062014*/
+/* 30062014*/
 /* redirected to when student logs in */
 
  
@@ -24,7 +24,7 @@ if (isset($_SESSION['work_id']) && $_SESSION['roles'] != 'admin') {
 
   								<ul class="breadcrumb">
   									<li><a href="index.php">Home</a></li>
-  									<li class="active"><a href="language.php">Dashboard</a></li>
+  									<li class="active"><a href="admin_area.php">Dashboard</a></li>
   								</ul>
 
 
