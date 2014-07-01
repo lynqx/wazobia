@@ -258,3 +258,20 @@ function TotalPrice4Order($conn, $id_string)
 	}	
 	return $totals;
 }
+
+
+/*---------------------------------- function returns true if file is image */
+
+function is_image($url)
+{
+	$img = array('jpg', 'jpeg', 'gif', 'png', 'bmp');
+	
+	$frag = strtolower(end(explode('.', $url)));
+	
+	if(in_array($frag, $img))
+	return true;
+	else
+	return false;
+}
+
+

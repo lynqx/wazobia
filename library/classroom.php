@@ -98,16 +98,16 @@ include($inc_path . 'header.php');
 			$dvdcode_id = $row2['dvd_code_id'];
 			//echo '<li>' . $dvdcode_id . ' - ';
 						
-			// select subject_code_id
-			$q3 = "SELECT subject_code_id FROM dvd_code WHERE dvd_code_id=$dvdcode_id";
+			// select dvd_id
+			$q3 = "SELECT dvd_id FROM dvd_code WHERE dvd_code_id=$dvdcode_id";
 			$r3 = mysqli_query ($conn, $q3) or trigger_error("Query: $q3\n<br />MySQL Error: " . mysqli_error($conn));
 			
 			//echo '<ul>';
 			while ($row3 = mysqli_fetch_array ($r3, MYSQLI_ASSOC))
 			{
-				$subjcode_id = $row3['subject_code_id'];
+				$subjcode_id = $row3['dvd_id'];
 				// select lesson_id
-				$q4 = "SELECT lesson_id FROM dvd_lessons WHERE subject_code_id=$subjcode_id";
+				$q4 = "SELECT lesson_id FROM dvd_lessons WHERE dvd_id=$subjcode_id";
 				$r4 = mysqli_query ($conn, $q4) or trigger_error("Query: $q4\n<br />MySQL Error: " . mysqli_error($conn));
 				
 				//echo '<ul>';
@@ -163,7 +163,7 @@ include($inc_path . 'header.php');
 									$filename = $row7['file_name'];
 											
 											echo '<div class="panel-body">';
-											echo '<a href="lessons.php?lesson=' . $lesson_id . '">' . $lesson . '</a>';
+											echo '<a href="lessons.php?id=' . $lesson_id . '&lesson='.$lesson.'">' . $lesson . '</a>';
 											echo '</div>';
 								}
 				echo '</div>';
