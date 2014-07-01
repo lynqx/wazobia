@@ -1,16 +1,4 @@
 <?php 
-<<<<<<< HEAD
-//* Student Area */
-/* Doubleakins*/
-/* 08063777394*/
-/* 19062014*/
-/* redirected to when student logs in */
-
-$page_title = "Admin Dashboard";
-$path = "";
-$inc_path = $path."partials/";
-include($inc_path . 'header.php'); ?> 
-=======
 //* Admin Area */
 /* Doubleakins*/
 /* 08063777394*/
@@ -29,7 +17,6 @@ if (isset($_SESSION['work_id']) && $_SESSION['roles'] != 'admin') {
 }
 
 ?> 
->>>>>>> f3a71c6ea6a7621666581991510f0ac14c3491c7
 
   						<!-- /header -->
   						<div class="row">
@@ -37,19 +24,11 @@ if (isset($_SESSION['work_id']) && $_SESSION['roles'] != 'admin') {
 
   								<ul class="breadcrumb">
   									<li><a href="index.php">Home</a></li>
-<<<<<<< HEAD
-  									<li class="active"><a href="language.php">Dashboard</a></li>
-  								</ul>
-
-
-  								<h3 class="page-header animated bounceInRight show-info"> Dashboard <i class="fa fa-dashboard animated bounceInDown show-info"></i> </h3>
-=======
   									<li class="active"><a href="admin_area.php">Dashboard</a></li>
   								</ul>
 
 
   								<h3 class="page-header animated bounceInRight show-info"> Administrator Dashboard <i class="fa fa-dashboard animated bounceInDown show-info"></i> </h3>
->>>>>>> f3a71c6ea6a7621666581991510f0ac14c3491c7
 
   								<blockquote class="page-information hidden">
   									<p>
@@ -66,20 +45,12 @@ if (isset($_SESSION['work_id']) && $_SESSION['roles'] != 'admin') {
   								<div class="panel panel-cascade">
   									<div class="panel-heading">
   										<h3 class="panel-title text-primary">
-<<<<<<< HEAD
-  											Welcome to Wazobia
-=======
   											Welcome to Wazobia Academy
->>>>>>> f3a71c6ea6a7621666581991510f0ac14c3491c7
   											
   										</h3>
   									</div>
   									<div class="panel-body panel-border">
   										<div class="list-group demo-list-group">
-<<<<<<< HEAD
-				          					Dashboard entities goes here
-
-=======
 <!-- Animated Info Boxes -->
 <div class="row">
 	<div class="col-md-12">
@@ -316,7 +287,6 @@ if (isset($_SESSION['work_id']) && $_SESSION['roles'] != 'admin') {
   								</div>
   							</div>
   						</div>
->>>>>>> f3a71c6ea6a7621666581991510f0ac14c3491c7
 									</div> <!-- /panel body -->	
 									</div>
 							  

@@ -1,14 +1,9 @@
 <?php 
 
-<<<<<<< HEAD
-  include ('../partials/functions.php');
-
-=======
   include ('../functions/functions.php');
 if (isset($_SESSION['work_id']) && $_SESSION['roles'] != 'admin') {
 	redirect_to('error.php');
 }
->>>>>>> f3a71c6ea6a7621666581991510f0ac14c3491c7
 
 // Check for a valid image ID, through GET or POST:
  if ( (isset($_GET['id'])) && (is_numeric ($_GET['id'])) ) { // From view_users.php
@@ -31,13 +26,7 @@ $r = @mysqli_query ($conn, $q);
 if (mysqli_affected_rows($conn) == 1) {
 	
 	// Do redirection.
-<<<<<<< HEAD
-$redirect = 'organisation.php';
-header("Location: {$redirect}?success=yes");
-	
-=======
 redirect_to("organisation.php?success=yes");
->>>>>>> f3a71c6ea6a7621666581991510f0ac14c3491c7
 	
 
 } else { // If the query did not run OK.
@@ -49,8 +38,4 @@ redirect_to("organisation.php?success=yes");
 
 ?>
 
-<<<<<<< HEAD
-<?php mysqli_close($dbc);?>
-=======
 <?php mysqli_close($conn);?>
->>>>>>> f3a71c6ea6a7621666581991510f0ac14c3491c7

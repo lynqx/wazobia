@@ -8,9 +8,6 @@
 $page_title = "Add Organisation";
 $path = "";
 $inc_path = $path."partials/";
-<<<<<<< HEAD
-include($inc_path . 'header.php'); ?> 
-=======
 include($inc_path . 'header.php'); 
 
 if (isset($_SESSION['work_id']) && $_SESSION['roles'] != 'admin') {
@@ -18,7 +15,6 @@ if (isset($_SESSION['work_id']) && $_SESSION['roles'] != 'admin') {
 }
 
 ?> 
->>>>>>> f3a71c6ea6a7621666581991510f0ac14c3491c7
 
 
 <?php // if its an edit function
@@ -201,10 +197,7 @@ if (mysqli_affected_rows($conn) == 1)
             <tr>
              <th>Organisation</th>
              <th>Language</th>
-<<<<<<< HEAD
-=======
              <th>Add Subject</th>
->>>>>>> f3a71c6ea6a7621666581991510f0ac14c3491c7
              <th>Edit</th>
              <th>Delete</th>
            </tr>
@@ -218,11 +211,6 @@ if (mysqli_affected_rows($conn) == 1)
           <tr class="odd gradeX">
            <td><?php echo $row1['organisation']; ?></td>
             <td><?php echo $row1['language']; ?></td>
-<<<<<<< HEAD
-            <td class="center"> <a href="<?php echo $path; ?>organisation.php?id=<?php echo urlencode($row1['organisation_id']); ?>"
-								class="btn btn-info btn-animate-demo" title="Edit"><i class="fa fa-pencil-square-o"></i> Edit </a>
-			</td>
-=======
             
             <td class="center"> <a href="<?php echo $path; ?>subjects.php?org=<?php echo urlencode($row1['organisation_id']); ?>"
 								class="btn btn-info btn-animate-demo" title="Edit"><i class="fa fa-plus"></i> Add </a>
@@ -232,7 +220,6 @@ if (mysqli_affected_rows($conn) == 1)
 								class="btn btn-info btn-animate-demo" title="Edit"><i class="fa fa-pencil-square-o"></i> Edit </a>
 			</td>
 			
->>>>>>> f3a71c6ea6a7621666581991510f0ac14c3491c7
             <td class="center">	<a href="<?php echo $path; ?>orgdelete.php?id=<?php echo urlencode($row1['organisation_id']); ?>" 
 								onclick="return confirm('Are you sure you want to delete this organisation ?')" 
 								class="btn btn-danger btn-animate-demo" title="Delete"><i class="fa fa-times"></i> Delete </a>
@@ -246,10 +233,7 @@ if (mysqli_affected_rows($conn) == 1)
             <tr>
              <th>Organisation</th>
              <th>Language</th>
-<<<<<<< HEAD
-=======
              <th>Add Subject</th>
->>>>>>> f3a71c6ea6a7621666581991510f0ac14c3491c7
              <th>Edit</th>
              <th>Delete</th>
            </tr>	
