@@ -53,7 +53,6 @@ else
 }
 ?>
 
-
   						<!-- /header -->
   						<div class="row">
   							<div class="col-mod-12">
@@ -89,8 +88,11 @@ else
 											<a target="_blank" href="<?php echo $pdf_link; ?>" class="btn btn-success btn-animate-demo">Download PDF Version</a> &nbsp; 
 											<a href="<?php echo $test_link; ?>" class="btn btn-info btn-animate-demo">Take Test</a>
 										</div>
+										
 										<div style="clear: both;"></div>
 										
+										<div style="clear:both;"></div>
+
 											<!-- CONTENT GOES IN HERE -->
 											<?php include($html_file); ?>
 										

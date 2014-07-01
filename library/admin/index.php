@@ -7,9 +7,18 @@ include('functions/functions.php');
 
  $page_title = 'Admin Login || Wazobia';
 // you need to login again if you enter this page
+<<<<<<< HEAD
 if (isset($_SESSION['work_id'])) {
 // Redirect:
 	redirect_to("admin_area.php");
+=======
+if (isset($_SESSION['work_id']) && $_SESSION['roles'] == 'admin') {
+// Redirect:
+	redirect_to("admin_area.php");
+} elseif (isset($_SESSION['work_id']) && $_SESSION['roles'] == 'lecturer') {
+	
+	redirect_to("lecturer_area.php");
+>>>>>>> f3a71c6ea6a7621666581991510f0ac14c3491c7
 }
 
  ?>
@@ -44,6 +53,10 @@ $_SESSION['lastname'] = $data ['work_last_name'];
 $_SESSION['email'] = $data ['work_email'];
 $_SESSION['phone'] = $data ['work_phone'];
 $_SESSION['image'] = $data ['work_image'];
+<<<<<<< HEAD
+=======
+$_SESSION['roles'] = $data ['roles'];
+>>>>>>> f3a71c6ea6a7621666581991510f0ac14c3491c7
 
 // Set the cookies:
 setcookie ('work_id', $data['work_id'], time()+86400, '/', '', 0, 0);
@@ -63,12 +76,27 @@ $_SESSION['start'] = time();
 // Store the HTTP_USER_AGENT:
 $_SESSION['agent'] = md5($_SERVER ['HTTP_USER_AGENT']);
 
+<<<<<<< HEAD
 //if ($_SESSION['user_level'] == 1) {
+=======
+if ($_SESSION['roles'] == 'admin') {
+>>>>>>> f3a71c6ea6a7621666581991510f0ac14c3491c7
 // Redirect:
 $url = absolute_url ('admin_area.php');
 header("Location: $url");
 exit();
 
+<<<<<<< HEAD
+=======
+} elseif ($_SESSION['roles'] == 'lecturer') {
+	// Redirect:
+$url = absolute_url ('lecturer_area.php');
+header("Location: $url");
+exit();
+	
+}
+
+>>>>>>> f3a71c6ea6a7621666581991510f0ac14c3491c7
 } 
 
 } else { // Unsuccessful!

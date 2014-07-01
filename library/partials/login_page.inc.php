@@ -115,7 +115,7 @@
             <div class="form-group">
               
               <input type="hidden" name="submitted" value="TRUE" />
-              <button type="submit" class="btn  btn-block  btn-submit pull-right">Submit</button>
+              <button type="submit" class="btn  btn-block  btn-submit pull-right">Login</button>
               
             <div class="login-helpers">
 			<a href="#" onclick="swapScreen('forgot');return false;">Forgot Password?</a> || <a href="#" onclick="swapScreen('register');return false;">New User?</a> <br>
@@ -247,10 +247,7 @@
           
             <h6><input type="checkbox"><a href="#" data-toggle="modal" data-target="#myModal">I agree to terms &amp; Services</a></h6>
 
-          
-
-
-         
+   
             <div class="form-group">
               <input type="hidden" name="registered" value="TRUE" />
               <button type="submit" class="btn  btn-block  btn-submit pull-right">Register</button>

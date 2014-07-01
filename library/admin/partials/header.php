@@ -87,7 +87,12 @@ if(strpos($page,"extended-modals") !== false ) { ?>
           <ul class="nav navbar-nav user-menu navbar-right " id="user-menu">
 
             <li><a href="#" class="user dropdown-toggle" data-toggle="dropdown"><span class="username">
+<<<<<<< HEAD
             	<img src="images/profiles/<?php echo $_SESSION['image']; ?>" class="user-avatar" alt="<?php echo $_SESSION['firstname'] . "  " . $_SESSION['lastname'] ; ?>"> <?php echo $_SESSION['firstname'] . "  " . $_SESSION['lastname'] ; ?>  </span></a>
+=======
+            	<img src="images/profiles/<?php echo $_SESSION['image']; ?>" class="user-avatar" alt="<?php echo $_SESSION['firstname'] . "  " . $_SESSION['lastname'] ; ?>">
+            	 <?php echo $_SESSION['firstname'] . '  ' . $_SESSION['lastname'] ; ?>  </span></a>
+>>>>>>> f3a71c6ea6a7621666581991510f0ac14c3491c7
               <ul class="dropdown-menu">
                 <li><a href="#"><i class="fa fa-user"></i> My Profile</a></li>
                 <li><a href="#"><i class="fa fa-envelope"></i> Inbox</a></li>
@@ -243,9 +248,57 @@ if(strpos($page,"extended-modals") !== false ) { ?>
                   </li>
 
                     <?php //buildMenu($menuList); ?>
+<<<<<<< HEAD
                     <li class="submenu"><a class="dropdown" href="admin_area.php" data-original-title="Dashboard"> <i class="fa fa-dashboard"></i><span class="hidden-minibar"> Dashboard </span></a></li>
                     <li class="submenu"><a class="dropdown" href="organisation.php" data-original-title="Add Organisation"> <i class="fa fa-plus-circle"></i><span class="hidden-minibar"> Add Organization <span class="badge bg-success2 pull-right">5</span></span></a></li>
                     <li class="submenu"><a class="dropdown" href="subject.php" data-original-title="Add Subject"> <i class="fa fa-plus-square"></i><span class="hidden-minibar"> Add Subject <span class="badge bg-success2 pull-right">5</span></span></a></li>
+=======
+                    
+                    <?php 
+                    if (isset($_SESSION['work_id']) && $_SESSION['roles'] == 'admin') { // admin access panel
+                    ?>
+                    <li class="submenu"><a class="dropdown" href="admin_area.php" data-original-title="Dashboard"> <i class="fa fa-dashboard"></i><span class="hidden-minibar"> Dashboard </span></a></li>
+                    <li class="submenu"><a class="dropdown" href="organisation.php" data-original-title="Add Organisation"> <i class="fa fa-briefcase"></i><span class="hidden-minibar"> Organization </span></a></li>
+                    <li class="submenu"><a class="dropdown" href="#" data-original-title="Subject"> <i class="fa fa-folder-open"></i><span class="hidden-minibar"> Subjects <span class="badge bg-success2 pull-right">2</span></span></a>
+                    	<ul>
+                   		<li class="submenu"><a class="dropdown" href="add_subjects.php" data-original-title="Add Subjects"> <i class="fa fa-plus-square"></i><span class="hidden-minibar"> Add Subjects </span></a></li>
+                   		<li class="submenu"><a class="dropdown" href="view_subjects.php" data-original-title="View Subjects"> <i class="fa fa-search"></i><span class="hidden-minibar"> View Subjects </span></a></li>
+                    	</ul>
+                    	
+                    </li>
+                    <li class="submenu"><a class="dropdown" href="#" data-original-title="Topics"> <i class="fa fa-book"></i><span class="hidden-minibar"> Topics <span class="badge bg-success2 pull-right">2</span></span></a>
+                    	<ul>
+                   		<li class="submenu"><a class="dropdown" href="add_topic.php" data-original-title="Add Topics"> <i class="fa fa-plus"></i><span class="hidden-minibar"> Add Topics </span></a></li>
+                   		<li class="submenu"><a class="dropdown" href="view_topics.php" data-original-title="View Topics"> <i class="fa fa-search-plus"></i><span class="hidden-minibar"> View Topics </span></a></li>
+                    	</ul>
+                    </li>
+                    
+                    <li class="submenu"><a class="dropdown" href="#" data-original-title="Lessons"> <i class="fa fa-edit"></i><span class="hidden-minibar"> Lessons <span class="badge bg-success2 pull-right">1</span></span></a>
+                    	<ul>
+                   		<li class="submenu"><a class="dropdown" href="view_lessons.php" data-original-title="View Lessons"> <i class="fa fa-search-plus"></i><span class="hidden-minibar"> View Lessons </span></a></li>
+                    	</ul>
+                    </li>
+                    
+                    <li class="submenu"><a class="dropdown" href="#" data-original-title="Lessons"> <i class="fa fa-dot-circle-o"></i><span class="hidden-minibar"> DVD <span class="badge bg-success2 pull-right">1</span></span></a>
+                    	<ul>
+                   		<li class="submenu"><a class="dropdown" href="add_dvd.php" data-original-title="Add DVD"> <i class="fa fa-plus"></i><span class="hidden-minibar"> Add DVD </span></a></li>
+                   		<li class="submenu"><a class="dropdown" href="view_dvd.php" data-original-title="View DVD"> <i class="fa fa-plus"></i><span class="hidden-minibar"> View DVD </span></a></li>
+                   		<li class="submenu"><a class="dropdown" href="add_dvd_pack.php" data-original-title="Add DVD Pack"> <i class="fa fa-plus"></i><span class="hidden-minibar"> Add DVD Pack</span></a></li>
+                   		<li class="submenu"><a class="dropdown" href="view_dvd_pack.php" data-original-title="View DVD Pack"> <i class="fa fa-plus"></i><span class="hidden-minibar"> View DVD Pack </span></a></li>
+                    	</ul>
+                    </li>
+                    <?php 
+                    } elseif (isset($_SESSION['work_id']) && $_SESSION['roles'] == 'lecturer') { // lecturer sidebar panel acces
+                    ?>
+                    <li class="submenu"><a class="dropdown" href="lecturer_area.php" data-original-title="Dashboard"> <i class="fa fa-dashboard"></i><span class="hidden-minibar"> Dashboard </span></a></li>
+                    <li class="submenu"><a class="dropdown" href="organisation.php" data-original-title="Add Organisation"> <i class="fa fa-briefcase"></i><span class="hidden-minibar"> View Payments </span></a></li>
+                    <li class="submenu"><a class="dropdown" href="account_details.php" data-original-title="Account Details"> <i class="fa fa-folder-open"></i><span class="hidden-minibar"> Account Details </span></a>
+                    	
+					<?php	
+                    }
+                    ?>
+                    
+>>>>>>> f3a71c6ea6a7621666581991510f0ac14c3491c7
                 </ul>
               </div>
             </div> <!-- /.left-sidebar -->

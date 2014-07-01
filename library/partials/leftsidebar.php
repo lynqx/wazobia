@@ -12,7 +12,11 @@
                   </li>
 
                     <?php //buildMenu($menuList); ?>
+
                     <li class="submenu"><a class="dropdown" href="student_area.php" data-original-title="Dashboard"> <i class="fa fa-user"></i><span class="hidden-minibar"> Dashboard <span class="badge bg-success2 pull-right">5</span></span></a></li>
+
+                    <li class="submenu"><a class="dropdown" href="student_area.php" data-original-title="Dashboard"> <i class="fa fa-dashboard"></i><span class="hidden-minibar"> Dashboard <span class="badge bg-success2 pull-right">5</span></span></a></li>
+
                     <li class="submenu"><a class="dropdown" href="add_dvd_code.php" data-original-title="Dashboard"> <i class="fa fa-user"></i><span class="hidden-minibar"> Add New DVD Key <span class="badge bg-success2 pull-right">5</span></span></a></li>
                     <li class="submenu"><a class="dropdown" href="" data-original-title="Heart"> <i class="fa fa-heart"></i><span class="hidden-minibar"> Heart <span class="badge bg-success2 pull-right">5</span></span></a></li>
                     <li class="submenu"><a class="dropdown" href="#" data-original-title="Subject"> <i class="fa fa-cog"></i><span class="hidden-minibar"> Subjects <span class="badge bg-success2 pull-right">5</span></span></a>
