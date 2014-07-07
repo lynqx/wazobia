@@ -23,7 +23,6 @@ $inc_path = $path."partials/";
 include($inc_path . 'header.php');
 $this_page = $_SERVER['PHP_SELF'];
 
-
 if(empty($_GET['id']))
 {
 	header('location: student_area.php');

@@ -276,6 +276,7 @@ if(strpos($page,"extended-modals") !== false ) { ?>
                    		<li class="submenu"><a class="dropdown" href="view_dvd.php" data-original-title="View DVD"> <i class="fa fa-plus"></i><span class="hidden-minibar"> View DVD </span></a></li>
                    		<li class="submenu"><a class="dropdown" href="add_dvd_pack.php" data-original-title="Add DVD Pack"> <i class="fa fa-plus"></i><span class="hidden-minibar"> Add DVD Pack</span></a></li>
                    		<li class="submenu"><a class="dropdown" href="view_dvd_pack.php" data-original-title="View DVD Pack"> <i class="fa fa-plus"></i><span class="hidden-minibar"> View DVD Pack </span></a></li>
+                   		<li class="submenu"><a class="dropdown" href="add_dvd_inventory.php" data-original-title="Add DVD to Inventory"> <i class="fa fa-plus"></i><span class="hidden-minibar"> Add DVD to Inventory </span></a></li>
                     	</ul>
                     </li>
                     <?php 

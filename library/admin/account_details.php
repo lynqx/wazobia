@@ -100,20 +100,31 @@ if (mysqli_affected_rows($conn) == 1)
   							</div>
   						</div>
 
-  						<!-- Demo Panel -->
-  						<div class="row">
-  							<div class="col-md-12">
-  								<div class="panel panel-cascade">
-  									<div class="panel-heading">
+
+<div class="row">
+           <div class="col-md-12">
+            <div class="panel">
+             <div class="panel-heading">
   										<h3 class="panel-title text-primary">
-  											Add Account Details
+  											View Account Details
   										</h3>
   									</div>
-  									<div class="panel-body panel-border">
-  									
-  									<?php 
+        <div class="panel-body">
         	
-        							// block to output success message	
+        	<?php 
+        	
+        	// block to output success message	
+								if (isset($_GET['success'])) 
+									{
+										$success_msg = 'Account details removed successfully';
+									}
+						
+								if (isset($_GET['error'])) 
+									{
+										$err_msg = 'Ooops: Account details was not removed';
+									}
+									
+									// block to output success message	
 											   	if(!empty($success_msg)) {
 												echo '<div class="alert alert-info alert-dismissable">
            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -128,10 +139,7 @@ if (mysqli_affected_rows($conn) == 1)
 														<p><h4><i class="fa fa-asterisk"></i> Error!</h4>' . $err_msg . '</p></div>';
 													}
 												
-												
-								
-									
-									
+
 									// This page prints any errors associated with logging in
 									// and it creates the entire login page, including the form.
 									
@@ -151,11 +159,114 @@ if (mysqli_affected_rows($conn) == 1)
 									</div>';
 									}
 												?>
+
+         <?php // code to select the organisations for view
+         // Make the query to view table details:
+				$q1 = "SELECT *  FROM `bank_details`
+						JOIN bank_name ON bank_name.bank_name_id = bank_details.bank_name_id 
+						WHERE work_id = $lecturer";
+				$r1 = @mysqli_query ($conn, $q1);
+				$row1 = mysqli_fetch_array($r1, MYSQLI_ASSOC);
+         ?>
+                  
+         <div class="row">
+           <div class="col-md-12">
+            <div class="panel">
+             <div class="panel-heading">
+  										<h3 class="panel-title text-primary">
+  											View Account Details
+  										</h3>
+  									</div>
+        <div class="panel-body">
+        	
+        	<?php 
+        	
+        	// block to output success message	
+								if (isset($_GET['success'])) 
+									{
+										$success_msg = 'Account details removed successfully';
+									}
+						
+								if (isset($_GET['error'])) 
+									{
+										$err_msg = 'Ooops: Account details was not removed';
+									}
+									
+									// block to output success message	
+											   	if(!empty($success_msg)) {
+												echo '<div class="alert alert-info alert-dismissable">
+           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+														<p><h4><i class="fa fa-heart"></i> Successful!</h4>' . $success_msg . '</p></div>';
+													}
+												?>
+												
+												<?php // block to output success message	
+											   	if(!empty($err_msg)) {
+												echo '<div class="alert alert-danger alert-dismissable">
+          										 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+														<p><h4><i class="fa fa-asterisk"></i> Error!</h4>' . $err_msg . '</p></div>';
+													}
+												
+
+									// This page prints any errors associated with logging in
+									// and it creates the entire login page, including the form.
+									
+									// Include the header:
+									
+									// Print any error messages, if they exist:
+									if (!empty($errors)) {
+										echo ' <div class="alert alert-block alert-danger fade in">
+										<a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+									<h4><i class="fa fa-times"></i> Error!</h4>
+									<p>The following error(s) occurred:<br />';
+									foreach ($errors as $msg) {
+									echo " - $msg<br />\n";
+									}
+									echo '</p>
+									<p>Please re-enter your details and try again</p>
+									</div>';
+									}
+												?>
+
+         <?php // code to select the organisations for view
+         // Make the query to view table details:
+				$q1 = "SELECT *  FROM `bank_details`
+						JOIN bank_name ON bank_name.bank_name_id = bank_details.bank_name_id 
+						WHERE work_id = $lecturer";
+				$r1 = @mysqli_query ($conn, $q1);
+				$row1 = mysqli_fetch_array($r1, MYSQLI_ASSOC);
+         ?>
+                  
+          <table class="table users-table table-condensed table-hover" >
+            <tr><th>Bank Name</th><td> <?php echo $row1['bank_name']; ?></td></tr>
+             <tr><th>Account Name</th> <td> <?php echo $row1['account_name']; ?></td></tr>
+             <tr><th>Account Number</td> <td> <?php echo $row1['account_no']; ?></td></tr>
+       </table>
+     </div> <!-- /panel body -->
+   </div>
+ </div> <!-- /col-md-12 -->
+</div><!-- /.View Organisationzs-->
+     </div> <!-- /panel body -->
+   </div>
+ </div> <!-- /col-md-12 -->
+</div><!-- /.View Organisationzs-->
+
+
+  						<!-- Demo Panel -->
+  						<div class="row">
+  							<div class="col-md-12">
+  								<div class="panel panel-cascade">
+  									<div class="panel-heading">
+  										<h3 class="panel-title text-primary">
+  											Add Account Details
+  										</h3>
+  									</div>
+  									<div class="panel-body panel-border">
 									<form class="form-horizontal cascade-forms" method="post" action="account_details.php">
 
   										<div class="form-group">
 										<label for="selectlanguage" class="col-lg-2 col-md-3 control-label"> Bank Name </label>
-									<?php // code to select language
+													<?php // code to select language
 				         								// Make the query to view table details:
 														$q = "SELECT * FROM bank_name";
 														$r = @mysqli_query ($conn, $q) or trigger_error("Query: $q\n<br />MySQL Error: " . mysqli_error($conn));;
@@ -196,7 +307,6 @@ if (mysqli_affected_rows($conn) == 1)
   									</div> <!-- /panel body -->	
   								</div>	
   							</div>
-  						</div>
 
 
 <?php include('partials/footer.php'); ?>

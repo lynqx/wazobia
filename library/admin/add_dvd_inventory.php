@@ -23,38 +23,32 @@ if (isset($_POST['submitted'])) { // Handle the form.
 $trimmed = array_map('trim', $_POST);
 
 // Assume invalid values:
-$bankname = $actname = $actno = FALSE;
+$dvd = $qty = $transaction = FALSE;
 
 $errors = array();
 
 // Check for the bank name:
-if (isset($_POST['bankname']) && ($_POST['bankname'] != "")){
-$bankname= mysqli_real_escape_string ($conn, $trimmed['bankname']);
+if (isset($_POST['dvd']) && ($_POST['dvd'] != "")){
+$dvd= mysqli_real_escape_string ($conn, $trimmed['dvd']);
 } else {
-$errors[] = 'Please select the Bank Name!</p>';
+$errors[] = 'Please select the DVD title!</p>';
 }
 
 // Check for the account name:
-if (isset($_POST['actname']) && ($_POST['actname'] != "")){
-$actname= mysqli_real_escape_string ($conn, $trimmed['actname']);
+if (isset($_POST['qty']) && ($_POST['qty'] != "")){
+$qty= mysqli_real_escape_string ($conn, $trimmed['qty']);
 } else {
-$errors[] = 'Please enter the Account Name!</p>';
+$errors[] = 'Please enter the Quantity!</p>';
 }
 
+$transaction = 1;
 
-// Check for the account number:
-if (isset($_POST['actno']) && ($_POST['actno'] != "")){
-$actno= mysqli_real_escape_string ($conn, $trimmed['actno']);
-} else {
-$errors[] = 'Please enter the Account Number!</p>';
-}
-
-if ($bankname && $actname && $actno) { // If everything's OK...
+if ($dvd && $qty && $transaction) { // If everything's OK...
 
 
 // Add the subject to the database:
 
-$q = "INSERT INTO `bank_details` (work_id, bank_name_id, account_name, account_no, date) VALUES ('$lecturer', '$bankname', '$actname', '$actno',  NOW())";
+$q = "INSERT INTO `dvd_transaction` (dvd_id, transaction_type, quantity, time_transact) VALUES ('$dvd', '$transaction', '$qty',  NOW())";
 $r = mysqli_query ($conn, $q) or trigger_error("Query: $q\n<br />MySQL Error: " . mysqli_error($conn));
 
 if (mysqli_affected_rows($conn) == 1)
@@ -62,10 +56,10 @@ if (mysqli_affected_rows($conn) == 1)
 
 	//Set display property and confirmation message of the message container to 'block'
 					$success_display = 'block';
-					$success_msg = '<h4 style="color: #008080"> SUCCESS! Account Information saved successfully.</h4>';
+					$success_msg = '<h4 style="color: #008080"> SUCCESS! Inventory item entered successfully.</h4>';
 					
 					} else { // db error.
-						$err_msg = 'Account Information could not be saved due to a system error. We apologize for any inconvenience</p>';
+						$err_msg = 'Inventory item could not be saved due to a system error. We apologize for any inconvenience</p>';
 					}
 
 								} else { // If one of the data tests failed.
@@ -160,16 +154,16 @@ if (mysqli_affected_rows($conn) == 1)
 												<div class="col-lg-4 col-md-3">
 													<input type="text" class="search form-control" id="searchid" placeholder="Search for DVD" />
 													&nbsp; &nbsp; Ex:MAT0102EN, GEO0304EN e.t.c<br /> 
-													<input type="text" class="search form-control" id="searchhidden" placeholder="Search for DVD" />
+													<input type="hidden" class="search form-control" id="searchhidden" name="dvd" />
 
 													<div id="result"></div>
-												</div>
+													</div>
 								</div>
 								
 								<div class="form-group">
-												<label for="account number" class="col-lg-2 col-md-3 control-label">Account Number</label>
+												<label for="account number" class="col-lg-2 col-md-3 control-label">Quantity</label>
 												<div class="col-lg-4 col-md-3">
-													<input type="number" class="form-control" id="pulser" name="actno" >
+													<input type="number" class="form-control" id="pulser" name="qty" >
 												</div>
 								</div>
 											
