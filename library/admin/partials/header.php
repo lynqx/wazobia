@@ -290,6 +290,7 @@ if(strpos($page,"extended-modals") !== false ) { ?>
                     }
                     ?>
                     
+					<li class="submenu"><a class="dropdown" href="pay_instructors.php">Pay Instructors</a></li>
                 </ul>
               </div>
             </div> <!-- /.left-sidebar -->

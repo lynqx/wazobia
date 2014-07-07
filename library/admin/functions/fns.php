@@ -258,3 +258,54 @@ function TotalPrice4Order($conn, $id_string)
 	}	
 	return $totals;
 }
+
+
+/*---------------------------------- function generates years and month options for drop-down  */
+function yearsGen()
+{
+	$start_year = date('Y')-5;
+	$end_year = date('Y')+5;
+	
+	for($n=$start_year; $n<=$end_year; $n++)
+	{
+		if($n == date('Y'))
+		echo "<option selected value=\"$n\">$n</option>";
+		else
+		echo "<option value=\"$n\">$n</option>";
+	}
+}
+
+function monthChange($m)
+{
+	$num_mn = array('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12');
+	$word_mn = array('JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER');
+	
+	return str_replace($num_mn, $word_mn, $m);
+}
+
+
+function monthsGen()
+{
+	$start = 01;
+	$end = 12;
+	
+	for($n=$start; $n<=$end; $n++)
+	{
+		if($n>=1 && $n<=9)
+		$n = '0'.$n;
+		
+		//select previous month
+		$curmn = date('m');
+		if($curmn==12)
+		$prevmn = 01;
+		else
+		$prevmn = $curmn-1;
+		
+		if($prevmn == $n)
+		echo "<option selected value=\"$n\">".monthChange($n)."</option>";
+		else
+		echo "<option value=\"$n\">".monthChange($n)."</option>";
+	}
+}
+
+
