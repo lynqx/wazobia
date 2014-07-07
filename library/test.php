@@ -10,6 +10,7 @@ $option_no = 5;				//no of options for answers (NOTE: MAXIMUM=5)
 
 //--------------------------------------------------------------//
 
+
 //print_r($_GET);
 
 //check lesson variables and include header
@@ -23,6 +24,7 @@ $inc_path = $path."partials/";
 include($inc_path . 'header.php');
 $this_page = $_SERVER['PHP_SELF'];
 
+//print_r($_SESSION);
 
 if(empty($_GET['id']))
 {
@@ -396,6 +398,7 @@ function do_marking($x, $y)
 											$colr = "#008080";
 											$score = "Excellent";
 											
+											
 											//determine percent color
 											switch($sc_perc)
 											{
@@ -429,6 +432,11 @@ function do_marking($x, $y)
 												$score = "Excellent";
 											}
 											
+											if($sc_perc == 0)
+											{
+												$colr = "#f00";
+												$score = "Poor";
+											}
 											
 											echo "<div>
 													<h4 style=\"font-weight: bold; color: $colr; \">$score</h4>
