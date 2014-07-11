@@ -135,7 +135,7 @@ $ct = mysqli_real_escape_string ($conn, $trimmed['city']);
 if (preg_match ('/^[\w.-]+@[\w.-]+\.[AZa-z]{2,6}$/', $trimmed['email'])) {
 $em = mysqli_real_escape_string ($conn, $trimmed['email']);
 } else {
-						$errorss[] = 'Please enter a valid email address!';
+					$errorss[] = 'Please enter a valid email address!';
 }
 
  // Check for a password and match against the confirmed password:

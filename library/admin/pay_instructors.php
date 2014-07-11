@@ -53,12 +53,47 @@ $this_page = $_SERVER['PHP_SELF'];
 
 
 	<!-- select an instructor -->
-	<br><br>
-	<div class="col-lg-10 col-md-9">
+	<div class="row">
+  							<div class="col-mod-12">
+
+  								<ul class="breadcrumb">
+  									<li><a href="index.php">Admin</a></li>
+  									<li class="active"><a href="pay_instructrs.php">Pay Instructors</a></li>
+  								</ul>
+
+
+  								<h3 class="page-header"> Pay Instructor's Commission<i class="fa animated bounceInDown show-info">&#8358;</i> </h3>
+
+  								<blockquote class="page-information hidden">
+  									<p>
+  										<b>Pay Instructors Page</b> to Pay Instructors that are not on the pay off plan.
+  									</p>
+  								</blockquote>
+
+  							</div>
+  						</div>
+
+  						<!-- view students Panel -->
+  						<div class="row">
+  							<div class="col-md-12">
+  								<div class="panel panel-cascade">
+  									<div class="panel-heading">
+  										<h3 class="panel-title">
+  											<i class="fa">&#8358;</i>
+  											Pay Instructors
+  											<span class="pull-right">
+  												<a  href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>
+  											</span>
+  										</h3>
+  									</div>
+  									<div class="panel-body">
+	<div class="col-lg-12 col-md-11">
 		
 		<label>Select An Instructor | Year & Month</label>
 		<form action="<?php echo $this_page; ?>" method="POST" onsubmit="return check_input('ins')">
-			<select id="ins" class="form-control" name="ins" data-placeholder="Select An Instructor">
+
+			<div class="form-group">
+			<select data-placeholder="Choose an Instructor..."id="ins" class="chosen-select" name="ins" style="width:500px;" tabindex="2">
 				<option value=""></option>
 				<?php
 					//generate options
@@ -78,22 +113,30 @@ $this_page = $_SERVER['PHP_SELF'];
 				?>				
 			<!--</select>-->
 			</select>
-			<br>
-			<label>Year: </label>
+			</div>
+			<div class="form-group" class="col-lg-12">
+			<div class="form-group col-lg-3">
+			<label for="selectyear"> Year: </label>
 			<select id="yr" name="yr">
 				<?php yearsGen(); ?>
-			</select>&nbsp; 
+			</select>
+			</div>
 			
-			<label>Month: </label>
+			<div class="form-group col-lg-3">
+			<label for="selectmonth" class="control-label"> Month: </label>
 			<select id="mn" name="mn">
 				<?php monthsGen(); ?>
-			</select><br>
-			
-			<button class="btn btn-success btn-animate-demo" name="ins_sel" value="1">Select Instructor</button>
+			</select>
+			</div>
+			</div>
+			<div style="clear:both">
+			<div class="form-actions">
+				<button class="btn btn-success btn-animate-demo pull-left" name="ins_sel" value="1">Select Instructor</button>
+			</div>
 		</form>
 	</div>
 	
-	<div class="col-lg-10 col-md-9">
+	<div class="col-lg-12 col-md-9">
 	<?php
 		if(!empty($_POST['ins']) && $_POST['ins_sel']>0 && !empty($_POST['mn']) && !empty($_POST['yr']))
 		{
@@ -296,6 +339,7 @@ $this_page = $_SERVER['PHP_SELF'];
 			
 				//if commission already paid or zero commision
 				$btnstate = "";
+				$btn_text = "PAY &raquo;";
 				
 				if($totcomm==0)
 				{
@@ -311,6 +355,18 @@ $this_page = $_SERVER['PHP_SELF'];
 			mysqli_free_result($rslt8);
 			
 			
+			//fetch instructor's payplan
+			$payplan = getColumnValue($conn, 'instructor_payplan', 'instructors', 'work_id', $work_id);
+			if($payplan == 2)
+			{
+				$paystatus = "<span style=\"color: gray; font-weight: bold; \">&nbsp;NONE&nbsp;</span>";
+				$btnstate = 'disabled';
+				$btn_text = "Payoff plan!";
+				$btn_color = "red";
+			}
+			
+			if(empty($btn_color))
+			$btn_color = "";
 			
 			//draw table to display result
 			$fname = getColumnValue($conn, 'work_first_name', 'worker_register', 'work_id', $work_id);
@@ -337,7 +393,7 @@ $this_page = $_SERVER['PHP_SELF'];
 								
 								<input type=\"hidden\" name=\"pay_name\" value=\"$nm\" >
 								
-								<td><input id=\"pulsateWarning\" type=\"text\" name=\"xcode\" size=\"10\" ></td><td>$nm</td><td>$mnyr</td><td style=\"font-weight: bold; \"> &#8358; $totcomm</td><td>$paystatus</td><td><button class=\"btn-sm btn-info\" type=\"submit\" name=\"paybtn\" value=\"1\" $btnstate>PAY &raquo;</button></td>
+								<td><input id=\"pulsateWarning\" type=\"text\" name=\"xcode\" size=\"10\" ></td><td>$nm</td><td>$mnyr</td><td style=\"font-weight: bold; \"> &#8358; $totcomm</td><td>$paystatus</td><td><button class=\"btn btn-info\" type=\"submit\" name=\"paybtn\" value=\"1\" $btnstate style=\"color: $btn_color; \">$btn_text</button></td>
 							</form>
 						</tr>
 					
@@ -367,8 +423,17 @@ $this_page = $_SERVER['PHP_SELF'];
 			
 			
 			//display bank details
-			echo
-			"<table id=\"acctinfo\" class=\"table-bordered table-striped\">
+			echo '<div class="panel-heading">
+  										<h3 class="panel-title">
+  											<i class="fa fa-money"></i>
+  											Bank Details
+  											<span class="pull-right">
+  												<a  href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>
+  											</span>
+  										</h3>
+  									</div>';
+  									
+			echo "<table id=\"acctinfo\" class=\"table table-bordered table-striped\">
 				<tr>
 					<th>&nbsp; Bank &nbsp;</th><td>$bnk_nm</td>
 				</tr>
@@ -412,6 +477,11 @@ $this_page = $_SERVER['PHP_SELF'];
 		
 		
 	?>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
 	</div>
 	
 

@@ -72,6 +72,64 @@ if (mysqli_affected_rows($conn) == 1)
 								$datatest = 'Please re-enter the details appropriately and try again.</p>';
 								}
 
+// End of the main Submit conditional.
+
+} elseif (isset($_POST['updated'])) { // Handle the form.
+
+// Trim all the incoming data:
+$trimmed = array_map('trim', $_POST);
+
+// Assume invalid values:
+$bankname = $actname = $actno = FALSE;
+
+$errors = array();
+
+// Check for the bank name:
+if (isset($_POST['bankname']) && ($_POST['bankname'] != "")){
+$bankname= mysqli_real_escape_string ($conn, $trimmed['bankname']);
+} else {
+$errors[] = 'Please select the Bank Name!</p>';
+}
+
+// Check for the account name:
+if (isset($_POST['actname']) && ($_POST['actname'] != "")){
+$actname= mysqli_real_escape_string ($conn, $trimmed['actname']);
+} else {
+$errors[] = 'Please enter the Account Name!</p>';
+}
+
+
+// Check for the account number:
+if (isset($_POST['actno']) && ($_POST['actno'] != "")){
+$actno= mysqli_real_escape_string ($conn, $trimmed['actno']);
+} else {
+$errors[] = 'Please enter the Account Number!</p>';
+}
+
+if ($bankname && $actname && $actno) { // If everything's OK...
+
+
+// Add the subject to the database:
+
+$q9 = "UPDATE bank_details SET bank_name_id='$bankname', account_name='$actname', account_no='$actno'
+		WHERE work_id = $lecturer";
+$r9 = mysqli_query ($conn, $q9) or trigger_error("Query: $q9\n<br />MySQL Error: " . mysqli_error($conn));
+
+if (mysqli_affected_rows($conn) == 1)
+{ // If it ran OK then add other details to biodata table.
+
+	//Set display property and confirmation message of the message container to 'block'
+					$success_display = 'block';
+					$success_msg = '<h4 style="color: #008080"> SUCCESS! Account Information updated successfully.</h4>';
+					
+					} else { // db error.
+						$err_msg = 'Account Information could not be updated due to a system error. We apologize for any inconvenience</p>';
+					}
+
+								} else { // If one of the data tests failed.
+								$datatest = 'Please re-enter the details appropriately and try again.</p>';
+								}
+
 } // End of the main Submit conditional.
 
 ?>
@@ -83,9 +141,8 @@ if (mysqli_affected_rows($conn) == 1)
   							<div class="col-mod-12">
 
   								<ul class="breadcrumb">
-  									<li><a href="index.php">Admin</a></li>
-  									<li class="active">Account</li>
-  									<li class="active"><a href="language.php">Add Account Details</a></li>
+  									<li><a href="index.php">Dashboard</a></li>
+  									<li class="active"><a href="#">Add Account Details</a></li>
   								</ul>
 
 
@@ -99,9 +156,8 @@ if (mysqli_affected_rows($conn) == 1)
 
   							</div>
   						</div>
-
-
-<div class="row">
+                
+         <div class="row" id="view">
            <div class="col-md-12">
             <div class="panel">
              <div class="panel-heading">
@@ -111,87 +167,7 @@ if (mysqli_affected_rows($conn) == 1)
   									</div>
         <div class="panel-body">
         	
-        	<?php 
-        	
-        	// block to output success message	
-								if (isset($_GET['success'])) 
-									{
-										$success_msg = 'Account details removed successfully';
-									}
-						
-								if (isset($_GET['error'])) 
-									{
-										$err_msg = 'Ooops: Account details was not removed';
-									}
-									
-									// block to output success message	
-											   	if(!empty($success_msg)) {
-												echo '<div class="alert alert-info alert-dismissable">
-           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-														<p><h4><i class="fa fa-heart"></i> Successful!</h4>' . $success_msg . '</p></div>';
-													}
-												?>
-												
-												<?php // block to output success message	
-											   	if(!empty($err_msg)) {
-												echo '<div class="alert alert-danger alert-dismissable">
-          										 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-														<p><h4><i class="fa fa-asterisk"></i> Error!</h4>' . $err_msg . '</p></div>';
-													}
-												
-
-									// This page prints any errors associated with logging in
-									// and it creates the entire login page, including the form.
-									
-									// Include the header:
-									
-									// Print any error messages, if they exist:
-									if (!empty($errors)) {
-										echo ' <div class="alert alert-block alert-danger fade in">
-										<a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
-									<h4><i class="fa fa-times"></i> Error!</h4>
-									<p>The following error(s) occurred:<br />';
-									foreach ($errors as $msg) {
-									echo " - $msg<br />\n";
-									}
-									echo '</p>
-									<p>Please re-enter your details and try again</p>
-									</div>';
-									}
-												?>
-
-         <?php // code to select the organisations for view
-         // Make the query to view table details:
-				$q1 = "SELECT *  FROM `bank_details`
-						JOIN bank_name ON bank_name.bank_name_id = bank_details.bank_name_id 
-						WHERE work_id = $lecturer";
-				$r1 = @mysqli_query ($conn, $q1);
-				$row1 = mysqli_fetch_array($r1, MYSQLI_ASSOC);
-         ?>
-                  
-         <div class="row">
-           <div class="col-md-12">
-            <div class="panel">
-             <div class="panel-heading">
-  										<h3 class="panel-title text-primary">
-  											View Account Details
-  										</h3>
-  									</div>
-        <div class="panel-body">
-        	
-        	<?php 
-        	
-        	// block to output success message	
-								if (isset($_GET['success'])) 
-									{
-										$success_msg = 'Account details removed successfully';
-									}
-						
-								if (isset($_GET['error'])) 
-									{
-										$err_msg = 'Ooops: Account details was not removed';
-									}
-									
+        							<?php 
 									// block to output success message	
 											   	if(!empty($success_msg)) {
 												echo '<div class="alert alert-info alert-dismissable">
@@ -242,23 +218,21 @@ if (mysqli_affected_rows($conn) == 1)
              <tr><th>Account Name</th> <td> <?php echo $row1['account_name']; ?></td></tr>
              <tr><th>Account Number</td> <td> <?php echo $row1['account_no']; ?></td></tr>
        </table>
+       <a href="#" id="show2" class="btn btn-lg btn-info"> Edit Account Details </a>
      </div> <!-- /panel body -->
    </div>
  </div> <!-- /col-md-12 -->
 </div><!-- /.View Organisationzs-->
-     </div> <!-- /panel body -->
-   </div>
- </div> <!-- /col-md-12 -->
-</div><!-- /.View Organisationzs-->
+
 
 
   						<!-- Demo Panel -->
-  						<div class="row">
+  						<div class="row" id="edit">
   							<div class="col-md-12">
   								<div class="panel panel-cascade">
   									<div class="panel-heading">
   										<h3 class="panel-title text-primary">
-  											Add Account Details
+  											Edit Account Details
   										</h3>
   									</div>
   									<div class="panel-body panel-border">
@@ -276,7 +250,9 @@ if (mysqli_affected_rows($conn) == 1)
 													<?php // iterate the table rows <tr>
 													while ($row = mysqli_fetch_array($r, MYSQLI_ASSOC)) {
 													?>
-														<option value="<?php echo $row['bank_name_id']; ?>"> <?php echo $row['bank_name']; ?> </option>
+														<option value="<?php echo $row['bank_name_id']; ?>"
+															<?php if (isset($row1['bank_name_id']) && $row1['bank_name_id'] == $row['bank_name_id']) echo "selected" ?>>
+															 <?php echo $row['bank_name']; ?> </option>
 														<?php } //end select subject while ?>
 											 		</select>
 											 		</div>
@@ -284,22 +260,30 @@ if (mysqli_affected_rows($conn) == 1)
 								<div class="form-group">
 												<label for="account name" class="col-lg-2 col-md-3 control-label">Account Name</label>
 												<div class="col-lg-4 col-md-3">
-													<input type="text" class="form-control" name="actname" >
+													<input type="text" class="form-control" name="actname"
+													value="<?php if (isset($row1['account_name'])) { echo $row1['account_name'];} ?>" >
 												</div>
 								</div>
 								
 								<div class="form-group">
 												<label for="account number" class="col-lg-2 col-md-3 control-label">Account Number</label>
 												<div class="col-lg-4 col-md-3">
-													<input type="number" class="form-control" id="pulser" name="actno" >
+													<input type="number" class="form-control" id="pulser" name="actno"
+													value="<?php if (isset($row1['account_no'])) { echo $row1['account_no'];} ?>" >
 												</div>
 								</div>
 											
 											<div class="form-actions">
-											<input type="hidden" name="submitted" value="TRUE" />
-											
+												<?php if (isset($row1['bank_details_id'])) { ?>
+											<input type="hidden" name="updated" value="TRUE" />
+											<input type="submit" value="Update" class="btn bg-primary text-white btn-lg">
+       										<a href="#" id="show1" class="btn btn-lg btn-info"> View Account Details </a>
+       										<?php } else { ?>
+       											
+       										<input type="hidden" name="submitted" value="TRUE" />
 											<input type="submit" value="Submit" class="btn bg-primary text-white btn-lg">
-											
+       										<a href="#" id="show1" class="btn btn-lg btn-info"> View Account Details </a>
+											<?php } ?>
 											</div>
 						</form>
 									</div>
@@ -311,38 +295,27 @@ if (mysqli_affected_rows($conn) == 1)
 
 <?php include('partials/footer.php'); ?>
 
-<script language = "javascript">
-var XMLHttpRequestObject = false;
-if (window.XMLHttpRequest) {
-XMLHttpRequestObject = new XMLHttpRequest();
-} else if (window.ActiveXObject) {
-XMLHttpRequestObject = new ActiveXObject("Microsoft.XMLHTTP");
-}
 
-function getData(divID, lang)
-{
-	
-	var url = "ajax/select_organisation.php?lang="+lang;
-if(XMLHttpRequestObject) {
-var obj = document.getElementById(divID);
-XMLHttpRequestObject.open("GET", url, true);
-XMLHttpRequestObject.onreadystatechange = function()
-{
-if (XMLHttpRequestObject.readyState == 4 &&
-XMLHttpRequestObject.status == 200) {
-obj.innerHTML = XMLHttpRequestObject.responseText;
-}
-}
-XMLHttpRequestObject.send(null);
-}
-}
-</script>
 
-<script language = "javascript">
+<script src="jquery-1.8.0.min.js"></script>
 
-function showsubj() {
-	
-	var elem = document.getElementById('hidden_subj');
-		elem.style.display = "block";
-}
-</script>
+			<script>
+			$.noConflict();
+		 $(document).ready(function () {
+			 //by default this initialises when the pagee is fully loaded
+               // 	alert('am ready');
+                	$('#edit').hide();
+                });
+                
+		 $(document).on('click','#show2',function(){
+			 //this performs the hide and show and you can add transitions using either slide,blind,fast,slow and many more
+			 $('#edit').show("slide");
+			 $('#view').hide("fast");
+		 });
+		 
+		 $(document).on('click','#show1',function(){
+			 $('#view').show("blind");
+        	$('#edit').hide("slide");
+		 });
+		 
+         </script>

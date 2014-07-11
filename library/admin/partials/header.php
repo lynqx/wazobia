@@ -279,18 +279,22 @@ if(strpos($page,"extended-modals") !== false ) { ?>
                    		<li class="submenu"><a class="dropdown" href="add_dvd_inventory.php" data-original-title="Add DVD to Inventory"> <i class="fa fa-plus"></i><span class="hidden-minibar"> Add DVD to Inventory </span></a></li>
                     	</ul>
                     </li>
+                    <li class="submenu"><a class="dropdown" href="pay_instructors.php" data-original-title="Pay Instructors"> <i class="fa">&#8358;</i><span class="hidden-minibar"> Pay Instructors </span></a></li>
+                    <li class="submenu"><a class="dropdown" href="view_students.php" data-original-title="Manage Students"> <i class="fa fa-plus"></i><span class="hidden-minibar"> Manage Students  </span></a></li>
+                    
                     <?php 
                     } elseif (isset($_SESSION['work_id']) && $_SESSION['roles'] == 'lecturer') { // lecturer sidebar panel acces
                     ?>
+                    
                     <li class="submenu"><a class="dropdown" href="lecturer_area.php" data-original-title="Dashboard"> <i class="fa fa-dashboard"></i><span class="hidden-minibar"> Dashboard </span></a></li>
-                    <li class="submenu"><a class="dropdown" href="organisation.php" data-original-title="Add Organisation"> <i class="fa fa-briefcase"></i><span class="hidden-minibar"> View Payments </span></a></li>
+                    <li class="submenu"><a class="dropdown" href="view_instructors_payment.php" data-original-title="Add Organisation"> <i class="fa fa-briefcase"></i><span class="hidden-minibar"> View Payments </span></a></li>
                     <li class="submenu"><a class="dropdown" href="account_details.php" data-original-title="Account Details"> <i class="fa fa-folder-open"></i><span class="hidden-minibar"> Account Details </span></a>
                     	
 					<?php	
                     }
                     ?>
                     
-					<li class="submenu"><a class="dropdown" href="pay_instructors.php">Pay Instructors</a></li>
+					
                 </ul>
               </div>
             </div> <!-- /.left-sidebar -->

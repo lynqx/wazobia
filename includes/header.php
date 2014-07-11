@@ -83,7 +83,7 @@ if (!isset($page_title)) {
              -->
              
             </li>
-            <li <?php if ($page == 'download') echo 'class="active"'; ?>><a href="download.php">Forum<b class="caret"></b></a></li>
+            <li <?php if ($page == 'download') echo 'class="active"'; ?>><a href="forum">Forum<b class="caret"></b></a></li>
                        
             <li <?php if ($page == 'report' || $page == 'comment' || $page == 'faq') echo 'class="active"'; ?>><a href="#">Help</a>
             	<ul class="dropdown-menu">

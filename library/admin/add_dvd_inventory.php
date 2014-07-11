@@ -179,13 +179,13 @@ if (mysqli_affected_rows($conn) == 1)
   									</div> <!-- /panel body -->	
   								</div>	
   							</div>
-  						</div>
 
 
 <?php include('partials/footer.php'); ?>
 
 <script type="text/javascript" src="jquery-1.8.0.min.js"></script>
 <script type="text/javascript">
+$.noConflict();
 $(function(){
 $(".search").keyup(function() 
 { 
