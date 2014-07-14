@@ -3,6 +3,7 @@
 // Set the page title and include the HTML header:
 
 session_start();
+
 include('functions/functions.php'); 
 
  $page_title = 'Student Login || Wazobia';
@@ -65,9 +66,10 @@ $_SESSION['agent'] = md5($_SERVER ['HTTP_USER_AGENT']);
 
 //if ($_SESSION['user_level'] == 1) {
 // Redirect:
-$url = absolute_url ('student_area.php');
-header("Location: $url");
-exit();
+
+	$refer = $_POST['refer'];
+
+	redirect_to($refer);
 
 } 
 

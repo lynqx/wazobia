@@ -113,8 +113,11 @@
               <input type="Password" class="form-control" placeholder="Password" name="pass">
             </div>
             <div class="form-group">
-              
+                           
+              <input type="hidden" name="refer" value="<?php echo $_SERVER['HTTP_REFERER']; ?>" />
+
               <input type="hidden" name="submitted" value="TRUE" />
+              
               <button type="submit" class="btn  btn-block  btn-submit pull-right">Login</button>
               
             <div class="login-helpers">

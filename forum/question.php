@@ -15,12 +15,16 @@ $page_title = "Ask A Question || " . $topicname;
 $path = "../library/";
 include('partials/header.php'); 
 include('functions/functions.php'); 
+include('functions/fns.php'); 
 
+
+	if(!empty($_GET['subj']))
+	$subj = $_GET['subj'];
+	else
+	$subj = "";
 ?> 
 
 <?php
-
-
 if (isset($_SESSION['student_id']) || isset($_SESSION['student_id'])) {
 	
 	// you are logged in so continue to post question
@@ -29,9 +33,9 @@ if (isset($_SESSION['student_id']) || isset($_SESSION['student_id'])) {
 
     <div class="container">
     	      <div class="box">
-
+				
+				
     	 <?php 
-  include ('breadcrumb.php');
  
 		// Check for a valid Organisation ID, through GET or POST:
 			if ( isset($_GET['id']) && is_numeric($_GET['id']))
@@ -40,7 +44,11 @@ if (isset($_SESSION['student_id']) || isset($_SESSION['student_id'])) {
 			} else {
 				redirect_to('index.php');
 			}
-
+	
+		//do breadcrumbs
+		$subject = ucwords(getColumnValue($conn, 'subject', 'subject', 'subject_id', $subj));
+		echo $bread = "<a href=\"../\">Home</a> &raquo; <a href=\"index.php\">Forum</a> &raquo; 
+		<a href=\"topics.php?subj=$subj\">$subject</a> &raquo; $topicname";
          ?>
          
          <?php // code to add or edit a new organisation 
@@ -183,7 +191,7 @@ if (mysqli_affected_rows($conn) == 1)
             </h3>
             <small> Ask a question on <?php echo $topicname; ?> and instructors and other students will help put you through on the solution</small>
             <hr>
-           <form action="question.php?id=<?php echo urlencode($id); ?>&topic=<?php echo urlencode($topicname); ?>" method="post">
+           <form action="question.php?id=<?php echo urlencode($id); ?>&topic=<?php echo urlencode($topicname); ?>&subj=<?php echo $subj; ?>" method="post">
            
            <div class="form-group">
 					<input type="text" name="title" class="form-control form-cascade-control"  placeholder="Title" />
@@ -225,21 +233,18 @@ if (mysqli_affected_rows($conn) == 1)
           
                     <div class="col-md-7 product-description">
 
-			        <h3>You do not have permissions to post a question.</h3> <hr>
-					<h4>Please <a href="../library/index.php">login</a> or <a href="../library/index.php">register</a> to post a question!</h4>
-					</div>
+        <h3>You do not have permissions to post a question.</h3> <hr>
+		<h4>Please <a href="../library/index.php">login</a> or <a href="../library/index.php">register</a> to post a question!</h4>
 		</div>
 		</div>
 		</div>
-		
-		<!--end of container-->
+		</div>
+		    </div><!--end of container-->
 
 		
 		
     <?php }  ?>
     
-    </div>
-		    </div>
 <?php include('partials/footer.php'); ?>
 
 

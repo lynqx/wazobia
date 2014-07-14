@@ -10,6 +10,7 @@ $page_title = "Topics";
 $path = "../library/";
 include('partials/header.php'); 
 include('functions/functions.php'); 
+include('functions/fns.php'); 
 
 ?> 
 	<style>
@@ -31,14 +32,21 @@ include('functions/functions.php');
     	 <?php 
  
  //breadcrum
- include ('breadcrumb.php');
-		// Check for a valid Organisation ID, through GET or POST:
+ //include ('breadcrumb.php');
+			// Check for a valid Organisation ID, through GET or POST:
 			if ( isset($_GET['subj']) && is_numeric($_GET['subj']))
 			{ 
 				$subj = $_GET['subj'];
 			} else {
 				redirect_to('index.php');
 			}
+ 
+	//get subject
+	$subject = getColumnValue($conn, 'subject', 'subject', 'subject_id', $subj);
+	$this_page = $_SERVER['PHP_SELF'];
+	
+	//do breadcrumbs
+	ECHO $bread = "<a href=\"../\">Home</a> &raquo; <a href=\"index.php\">Forum</a> &raquo; $subject";
 
          // Make the query to view table details:
 				$q1 = "SELECT topic.topic_id, topic.topic, topic.date
@@ -46,12 +54,16 @@ include('functions/functions.php');
 				WHERE topic.subject_id = '$subj'
 				ORDER BY  `topic`.topic_id DESC";
 				$r1 = @mysqli_query ($conn, $q1) or trigger_error(mysqli_error($conn));
+				
+		
+		
+		
          ?>
-                  
+         <h3 style="color: #666; text-shadow: 1px 2px #ccc; "><?php echo $subject; ?></h3>
          <table  class="table table-bordered table-hover table-striped display" id="example" >
            <thead>
             <tr class="top">
-             <th width="550">Topic</th>
+             <th width="550">Topic: </th>
              <th width="140">Questions</th>
              <th width="210">Last Question</th>
              <th></th>
@@ -102,7 +114,7 @@ include('functions/functions.php');
 						?>
 						</td>
            
-						<td><a href="question.php?id=<?php echo $id; ?>&topic=<?php echo $row1['topic']; ?>" class="btn btn-success btn-sm"> New Question </a></td>
+						<td><a href="question.php?id=<?php echo $id; ?>&topic=<?php echo $row1['topic']; ?>&subj=<?php echo $subj; ?>" class="btn btn-success btn-sm"> New Question </a></td>
 					</tr>
 				</table>
             		
@@ -126,7 +138,7 @@ include('functions/functions.php');
 						?>
 						<tr>
 							<td width="150">
-								<h4><a href="forum.php?id=<?php echo $post_id; ?>&forum=<?php echo $title; ?>"><b> <?php echo $row2['title']; ?> </b></a></h4>
+								<h4><a href="forum.php?id=<?php echo $post_id; ?>&forum=<?php echo $title; ?>&subj=<?php echo $subj; ?>&subject=<?php echo $subject; ?>"><b> <?php echo $row2['title']; ?> </b></a></h4>
 								<h5 class="author"><span>Posted by : </span><?php 
 								$email = $row2['author'];
 								$un = explode('@', $email);
@@ -157,7 +169,7 @@ include('functions/functions.php');
 							<td width="400"> <?php 
 								$discus = $row2['question']; 
 								echo $discuss = substr($discus, 0, 150) ?> 
-								<h5><a href="forum.php?id=<?php echo $post_id; ?>" class="btn btn-danger btn-sm"> Read More </a></h5>
+								<h5><a href="forum.php?id=<?php echo $post_id; ?>&forum=<?php echo $title; ?>&subj=<?php echo $subj; ?>&subject=<?php echo $subject; ?>" class="btn btn-danger btn-sm"> Read More </a></h5>
 							</td>
 						</tr>
 						

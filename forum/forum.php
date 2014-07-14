@@ -18,6 +18,20 @@ $path = "../library/";
 include('partials/header.php'); 
 include('functions/functions.php'); 
 
+if(!empty($_GET['subj']))
+	$subj = $_GET['subj'];
+	else
+	$subj = "";
+	
+	if(!empty($_GET['subject']))
+	$subject = $_GET['subject'];
+	else
+	$subject = "";
+	
+	if(!empty($_GET['forum']))
+	$forum = substr($_GET['forum'],0,25);
+	else
+	$forum = "";
 ?> 
 	<style>
 		<!--
@@ -35,8 +49,10 @@ include('functions/functions.php');
     	      <div class="box">
 
     	 <?php 
-  include ('breadcrumb.php');
- 
+    	 
+    	 //breadcrumb
+			echo $bread = "<a href=\"../\">Home</a> &raquo; <a href=\"index.php\">Forum</a> &raquo; <a href=\"topics.php?subj=$subj\">$subject</a> &raquo; $forum";
+    	  
 		// Check for a valid Organisation ID, through GET or POST:
 			if ( isset($_GET['id']) && is_numeric($_GET['id']))
 			{ 
@@ -211,7 +227,7 @@ if (mysqli_affected_rows($conn) == 1)
 			$minutes = floor($remainder / 60);
 			$seconds = $remainder % 60;
 	if($days > 0)
-			echo date('F d Y', $row2['posted_date']);
+			echo date('F d Y', $row1['posted_date']);
 			elseif($days == 0 && $hours == 0 && $minutes == 0)
 			echo "few seconds ago";		
 			elseif($days == 0 && $hours == 0)
@@ -268,7 +284,7 @@ if (mysqli_affected_rows($conn) == 1)
 			$minutes = floor($remainder / 60);
 			$seconds = $remainder % 60;
 	if($days > 0)
-			echo date('F d Y', $row2['posted_date']);
+			echo date('F d Y', $row2['date']);
 			elseif($days == 0 && $hours == 0 && $minutes == 0)
 			echo "few seconds ago";		
 			elseif($days == 0 && $hours == 0)
@@ -290,7 +306,7 @@ if (mysqli_affected_rows($conn) == 1)
 					
 					?>
 					<hr>
-					<form action="forum.php?id=<?php echo urlencode($id); ?>&forum=<?php echo urlencode($forumname); ?>" method="post">
+					<form action="forum.php?id=<?php echo urlencode($id); ?>&forum=<?php echo urlencode($forumname); ?>&subject=<?php echo $subject; ?>" method="post">
 			
 			<div class="form-group">
 					<label for="question" class="col-lg-2 col-md-3 control-label"><h4>Answer</h4></label>

@@ -80,7 +80,7 @@ if(strpos($page,"extended-modals") !== false ) { ?>
                 <li><a href="#"><i class="fa fa-user"></i> My Profile</a></li>
                 <li><a href="#"><i class="fa fa-envelope"></i> Inbox</a></li>
                 <li><a href="password.php"><i class="fa fa-edit"></i> Change Password</a></li>
-                <li><a href="#"><i class="fa fa-cogs"></i> Settings</a></li>
+                 <li><a href="#"><i class="fa fa-cogs"></i> Settings</a></li>
                 <li class="divider"></li>
                 <?php 
                 if(isset($_SESSION['student_id'])) {
@@ -88,6 +88,7 @@ if(strpos($page,"extended-modals") !== false ) { ?>
 				}
 				?>
               </ul>
+              </li>
               <li><a href="#" class="settings dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i><span class="badge bg-pink">4</span></a>
                 <ul class="dropdown-menu inbox">
                   <li>

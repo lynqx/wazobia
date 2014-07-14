@@ -22,6 +22,11 @@ include('partials/header.php');
 				FROM `subject`
 				ORDER BY  `subject`.`subject_id` DESC";
 				$r1 = @mysqli_query ($conn, $q1) or trigger_error(mysqli_error($conn));
+		
+		//breadcrum
+		ECHO $bread = "<p><a href=\"../\">Home</a> &raquo; Forum</p>";
+		
+		
          ?>
                   
          <table  class="table table-bordered table-hover table-striped display" id="example" >
@@ -41,7 +46,7 @@ include('partials/header.php');
 			?>
           <tr class="odd gradeX">
            <td align="center" width="80px"><img src="images/<?php echo $row1['avatar']; ?>" align="left" alt="Forum" width="70" class="imgclass" /></td>
-           <td width="700"><h3><a href="topics.php?subj=<?php echo $id; ?>"><?php echo ucwords($row1['subject']); ?></a></h3>
+           <td width="700"><h3><a href="topics.php?subj=<?php echo $id; ?>" title="<?php echo ucwords($row1['subject']); ?>" ><?php echo ucwords($row1['subject']); ?></a></h3>
            	<span class="subjdesc"><?php echo ucwords($row1['description']); ?></span>
            </td>
            <td>
@@ -68,7 +73,7 @@ include('partials/header.php');
            	?></td>
            <td>
 			<?php
-           	$q4 = "SELECT posts.post_id, posts.title, posts.author, UNIX_TIMESTAMP() - posts.posted_date AS TimeSpent FROM `posts`
+           	$q4 = "SELECT posts.post_id, posts.title, posts.author, UNIX_TIMESTAMP() - posts.posted_date AS TimeSpent, posts.posted_date FROM `posts`
 				JOIN topic ON topic.topic_id = posts.topic_id
 				JOIN subject ON subject.subject_id = topic.subject_id
 				WHERE topic.subject_id = '$id'
@@ -90,7 +95,7 @@ include('partials/header.php');
 			$minutes = floor($remainder / 60);
 			$seconds = $remainder % 60;
 	if($days > 0)
-			echo date('F d Y', $row2['posted_date']);
+			echo date('F d Y', $row4['posted_date']);
 			elseif($days == 0 && $hours == 0 && $minutes == 0)
 			echo "few seconds ago";		
 			elseif($days == 0 && $hours == 0)
