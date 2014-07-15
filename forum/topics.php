@@ -45,9 +45,11 @@ include('functions/fns.php');
 	$subject = getColumnValue($conn, 'subject', 'subject', 'subject_id', $subj);
 	$this_page = $_SERVER['PHP_SELF'];
 	
+		echo '<div class="btn btn-lg">';
+	
 	//do breadcrumbs
-	ECHO $bread = "<a href=\"../\">Home</a> &raquo; <a href=\"index.php\">Forum</a> &raquo; $subject";
-
+	echo $bread = "<a href=\"../\">Home</a> &raquo; <a href=\"index.php\">Forum</a> &raquo; $subject";
+		echo '</div>';
          // Make the query to view table details:
 				$q1 = "SELECT topic.topic_id, topic.topic, topic.date
 				FROM `topic`
@@ -59,13 +61,22 @@ include('functions/fns.php');
 		
 		
          ?>
-         <h3 style="color: #666; text-shadow: 1px 2px #ccc; "><?php echo $subject; ?></h3>
+         <h3 style="color: #333; "><?php echo $subject; ?></h3>
          <table  class="table table-bordered table-hover table-striped display" id="example" >
            <thead>
             <tr class="top">
-             <th width="550">Topic: </th>
-             <th width="140">Questions</th>
-             <th width="210">Last Question</th>
+            	<?php if($subj == 1) {
+             echo '<th width="550">Project Section </th>
+                   <th width="140">Total Topics</th>
+                   <th width="210">Latest Topic</th>
+             ';
+            	} else {
+             echo '<th width="550">Topic </th>
+                   <th width="140">Questions</th>
+                   <th width="210">Last Question</th>
+             ';
+             } 
+             ?>
              <th></th>
            </tr>
          </thead>
@@ -114,7 +125,11 @@ include('functions/fns.php');
 						?>
 						</td>
            
+           <?php if ($subj == 1) { ?>
+           	<td><a href="question.php?id=<?php echo $id; ?>&topic=<?php echo $row1['topic']; ?>&subj=<?php echo $subj; ?>" class="btn btn-success btn-sm"> New Topic </a></td>
+          <?php } else { ?>
 						<td><a href="question.php?id=<?php echo $id; ?>&topic=<?php echo $row1['topic']; ?>&subj=<?php echo $subj; ?>" class="btn btn-success btn-sm"> New Question </a></td>
+					<?php } ?>
 					</tr>
 				</table>
             		

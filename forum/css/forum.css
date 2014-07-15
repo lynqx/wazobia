@@ -144,7 +144,7 @@ html {
 }
 
 
-tr.top { background:#396; text-align:center;}
+tr.top { background:#396; text-align:center; color:#fff}
 tr.bottom { background:#000; color:#396; text-align:center;}
 .imgclass { padding:10px; border: solid 1px #396; -moz-border-radius: 6px; border-radius: 6px; -webkit-border-radius: 6px;  }
 .subjdesc { padding:5px; text-align:justify; font-size: 12px;}

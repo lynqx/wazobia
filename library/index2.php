@@ -1,700 +1,265 @@
-<?php 
-$page_title = 'Wazobia Academy';
-include('partials/header.php'); 
+<?php # Script 16.5 - index.php
+// This is the main page for the site.
+// Set the page title and include the HTML header:
+
+session_start();
+
+include('functions/functions.php'); 
+
+ $page_title = 'Student Login || Wazobia';
+// you need to login again if you enter this page
+if (isset($_SESSION['student_id'])) {
+// Redirect:
+	redirect_to("student_area.php");
+}
+
+ ?>
+
+<?php # Script 11.3 - login.php
+
+// This page processes the login form submission.
+// Upon successful login, the user is redirected.
+// Two included files are necessary.
+// Send NOTHING to the Web browser prior to the setcookie() lines!
+
+// Check if the form has been submitted:
+if (isset($_POST['submitted'])) {
+
+
+// For processing the login:
+require_once ('partials/login_functions.inc.php');
+
+// Need the database connection:
+require_once ('../init_connect.php');
+
+// Check the login:
+list ($check, $data) = check_login($conn, $_POST['email'], $_POST['pass']);
+if ($check) { // OK!
+
+
+// Set the session data:.
+session_start();
+$_SESSION['student_id'] = $data ['student_id'];
+$_SESSION['firstname'] = $data ['first_name'];
+$_SESSION['lastname'] = $data ['last_name'];
+$_SESSION['email'] = $data ['email'];
+$_SESSION['phone'] = $data ['phone'];
+$_SESSION['image'] = $data ['image'];
+
+// Set the cookies:
+setcookie ('user_id', $data['user_id'], time()+86400, '/', '', 0, 0);
+setcookie ('firstname', $data['first_name'], time()+86400, '/', '', 0, 0);
+setcookie ('lastname', $data['last_name'], time()+86400, '/', '', 0, 0);
+
+if (isset ($_SESSION['student_id'])){
+	 
+	 $student = $_SESSION['student_id'];
+	 $datetime = strtotime(date("Y-m-d H:i:s"));
+// update the last login time	
+$q4 = "UPDATE student_register SET last_login='$datetime' WHERE student_id='$student' LIMIT 1";
+$r4 = mysqli_query ($conn, $q4) or trigger_error("Query: $q4\n<br />MySQL Error: " . mysqli_error($dbc));
+	
+$_SESSION['start'] = time();
+
+// Store the HTTP_USER_AGENT:
+$_SESSION['agent'] = md5($_SERVER ['HTTP_USER_AGENT']);
+
+//if ($_SESSION['user_level'] == 1) {
+// Redirect:
+
+	$refer = $_POST['refer'];
+
+	redirect_to($refer);
+
+} 
+
+} else { // Unsuccessful!
+
+// Assign $data to $errors for error reporting
+// in the login_page.inc.php file.
+$errors = $data;
+
+ }
+
+
+} // End of the main submit conditional.
+
+
+// Check if the registeration form has been submitted:
+if (isset($_POST['registered'])) {
+require_once ('../init_connect.php');
+
+$errorss = array(); // Initialize error array.
+
+// Trim all the incoming data:
+$trimmed = array_map('trim', $_POST);
+
+// Assume invalid values:
+$fn = $ln = $mb = $ad = $ct = $em = $p = FALSE;
+
+// Check for a first name:
+if (preg_match ('/^[A-Z \'.-]{2,20}$/i', $trimmed['firstname'])) {
+$fn = mysqli_real_escape_string ($conn, $trimmed['firstname']);
+} else {
+	$errorss[] = 'Please enter a first name!';
+
+}
+
+// Check for a last name:
+if (preg_match ('/^[A-Z \'.-]{2,40}$/i', $trimmed['lastname'])) {
+$ln = mysqli_real_escape_string ($conn, $trimmed['lastname']);
+} else {
+		$errorss[] = 'Please enter a last name!';
+}
+
+//check for a mobile no
+if ( (isset($_POST['mobile'])) && (is_numeric($_POST['mobile'])) ) {
+$mb = mysqli_real_escape_string ($conn, $trimmed['mobile']);
+} else {
+			$errorss[] = 'Please enter a valid mobile number.';
+	}
+
+// Check for an address:
+if ($_POST['address']) {
+$ad = mysqli_real_escape_string ($conn, $trimmed['address']);
+} else {
+			$errorss[] = 'Please enter your address!';
+}
+
+//check for a city
+if ($_POST['city']) {
+$ct = mysqli_real_escape_string ($conn, $trimmed['city']);
+} else {
+					$errorss[] = 'Please enter a city!';
+}
+
+// Check for an email address:
+if (preg_match ('/^[\w.-]+@[\w.-]+\.[AZa-z]{2,6}$/', $trimmed['email'])) {
+$em = mysqli_real_escape_string ($conn, $trimmed['email']);
+} else {
+					$errorss[] = 'Please enter a valid email address!';
+}
+
+ // Check for a password and match against the confirmed password:
+if (preg_match ('/^\w{4,20}$/', $trimmed['password1']) ) {
+if ($trimmed['password1'] == $trimmed['password2']) {
+$p = mysqli_real_escape_string ($conn, $trimmed['password1']);
+} else {
+							$errorss[] = 'Your password did not match the confirmed password!';
+	}
+} else {
+								$errorss[] = 'Please enter a valid password!';
+	}
+
+
+if ($fn && $ln && $mb && $ad && $ct && $em && $p) { // If everything's OK...
+
+// Make sure the email address is available:
+$q = "SELECT student_id FROM student_register WHERE email='$em'";
+$r = mysqli_query ($conn, $q);
+
+if (mysqli_num_rows($r) == 0) { // Available.
+
+// Add the user to the database:
+$q = "INSERT INTO student_register (email, password, first_name, last_name, phone, address, city, time_register) 
+						VALUES ('$em', SHA1('$p'), '$fn', '$ln', '$mb', '$ad', '$ct', NOW())";
+$r = mysqli_query ($conn, $q);
+
+
+// Send the email:
+
+$body = "You have been registered on the Wazobia Portal";
+$body .= "Below are you login details<br /><br />";
+$body .= 'Email - ' . $em . '<br />';
+$body .= 'Password - ' . $p . '<br /><br />';
+$body .= "Please change your password regularly <br /><br /> Best Regards";
+
+ mail($trimmed['email'],
+'Registration on Wazobia', $body,
+'From: Wazobia Academy');
+
+ 					// Finish the page:
+					 //Set display property and confirmation message of the message container to 'block'
+					$success_display = 'block';
+					$success_msg = '<h4 style="color: #008080"> SUCCESS! Your Account has been created successfully.</h4>';
+					
+					} else { // The email address is not available.
+							$err_msg = 'The student has already been registered. Please use a unique email address</p>';
+					}
+
+								} else { // If one of the data tests failed.
+								$errorss[] = 'Please re-enter the details appropriately and try again.</p>';
+								}
+
+} // End of the if submitted conditional.
+
+// Forgot password
+
+if (isset($_POST['forgotten'])) {
+require_once ('../init_connect.php');
+	
+	$errorss = array(); // Initialize error array.
+	
+
+// Assume nothing:
+$uid = FALSE;
+
+// Validate the email address...
+if (!empty($_POST['email'])) {
+
+// Check for the existence of that email address...
+$q = 'SELECT student_id FROM student_register WHERE email="'. mysqli_real_escape_string ($conn, $_POST['email']) . '"';
+$r = mysqli_query ($conn, $q) or trigger_error("Query: $q\n<br />MySQL Error: " . mysqli_error($conn));
+
+if (mysqli_num_rows($r) == 1) { //Email available in db:
+//Retrieve the user ID:
+
+list($uid) = mysqli_fetch_array ($r, MYSQLI_NUM);
+
+// Create a new, random password:
+$p = substr ( md5(uniqid(rand(), true)), 3, 10);
+
+// Update the database:
+$q = "UPDATE student_register SET password=SHA1('$p') WHERE student_id=$uid LIMIT 1";
+$r = mysqli_query ($conn, $q) or trigger_error("Query: $q\n<br />MySQL Error: " . mysqli_error($dbc));
+
+if (mysqli_affected_rows($conn) == 1) {
+// If it ran OK.
+
+/*
+// Send an email:
+ $body = "Your password to log into www.zelsroarkep.com has been temporarily changed to '$p'. Please log in using
+this password and this email address. Then you may change your password to something more familiar.";
+ $body .= "Please login and change the password immediately as this temporary password expires in two (2) hours.";
+ $body .= "Regards from Zels Roarke Productions";
+mail ($_POST['email'], 'Your temporary password.', $body, 'From: admin@zelsroarkep.com');
+
+ */
+
+// Print a message and wrap up:
+					// Finish the page:
+					 //Set display property and confirmation message of the message container to 'block'
+					$success_display = 'block';
+					$success_msg = '<h4 style="color: #008080"> SUCCESS! Your password has been changed to - ' . $p . '. 
+					You will receive the new, temporary password at the email address with which you registered.</h4>';
+					
+					} else { // The email address is not available.
+							$err_msg = 'Your password could not be reset for technical reasons. We apologize for any inconviniences</p>';
+					}
+
+} else { // No database match made.
+$errorsss[] = 'The submitted email address does not match those on file!</p>';
+}
+
+} else { // No email!
+$errorsss[] = 'You forgot to enter your email address!</p>';
+
+} // End of empty($_POST['email']) IF.
+
+}
+
+
+// Create the page:
+include ('partials/login_page.inc.php');
 ?>
 
-
-  						<div class="row">
-  							<div class="col-mod-12">
-
-  								<ul class="breadcrumb">
-  									<li><a href="index.php">Dashboard</a></li>
-  									<li><a href="template.php">Template</a></li>
-  									<li class="active">DashBoard</li>
-  								</ul>
-
-  								<div class="form-group hiddn-minibar pull-right">
-  									<input type="text" class="form-control form-cascade-control nav-input-search" size="20" placeholder="Search through site" />
-
-  									<span class="input-icon fui-search"></span>
-  								</div>
-
-  								<h3 class="page-header"><i class="fa fa fa-dashboard"></i> Dashboard <i class="fa fa-info-circle animated bounceInDown show-info"></i> </h3>
-
-  								<blockquote class="page-information hidden">
-  									<p>
-  										Dashboard is an "Easy To Read" real-time user interface, showing a graphical presentation of the current status and historical trends of an organization’s key performance indicators to enable instantaneous and informed decisions to be made at a glance.
-  									</p>
-  								</blockquote>
-  							</div>
-  						</div>
-
-
-  						<!-- Info Boxes -->
-  						<div class="row">
-  							<div class="col-md-4">
-  								<div class="info-box  bg-info  text-white">
-  									<div class="info-icon bg-info-dark">
-  										<i class="fa fa-shopping-cart fa-4x"></i>
-  									</div>
-  									<div class="info-details">
-  										<h4>Sales   <span class="pull-right">233</span></h4>
-  										<p>This Week <span class="badge pull-right bg-white text-info"> 48% <i class="fa fa-arrow-down fa-1x"></i> </span> </p>
-  									</div>
-  								</div>
-  							</div>
-  							<div class="col-md-4 ">
-  								<div class="info-box  bg-success  text-white"  id="initial-tour">
-  									<div class="info-icon bg-success-dark">
-  										<i class="fa fa-cloud-download fa-4x"></i>
-  									</div>
-  									<div class="info-details">
-  										<h4>Downloads   <span class="pull-right">233</span></h4>
-  										<p>This Year <span class="badge pull-right bg-white text-success"> 98% <i class="fa fa-arrow-up fa-1x"></i> </span> </p>
-  									</div>
-  								</div>
-  							</div>
-  							<div class="col-md-4">
-  								<div class="info-box  bg-warning  text-white">
-  									<div class="info-icon bg-warning-dark">
-  										<i class="fa fa-comments fa-4x"></i>
-  									</div>
-  									<div class="info-details">
-  										<h4>Comments   <span class="pull-right">2,987</span></h4>
-  										<p>This Month <span class="badge pull-right bg-white text-warning"> 78% <i class="fa fa-arrow-up fa-1x"></i> </span> </p>
-  									</div>
-  								</div>
-  							</div>
-  						</div>
-
-  						<div class="row hidden">
-  							<div class="col-md-4">
-  								<div class="info-box  bg-primary  text-white">
-  									<div class="info-icon bg-primary-dark">
-  										<i class="fa fa-refresh fa-4x"></i>
-  									</div>
-  									<div class="info-details">
-  										<h4>Visits   <span class="pull-right">2,43,333</span></h4>
-  										<p>Today <span class="badge pull-right bg-white text-primary"> 48% <i class="fa fa-arrow-down fa-1x"></i> </span> </p>
-  									</div>
-  								</div>
-  							</div>
-  							<div class="col-md-4">
-  								<div class="info-box  bg-danger  text-white">
-  									<div class="info-icon bg-danger-dark">
-  										<i class="fa fa-rotate-left fa-4x"></i>
-  									</div>
-  									<div class="info-details">
-  										<h4>Returns   <span class="pull-right">33</span></h4>
-  										<p>This Year <span class="badge pull-right bg-white text-danger"> 28% <i class="fa fa-arrow-down fa-1x"></i> </span> </p>
-  									</div>
-  								</div>
-  							</div>
-  							<div class="col-md-4">
-  								<div class="info-box  bg-info  text-white">
-  									<div class="info-icon bg-primary-dark">
-  										<i class="fa fa-dollar fa-4x"></i>
-  									</div>
-  									<div class="info-details">
-  										<h4>Profit   <span class="pull-right">$98,233</span></h4>
-  										<p>Projected <span class="badge pull-right bg-success text-white"> 48% <i class="fa fa-arrow-up fa-1x"></i> </span> </p>
-  									</div>
-  								</div>
-  							</div>
-  						</div>
-
-  						<!-- Charts -->
-  						<div class="row">
-  							<!-- Discrete Bar Chart -->
-  							<div class="col-md-6">
-  								<div id="chart1">
-  									<svg></svg>
-  								</div>
-  							</div>
-
-  							<!-- Pie chart -->
-  							<div class="col-md-6 holder" id="donuts-holder">
-  								<div class="row">
-  									<div class="col-md-6">
-  										<div id="donut"></div>
-  									</div>
-  									<div class="col-md-6">
-  										<div id="coloredDonut"></div>
-  									</div>
-  								</div>
-  							</div>
-  						</div>
-
-  						<!-- Live Graph -->
-  						<div class="row">
-  							<div class="col-md-12">
-  								<div class="panel">
-  									<div class="panel-body">
-  										<div class="row">
-  											<div class="col-md-3">
-  												<ul class="list-unstyled info-list">
-  													<li>
-  														<div class="info-box  bg-warning text-white">
-  															<div class="info-icon bg-success-dark">
-  																<i class="fa fa-rotate-right fa-spin fa-4x"></i>
-  															</div>
-  															<div class="info-details">
-  																<h4>Active Users   <span class="pull-right" id="reloadStatus">33</span></h4>
-  																<p>1500ms<span class="badge pull-right bg-white text-success"> 28% <i class="fa fa-arrow-down fa-1x"></i> </span> </p>
-  															</div>
-  														</div>
-  													</li>
-  													<li>
-  														<div class="info-box  bg-primary  text-white">
-  															<div class="info-icon bg-primary-dark">
-  																<i class="fa fa-user fa-4x"></i>
-  															</div>
-  															<div class="info-details">
-  																<h4>Total Users   <span class="pull-right">5033</span></h4>
-  																<p>This Year <span class="badge pull-right bg-white text-primary"> 28% <i class="fa fa-arrow-down fa-1x"></i> </span> </p>
-  															</div>
-  														</div>
-  													</li>
-  													<li>
-  														<div class="info-box  bg-info  text-white">
-  															<div class="info-icon bg-primary-dark">
-  																<i class="fa fa-dollar fa-4x"></i>
-  															</div>
-  															<div class="info-details">
-  																<h4>Profit   <span class="pull-right">$98,233</span></h4>
-  																<p>Projected <span class="badge pull-right bg-primary text-white"> 48% <i class="fa fa-arrow-up fa-1x"></i> </span> </p>
-  															</div>
-  														</div>
-  													</li>
-  													<li>
-  														<div class="info-box  bg-danger  text-white">
-  															<div class="info-icon bg-danger-dark">
-  																<i class="fa fa-rotate-left fa-4x"></i>
-  															</div>
-  															<div class="info-details">
-  																<h4>Returns   <span class="pull-right">33</span></h4>
-  																<p>This Year <span class="badge pull-right bg-white text-danger"> 28% <i class="fa fa-arrow-down fa-1x"></i> </span> </p>
-  															</div>
-  														</div>
-  													</li>
-  												</ul>
-  											</div>
-  											<div class="col-md-9">
-  												<div id="liveGraph"></div>
-  											</div>
-  										</div>
-
-  									</div>
-  								</div>
-  							</div>
-  						</div><!-- /.Live Graph -->
-
-
-  						<div class="row">
-  							<div class="col-md-6">
-  								<div class="panel panel-cascade">
-  									<div class="panel-heading">
-  										<h3 class="panel-title">
-  											<i class="fa fa-user"></i>
-  											Users
-  											<span class="pull-right">
-  												<a  href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>
-  												<a  href="#"  class="panel-settings"><i class="fa fa-cog"></i></a>
-  												<a  href="#"  class="panel-close"><strong><i class="fa fa-times"></i></strong></a>
-  											</span>
-  										</h3>
-  									</div>
-  									<div class="panel-body nopadding">
-  										<table class="table">
-  											<thead>
-  												<tr>
-  													<th><i class="fa fa-caret-right"></i> User ID</th>
-  													<th><i class="fa fa-caret-right"></i> Email</th>
-  													<th><i class="fa fa-caret-right"></i> Status</th>
-  												</tr>
-  											</thead>
-  											<tr>
-  												<td>Vijay</td>
-  												<td>me@example.com</td>
-  												<td><label class="label label-success">Approved</label></td>
-  											</tr>
-  											<tr>
-  												<td>Anusha</td>
-  												<td>you@example.com</td>
-  												<td><label class="label label-info">Pending</label></td>
-  											</tr>
-  											<tr>
-  												<td>John Deo</td>
-  												<td>John@example.com</td>
-  												<td><label class="label label-warning">Suspended</label></td>
-  											</tr>
-  											<tr>
-  												<td>Jane Deo</td>
-  												<td>Jane@example.com</td>
-  												<td><label class="label label-danger">Rejected</label></td>
-  											</tr>
-  											<tr>
-  												<td>Jone Deo</td>
-  												<td>Jone@example.com</td>
-  												<td><label class="label label-danger">Deleted</label></td>
-  											</tr>
-  											<tr>
-  												<td>Jane Deo</td>
-  												<td>Jane@example.com</td>
-  												<td><label class="label label-danger">Rejected</label></td>
-  											</tr>
-  											<tr>
-  												<td>Jane Deo</td>
-  												<td>Jane@example.com</td>
-  												<td><label class="label label-danger">Rejected</label></td>
-  											</tr>
-  											<tr>
-  												<td>Jane Deo</td>
-  												<td>Jane@example.com</td>
-  												<td><label class="label label-danger">Rejected</label></td>
-  											</tr>
-  										</table>
-  										<div class="row visitors-list-summary text-center">
-  											<div class="col-md-3 col-sm-3 col-xs-3 visitor-item ">
-  												<h4>  Total Users </h4>
-  												<label class="label label-big label-info"> <i class="fa fa-user text-white"></i> 2,38,575</label>
-  											</div>
-  											<div class="col-md-3 col-sm-3 col-xs-3 visitor-item ">
-  												<h4>  This Month </h4>
-  												<label class="label label-big label-success"> <i class="fa fa-calendar text-white"></i> 5,435</label>
-  											</div>
-  											<div class="col-md-3 col-sm-3 col-xs-3 visitor-item ">
-  												<h4>  Pending </h4>
-  												<label class="label label-big label-warning"> <i class="fa fa-bullhorn text-white"></i> 854</label>
-  											</div>
-  											<div class="col-md-3 col-sm-3 col-xs-3 visitor-item ">
-  												<h4>  Deleted </h4>
-  												<label class="label label-big label-danger"> <i class="fa fa-trash-o text-white"></i> 89</label>
-  											</div>
-  										</div>
-
-  									</div>
-  								</div>
-  							</div>		
-  							<div class="col-md-6">
-  								<div class="panel text-primary panel-cascade">
-  									<div class="panel-heading">
-  										<h3 class="panel-title">
-  											<i class="fa fa-bar-chart-o"></i>
-  											Analytics
-  											<span class="pull-right text-success">
-  												<i class="fa fa-arrow-up"></i>
-  												68%
-  											</span>
-  										</h3>
-  									</div>
-  									<div class="panel-body nopadding">
-  										<div id="visitors"></div>			
-  										<div class="row visitors-list-summary text-center">
-  											<div class="col-md-4 col-sm-4 col-xs-4 visitor-item ">
-  												<i class="fa fa-bullhorn fa-3x pull-left"></i>
-  												Unique Users <br />
-  												<label class="label label-success">8,575</label>
-  											</div>
-  											<div class="col-md-4 col-sm-4 col-xs-4 visitor-item">
-  												<i class="fa fa-eye fa-3x pull-left"></i>
-  												Page Views <br />
-  												<label class="label label-info">76,67,598</label>
-  											</div>
-  											<div class="col-md-4 col-sm-4 col-xs-4 visitor-item">
-  												<i class="fa fa-comments fa-3x pull-left"></i>
-  												Comments <br />
-  												<label class="label label-warning">658</label>
-  											</div>
-  										</div>
-  									</div>
-  								</div>
-  							</div>
-  						</div>
-
-
-  						<div class="row">
-  							<div class="col-md-3">
-  								<div class="panel ">
-  									<div class="panel-heading bg-primary text-white">
-  										<h3 class="panel-title">
-  											<i class="fa fa-check-square-o"></i>
-  											Todo List
-  											<span class="pull-right ">
-  												<a  href="#" class="panel-minimize text-white"><i class="fa fa-chevron-up"></i></a>
-  												<a  href="#"  class="panel-close text-white"><strong><i class="fa fa-times"></i></strong></a>
-  											</span>
-  										</h3>
-  									</div>
-  									<div class="panel-body nopadding">
-  										<ul class="list-group list-todo">
-  											<li class="list-group-item finished">
-  												<i class="fa fa-check-square-o finish  "></i>
-  												<span>Cras justo odio Cras justo</span>
-  												<label class="label label-success pull-right">Finished</label>
-  											</li>
-  											<li class="list-group-item">
-  												<i class="fa fa-check-square-o finish fa-square-o "></i>
-  												<span>Cras justo odio Cras justo</span>
-  												<label class="label label-success pull-right">Today</label>
-  											</li>
-  											<li class="list-group-item">
-  												<i class="fa fa-check-square-o finish fa-square-o "></i>
-  												<span>Cras justo odio Cras justo</span>
-  												<label class="label label-danger pull-right">Now</label>
-  											</li>
-  											<li class="list-group-item">
-  												<i class="fa fa-check-square-o finish fa-square-o "></i>
-  												<span>Cras justo odio Cras justo</span>
-  												<label class="label label-info pull-right">2 days later</label>
-  											</li>
-  											<li class="list-group-item">
-  												<i class="fa fa-check-square-o finish fa-square-o "></i>
-  												<span>Cras justo odio Cras justo</span>
-  												<label class="label label-warning pull-right">06:58 AM</label>
-  											</li>
-  											<li class="list-group-item">
-  												<i class="fa fa-check-square-o finish fa-square-o "></i>
-  												<span>Cras justo odio Cras justo</span>
-  												<label class="label label-primary pull-right">Current</label>
-  											</li>
-  											<li class="list-group-item">
-  												<i class="fa fa-check-square-o finish fa-square-o "></i>
-  												<span>Cras justo odio Cras justo</span>
-  												<label class="label bg-primary pull-right">Postponed</label>
-  											</li>
-  										</ul>
-  									</div>
-  								</div>
-  							</div>
-  							<div class="col-md-3">
-  								<div class="panel panel-info">
-  									<div class="panel-heading">
-  										<h3 class="panel-title">
-  											<i class="fa fa-bar-chart-o"></i>
-  											Statistics
-  											<span class="pull-right">
-  												<a  href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a>
-  												<a  href="#"  class="panel-close"><strong><i class="fa fa-times"></i></strong></a>
-  											</span>
-  										</h3>
-  									</div>
-  									<div class="panel-body nopadding">
-  										<div class="list-group list-statistics">
-  											<a href="#" class="list-group-item">
-  												Cras justo odio 
-  												<span class="pull-right  mini-graph success"></span>
-  											</a>
-  											<a href="#" class="list-group-item">
-  												Dapibus ac facilisis in
-  												<span class=" pull-right   mini-graph info"></span>
-  											</a>
-  											<a href="#" class="list-group-item">
-  												Morbi leo risus
-  												<span class=" pull-right   mini-graph danger"></span>
-  											</a>
-  											<a href="#" class="list-group-item">
-  												Porta ac consectetur ac
-  												<span class=" pull-right   mini-graph pie"></span>
-  											</a>
-  											<a href="#" class="list-group-item">
-  												Vestibulum at eros
-  												<span class="badge bg-danger">20%</span>
-  											</a>
-  											<a href="#" class="list-group-item">
-  												Vestibulum at eros
-  												<span class="badge bg-success">90%</span>
-  											</a>
-  										</div>
-
-
-  									</div>
-  								</div>	
-  							</div>
-  							<div class="col-md-6">
-  								<div class="panel text-primary panel-cascade">
-  									<div class="panel-heading">
-  										<h3 class="panel-title">
-  											<i class="fa fa-clock-o"></i>
-  											Recent
-  											<ul id="myTab" class="nav nav-tabs pull-right">
-  												<li class=""><a href="#home" data-toggle="tab">Users</a></li>
-  												<li><a href="#profile" data-toggle="tab">Projects</a></li>
-  												<li class="dropdown">
-  													<a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown">Comments <b class="caret"></b></a>
-  													<ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1">
-  														<li><a href="#dropdown1" tabindex="-1" data-toggle="tab">Approved</a></li>
-  														<li><a href="#dropdown2" tabindex="-1" data-toggle="tab">Pending</a></li>
-  													</ul>
-  												</li>
-  											</ul>
-  										</h3>
-  									</div>
-  									<div class="panel-body nopadding">
-  										<div id="myTabContent" class="tab-content">
-  											<div class="tab-pane fade " id="home">
-  												<ul class="list-inline list-users">
-  													<li><img src="images/profiles/fifteen.png" class="avatar" alt="" /> <h4>Vijay Kumar</h4> 
-  														<div class="btn-group user-options">
-  															<button type="button" class="btn btn-default dropdown-toggle text-success" data-toggle="dropdown">
-  																Approved <i class="fa fa-chevron-circle-down"></i>
-  															</button>
-  															<ul class="dropdown-menu" role="menu">
-  																<li><a href="#">Action</a></li>
-  																<li><a href="#">Approve</a></li>
-  																<li><a href="#">Reject</a></li>
-  																<li><a href="#">Send Email</a></li>
-  																<li class="divider"></li>
-  																<li class="bg-danger"><a href="#"><i class="fa fa-trash-o"></i> Delete</a></li>
-  															</ul>
-  														</div>
-  													</li>
-  													<li><img src="images/profiles/sixteen.png" class="avatar" alt="" /> <h4>Vijay Kumar</h4> 
-  														<div class="btn-group user-options">
-  															<button type="button" class="btn btn-default dropdown-toggle text-warning" data-toggle="dropdown">
-  																Pending <i class="fa fa-chevron-circle-down"></i>
-  															</button>
-  															<ul class="dropdown-menu" role="menu">
-  																<li><a href="#">Action</a></li>
-  																<li><a href="#">Approve</a></li>
-  																<li><a href="#">Reject</a></li>
-  																<li><a href="#">Send Email</a></li>
-  																<li class="divider"></li>
-  																<li class="bg-danger"><a href="#"><i class="fa fa-trash-o"></i> Delete</a></li>
-  															</ul>
-  														</div>
-  													</li>
-  													<li><img src="images/profiles/seventeen.png" class="avatar" alt="" /> <h4>Vijay Kumar</h4> 
-  														<div class="btn-group user-options">
-  															<button type="button" class="btn btn-default dropdown-toggle text-danger" data-toggle="dropdown">
-  																Deleted <i class="fa fa-chevron-circle-down"></i>
-  															</button>
-  															<ul class="dropdown-menu" role="menu">
-  																<li><a href="#">Action</a></li>
-  																<li><a href="#">Approve</a></li>
-  																<li><a href="#">Reject</a></li>
-  																<li><a href="#">Send Email</a></li>
-  																<li class="divider"></li>
-  																<li class="bg-danger"><a href="#"><i class="fa fa-trash-o"></i> Delete</a></li>
-  															</ul>
-  														</div>
-  													</li>
-  													<li><img src="images/profiles/eighteen.png" class="avatar" alt="" /> <h4>Vijay Kumar</h4> 
-  														<div class="btn-group user-options">
-  															<button type="button" class="btn btn-default dropdown-toggle text-warning" data-toggle="dropdown">
-  																Pending <i class="fa fa-chevron-circle-down"></i>
-  															</button>
-  															<ul class="dropdown-menu" role="menu">
-  																<li><a href="#">Action</a></li>
-  																<li><a href="#">Approve</a></li>
-  																<li><a href="#">Reject</a></li>
-  																<li><a href="#">Send Email</a></li>
-  																<li class="divider"></li>
-  																<li class="bg-danger"><a href="#"><i class="fa fa-trash-o"></i> Delete</a></li>
-  															</ul>
-  														</div>
-  													</li>
-  													<li><img src="images/profiles/nineteen.png" class="avatar" alt="" /> <h4>Vijay Kumar</h4> 
-  														<div class="btn-group user-options">
-  															<button type="button" class="btn btn-default dropdown-toggle text-success" data-toggle="dropdown">
-  																Approved <i class="fa fa-chevron-circle-down"></i>
-  															</button>
-  															<ul class="dropdown-menu" role="menu">
-  																<li><a href="#">Action</a></li>
-  																<li><a href="#">Approve</a></li>
-  																<li><a href="#">Reject</a></li>
-  																<li><a href="#">Send Email</a></li>
-  																<li class="divider"></li>
-  																<li class="bg-danger"><a href="#"><i class="fa fa-trash-o"></i> Delete</a></li>
-  															</ul>
-  														</div>
-  													</li>
-  													<li><img src="images/profiles/twenty.png" class="avatar" alt="" /> <h4>Vijay Kumar</h4> 
-  														<div class="btn-group user-options">
-  															<button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown">
-  																Action <i class="fa fa-chevron-circle-down"></i>
-  															</button>
-  															<ul class="dropdown-menu" role="menu">
-  																<li><a href="#">Action</a></li>
-  																<li><a href="#">Approve</a></li>
-  																<li><a href="#">Reject</a></li>
-  																<li><a href="#">Send Email</a></li>
-  																<li class="divider"></li>
-  																<li class="bg-danger"><a href="#"><i class="fa fa-trash-o"></i> Delete</a></li>
-  															</ul>
-  														</div>
-  													</li>
-  													<li><img src="images/profiles/twentyOne.png" class="avatar" alt="" /> <h4>Vijay Kumar</h4> 
-  														<div class="btn-group user-options">
-  															<button type="button" class="btn btn-default dropdown-toggle text-danger" data-toggle="dropdown">
-  																Rejected <i class="fa fa-chevron-circle-down"></i>
-  															</button>
-  															<ul class="dropdown-menu" role="menu">
-  																<li><a href="#">Action</a></li>
-  																<li><a href="#">Approve</a></li>
-  																<li><a href="#">Reject</a></li>
-  																<li><a href="#">Send Email</a></li>
-  																<li class="divider"></li>
-  																<li class="bg-danger"><a href="#"><i class="fa fa-trash-o"></i> Delete</a></li>
-  															</ul>
-  														</div>
-  													</li>
-  													<li><img src="images/profiles/twentyTwo.png" class="avatar" alt="" /> <h4>Vijay Kumar</h4> 
-  														<div class="btn-group user-options">
-  															<button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown">
-  																Action <i class="fa fa-chevron-circle-down"></i>
-  															</button>
-  															<ul class="dropdown-menu" role="menu">
-  																<li><a href="#">Action</a></li>
-  																<li><a href="#">Approve</a></li>
-  																<li><a href="#">Reject</a></li>
-  																<li><a href="#">Send Email</a></li>
-  																<li class="divider"></li>
-  																<li class="bg-danger"><a href="#"><i class="fa fa-trash-o"></i> Delete</a></li>
-  															</ul>
-  														</div>
-  													</li>
-  													<li><img src="images/profiles/twentyThree.png" class="avatar" alt="" /> <h4>Vijay Kumar</h4> 
-  														<div class="btn-group user-options">
-  															<button type="button" class="btn btn-default dropdown-toggle text-info" data-toggle="dropdown">
-  																Email Sent <i class="fa fa-chevron-circle-down"></i>
-  															</button>
-  															<ul class="dropdown-menu" role="menu">
-  																<li><a href="#">Action</a></li>
-  																<li><a href="#">Approve</a></li>
-  																<li><a href="#">Reject</a></li>
-  																<li><a href="#">Send Email</a></li>
-  																<li class="divider"></li>
-  																<li class="bg-danger"><a href="#"><i class="fa fa-trash-o"></i> Delete</a></li>
-  															</ul>
-  														</div>
-  													</li>
-
-  												</ul>
-  											</div>
-  											<div class="tab-pane fade active in" id="profile">
-  												<div class="list-group list-projects">
-  													<a href="#" class="list-group-item">
-  														<img  src="images/profiles/twentyFour.png" class="project-img pull-left" alt="" />
-  														Cras justo odio 
-  														<span class="badge bg-success">80%</span>
-  														<div class="progress progress-mini">
-  															<div class="progress-bar progress-bar-success " role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 80%;">
-  																<span class="sr-only">80% Complete</span>
-  															</div>
-  														</div>
-  													</a>
-  													<a href="#" class="list-group-item">
-  														<img  src="images/profiles/one.png" class="project-img pull-left" alt="" />
-  														Dapibus ac facilisis in
-  														<span class="badge bg-primary">60%</span>
-  														<div class="progress progress-mini">
-  															<div class="progress-bar progress-bar-primary " role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-  																<span class="sr-only">60% Complete</span>
-  															</div>
-  														</div>
-
-  													</a>
-  													<a href="#" class="list-group-item">
-  														<img  src="images/profiles/two.png" class="project-img pull-left" alt="" />
-  														Morbi leo risus
-  														<span class="badge bg-info">50%</span>
-  														<div class="progress progress-mini">
-  															<div class="progress-bar progress-bar-info " role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
-  																<span class="sr-only">50% Complete</span>
-  															</div>
-  														</div>
-
-  													</a>
-  													<a href="#" class="list-group-item">
-  														<img  src="images/profiles/three.png" class="project-img pull-left" alt="" />
-  														Porta ac consectetur ac
-  														<span class="badge bg-warning">30%</span>
-  														<div class="progress progress-mini">
-  															<div class="progress-bar progress-bar-warning " role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 30%;">
-  																<span class="sr-only">30% Complete</span>
-  															</div>
-  														</div>
-
-  													</a>
-  													<a href="#" class="list-group-item">
-  														<img  src="images/profiles/four.png" class="project-img pull-left" alt="" />
-  														Vestibulum at eros
-  														<span class="badge bg-danger">20%</span>
-  														<div class="progress progress-mini">
-  															<div class="progress-bar progress-bar-danger " role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 20%;">
-  																<span class="sr-only">20% Complete</span>
-  															</div>
-  														</div>
-
-  													</a>
-  												</div>
-  											</div>
-  											<div class="tab-pane fade " id="dropdown1">
-  												<div class="list-group list-comments">
-  													<a href="#" class="list-group-item">
-  														<img  src="images/profiles/five.png" class="comment-img pull-left" alt="" />
-  														<h4 class="list-group-item-heading">John Deo <span class="label label-success pull-right">Approved</span></h4>
-  														<p class="list-group-item-text"> E topic chala bagundhi, nenu andharini chudamani chepthunnanu</p>
-  													</a>
-  													<a href="#" class="list-group-item">
-  														<img  src="images/profiles/six.png" class="comment-img pull-left" alt="" />
-  														<h4 class="list-group-item-heading">John Deo <span class="label label-success pull-right">Approved</span></h4>
-  														<p class="list-group-item-text"> E topic chala bagundhi, nenu andharini chudamani chepthunnanu</p>
-  													</a>
-  													<a href="#" class="list-group-item">
-  														<img  src="images/profiles/seven.png" class="comment-img pull-left" alt="" />
-  														<h4 class="list-group-item-heading">John Deo <span class="label label-success pull-right">Approved</span></h4>
-  														<p class="list-group-item-text"> E topic chala bagundhi, nenu andharini chudamani chepthunnanu</p>
-  													</a>
-  													<a href="#" class="list-group-item">
-  														<img  src="images/profiles/eight.png" class="comment-img pull-left" alt="" />
-  														<h4 class="list-group-item-heading">John Deo <span class="label label-success pull-right">Approved</span></h4>
-  														<p class="list-group-item-text"> E topic chala bagundhi, nenu andharini chudamani chepthunnanu</p>
-  													</a>
-  													<a href="#" class="list-group-item">
-  														<img  src="images/profiles/nine.png" class="comment-img pull-left" alt="" />
-  														<h4 class="list-group-item-heading">John Deo <span class="label label-success pull-right">Approved</span></h4>
-  														<p class="list-group-item-text"> E topic chala bagundhi, nenu andharini chudamani chepthunnanu</p>
-  													</a>
-  												</div>
-  											</div>
-  											<div class="tab-pane fade" id="dropdown2">
-  												<div class="list-group list-comments">
-  													<a href="#" class="list-group-item">
-  														<img  src="images/profiles/ten.png" class="comment-img pull-left" alt="" />
-  														<h4 class="list-group-item-heading">John Deo <span class="label label-warning pull-right">Pending</span></h4>
-  														<p class="list-group-item-text"> E topic chala bagundhi, nenu andharini chudamani chepthunnanu</p>
-  													</a>
-  													<a href="#" class="list-group-item">
-  														<img  src="images/profiles/eleven.png" class="comment-img pull-left" alt="" />
-  														<h4 class="list-group-item-heading">John Deo <span class="label label-warning pull-right">Pending</span></h4>
-  														<p class="list-group-item-text"> E topic chala bagundhi, nenu andharini chudamani chepthunnanu</p>
-  													</a>
-  													<a href="#" class="list-group-item">
-  														<img  src="images/profiles/twelve.png" class="comment-img pull-left" alt="" />
-  														<h4 class="list-group-item-heading">John Deo <span class="label label-warning pull-right">Pending</span></h4>
-  														<p class="list-group-item-text"> E topic chala bagundhi, nenu andharini chudamani chepthunnanu</p>
-  													</a>
-  													<a href="#" class="list-group-item">
-  														<img  src="images/profiles/thirteen.png" class="comment-img pull-left" alt="" />
-  														<h4 class="list-group-item-heading">John Deo <span class="label label-warning pull-right">Pending</span></h4>
-  														<p class="list-group-item-text"> E topic chala bagundhi, nenu andharini chudamani chepthunnanu</p>
-  													</a>
-  													<a href="#" class="list-group-item">
-  														<img  src="images/profiles/fourteen.png" class="comment-img pull-left" alt="" />
-  														<h4 class="list-group-item-heading">John Deo <span class="label label-warning pull-right">Pending</span></h4>
-  														<p class="list-group-item-text"> E topic chala bagundhi, nenu andharini chudamani chepthunnanu</p>
-  													</a>
-  												</div>
-  											</div>
-  										</div>
-  									</div>
-  								</div>
-
-  							</div>
-  						</div>
-
-  	
-
-<?php include('partials/footer.php'); ?>

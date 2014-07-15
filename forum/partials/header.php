@@ -1,7 +1,7 @@
 <?php 
 ob_start();
 session_start();
-include('init_connect.php'); 
+include('partials/init_connect.php'); 
 ?>
 
 
@@ -19,7 +19,7 @@ if(isset($_SESSION['firstname'])) {
 } else {
 	$student = "";
 }
-	 echo $page_title;
+	 echo $page_title . " | | " . $student;
 
 	 ?>
 
@@ -53,3 +53,20 @@ if(isset($_SESSION['firstname'])) {
   </div> <!--end of header part-->
   
   <div class="template-body">
+			<div style="margin:1.8em 9em 3em 0" class="btn btn-lg pull-right">
+				<?php
+					if(isset($_SESSION['firstname']) && isset($_SESSION['lastname']))
+					{
+						$memb = "<b>".ucwords($_SESSION['firstname']." ".$_SESSION['lastname'])."</b>";
+						$status = "<a href=\"../library/logout.php\">Logout</a>";
+						
+					}
+					else
+					{
+						$memb = "a <b>Guest</b>";
+						$status = "<a href=\"../library/index.php\">Login</a>";
+					}
+				
+				?>
+				You are here as <span><?php echo $memb; ?></span> &nbsp; | &nbsp; <?php echo $status; ?>
+			</div>

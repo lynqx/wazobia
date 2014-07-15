@@ -47,12 +47,13 @@ if(!empty($_GET['subj']))
 
     <div class="container">
     	      <div class="box">
+	<div class="btn btn-lg">
 
     	 <?php 
     	 
     	 //breadcrumb
 			echo $bread = "<a href=\"../\">Home</a> &raquo; <a href=\"index.php\">Forum</a> &raquo; <a href=\"topics.php?subj=$subj\">$subject</a> &raquo; $forum";
-    	  
+    	  echo '</div>';
 		// Check for a valid Organisation ID, through GET or POST:
 			if ( isset($_GET['id']) && is_numeric($_GET['id']))
 			{ 

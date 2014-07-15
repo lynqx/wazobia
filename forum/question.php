@@ -5,23 +5,29 @@ if ( isset($_GET['topic']))
 			{ 
 				$topicname = $_GET['topic'];
 			}
+			
+			
+	if(!empty($_GET['subj']))
+	$subj = $_GET['subj'];
+	else
+	$subj = "";
+	
 //* Student Area */
 /* Doubleakins*/
 /* 08063777394*/
 /* 19062014*/
 /* redirected to when student logs in */
-
+if ($subj == 1) {
+$page_title = "Submit a Project Topic || " . $topicname;
+} else {
 $page_title = "Ask A Question || " . $topicname;
+}
 $path = "../library/";
 include('partials/header.php'); 
 include('functions/functions.php'); 
 include('functions/fns.php'); 
 
 
-	if(!empty($_GET['subj']))
-	$subj = $_GET['subj'];
-	else
-	$subj = "";
 ?> 
 
 <?php
@@ -44,13 +50,14 @@ if (isset($_SESSION['student_id']) || isset($_SESSION['student_id'])) {
 			} else {
 				redirect_to('index.php');
 			}
+		echo '<div class="btn btn-lg">';
 	
 		//do breadcrumbs
 		$subject = ucwords(getColumnValue($conn, 'subject', 'subject', 'subject_id', $subj));
 		echo $bread = "<a href=\"../\">Home</a> &raquo; <a href=\"index.php\">Forum</a> &raquo; 
 		<a href=\"topics.php?subj=$subj\">$subject</a> &raquo; $topicname";
          ?>
-         
+         </div>
          <?php // code to add or edit a new organisation 
 if (isset($_POST['submitted'])) { // Handle the form.
 
@@ -194,11 +201,13 @@ if (mysqli_affected_rows($conn) == 1)
            <form action="question.php?id=<?php echo urlencode($id); ?>&topic=<?php echo urlencode($topicname); ?>&subj=<?php echo $subj; ?>" method="post">
            
            <div class="form-group">
-					<input type="text" name="title" class="form-control form-cascade-control"  placeholder="Title" />
+					<input type="text" name="title" class="form-control form-cascade-control" placeholder="<?php if ($subj == 1) { echo 'Project Topic'; } else { echo 'Title'; } ?>"/>
 			</div>
 			
 			<div class="form-group">
-					<label for="question" class="col-lg-2 col-md-3 control-label"><h4>Question</h4></label>
+					<label for="question" class="col-lg-2 col-md-3 control-label">
+						<?php if ($subj == 1) { echo '<h4 style="width:400px">Project Description / Objectives</h4>'; } else { echo '<h4>Questions</h4>'; } ?>
+						</label>
 					<textarea class="form-control form-cascade-control" rows="5" name="question"></textarea>
 			</div>
 			
@@ -214,7 +223,7 @@ if (mysqli_affected_rows($conn) == 1)
 				</table>			
            									<div class="form-actions">
 											<input type="hidden" name="submitted" value="TRUE" />
-											<input type="submit" value="Ask a Question" class="btn bg-primary btn-lg">
+											<input type="submit" value="<?php if ($subj == 1) { echo 'Submit a Project Topic'; } else { echo 'Ask a Question'; } ?>" class="btn bg-primary btn-lg">
 											</div>
            </form>
           </div>

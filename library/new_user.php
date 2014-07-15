@@ -93,7 +93,7 @@ if(!empty($_GET['user']) && !empty($_GET['ucode']))
 				
 				<div id="mainbox">
 					<h3 style="color: #6f3; ">Congratulations!</h3>
-					<h5 style="color: #663; ">Your email <?phpecho $user; ?> has been confirmed.</h5>
+					<h5 style="color: #663; ">Your email <?php echo $user; ?> has been confirmed.</h5>
 					<span>You may now login below</span>
 					<p><a href="index.php">Classroom</a> &nbsp; | &nbsp; <a href="../forum/">Forum</a></p>
 				</div>

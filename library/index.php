@@ -1,8 +1,12 @@
+<?php
+ob_start();
+session_start();
+?>
+
 <?php # Script 16.5 - index.php
 // This is the main page for the site.
 // Set the page title and include the HTML header:
 
-session_start();
 
 include('functions/functions.php'); 
 
@@ -64,13 +68,11 @@ $_SESSION['start'] = time();
 // Store the HTTP_USER_AGENT:
 $_SESSION['agent'] = md5($_SERVER ['HTTP_USER_AGENT']);
 
-//if ($_SESSION['user_level'] == 1) {
-// Redirect:
 
-	$refer = $_POST['refer'];
-
-	redirect_to($refer);
-
+	$url = absolute_url ('student_area.php');	//else go to student_area page
+	header("Location: $url");
+	exit();
+	
 } 
 
 } else { // Unsuccessful!
@@ -137,7 +139,7 @@ $ct = mysqli_real_escape_string ($conn, $trimmed['city']);
 if (preg_match ('/^[\w.-]+@[\w.-]+\.[AZa-z]{2,6}$/', $trimmed['email'])) {
 $em = mysqli_real_escape_string ($conn, $trimmed['email']);
 } else {
-					$errorss[] = 'Please enter a valid email address!';
+						$errorss[] = 'Please enter a valid email address!';
 }
 
  // Check for a password and match against the confirmed password:
@@ -153,6 +155,10 @@ $p = mysqli_real_escape_string ($conn, $trimmed['password1']);
 
 
 if ($fn && $ln && $mb && $ad && $ct && $em && $p) { // If everything's OK...
+	
+	//+--- generate activation code
+	$ucode = md5(rand());
+
 
 // Make sure the email address is available:
 $q = "SELECT student_id FROM student_register WHERE email='$em'";
@@ -161,22 +167,35 @@ $r = mysqli_query ($conn, $q);
 if (mysqli_num_rows($r) == 0) { // Available.
 
 // Add the user to the database:
-$q = "INSERT INTO student_register (email, password, first_name, last_name, phone, address, city, time_register) 
-						VALUES ('$em', SHA1('$p'), '$fn', '$ln', '$mb', '$ad', '$ct', NOW())";
+$q = "INSERT INTO student_register (ucode, email, password, first_name, last_name, phone, address, city, time_register) 
+						VALUES ('$ucode', '$em', SHA1('$p'), '$fn', '$ln', '$mb', '$ad', '$ct', NOW())";
 $r = mysqli_query ($conn, $q);
 
 
 // Send the email:
+	//+-- compose activation link
+	$optin_url = "http://".$_SERVER['HTTP_HOST']."/library/new_user.php?user=".$em."&ucode=".$ucode;
+	
 
-$body = "You have been registered on the Wazobia Portal";
-$body .= "Below are you login details<br /><br />";
-$body .= 'Email - ' . $em . '<br />';
-$body .= 'Password - ' . $p . '<br /><br />';
-$body .= "Please change your password regularly <br /><br /> Best Regards";
+$body = "<h4>You have been registered on the Wazobia Portal </h4>";
+$body .= "<p>But you must validate your registration by clicking on the following link:<p>";
+$body .= $optin_url ;
+$body .= "<p><b>NOTE:</b> if the link above is not clickable, please copy and paste into your browser's address bar.</p><br>";
+$body .= "<p>Below are your login details </p>";
+$body .= "<p>Email - " . $em . "</p>";
+$body .= "<p>Password - " . $p . "</p>";
+$body .= "<p>Please change your password regularly.</p><br>";
+$body .= "<p>Best Regards</p>";
 
- mail($trimmed['email'],
-'Registration on Wazobia', $body,
-'From: Wazobia Academy');
+$user_email = $trimmed['email'];
+
+$header = 'From: Wazobia Academy<admin@Wazobia-academy.com>'."\r\n";
+$header .= 'To: ' . $user_email ."\r\n";
+$header .= 'Reply-to: admin@Wazobia-academy.com'."\r\n";
+$header .= 'MIME-Version: 1.0' . "\r\n";
+$header .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+
+ mail($user_email, 'Registration on Wazobia', $body, $header);
 
  					// Finish the page:
 					 //Set display property and confirmation message of the message container to 'block'
@@ -262,4 +281,3 @@ $errorsss[] = 'You forgot to enter your email address!</p>';
 // Create the page:
 include ('partials/login_page.inc.php');
 ?>
-
