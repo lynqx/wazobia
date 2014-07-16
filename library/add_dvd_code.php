@@ -1,8 +1,9 @@
-
 <?php
 $path = "";
 include('partials/header.php'); 
+?>
 
+<?php
 //redirect to index.php if no session
 if(!isset($_SESSION['student_id']))
 header('location: index.php');

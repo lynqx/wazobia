@@ -46,6 +46,7 @@
 	.faq_q
 	{
 		color: #707070;
+		font-weight: bold;
 	}
 	
 	
@@ -59,7 +60,7 @@
 		$qsel = mysqli_query($conn, "SELECT faq_id, quest, ans FROM faq WHERE qshow='1'") or die(mysqli_error($conn).'Cannot Connect to FAQ base');
 		while($qrow = mysqli_fetch_row($qsel))
 		{
-			$h = "<h3 class=\"faq_q\" id=\"q$qrow[0]\" onclick=\"showHide('q$qrow[0]','a$qrow[0]','s$qrow[0]')\"><a id=\"s$qrow[0]\" class=\"faq_s\">&plus;</a>$qrow[1]</h3>";
+			$h = "<h4 title=\"Click to display/hide Answer\" class=\"faq_q\" id=\"q$qrow[0]\" onclick=\"showHide('q$qrow[0]','a$qrow[0]','s$qrow[0]')\"><a href=\"javascript:void()\" id=\"s$qrow[0]\" class=\"faq_s\">&plus;</a>$qrow[1]</h4>";
 			$p = "<p id=\"a$qrow[0]\" class=\"faq_a\" style=\"background-color: #fff;\">$qrow[2]</p>";
 			echo $h.$p;
 		}

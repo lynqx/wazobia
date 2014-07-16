@@ -1,8 +1,11 @@
+<?php
+ob_start();
+?>
 <style>
 	<!--
 	body
 	{
-		background-color: #093;
+		background-color: #F4F4F4;
 	}
 	
 	div
@@ -92,7 +95,7 @@ if(!empty($_GET['user']) && !empty($_GET['ucode']))
 			<!-- SUCCESS PAGE BEGINS --->
 				
 				<div id="mainbox">
-					<h3 style="color: #6f3; ">Congratulations!</h3>
+					<h3 style="color: #030; ">Congratulations!</h3>
 					<h5 style="color: #663; ">Your email <?php echo $user; ?> has been confirmed.</h5>
 					<span>You may now login below</span>
 					<p><a href="index.php">Classroom</a> &nbsp; | &nbsp; <a href="../forum/">Forum</a></p>

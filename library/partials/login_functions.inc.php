@@ -58,28 +58,21 @@ if (empty($errors)) { // If everything's OK.
 
 $q = "SELECT * 
 FROM  `student_register` 
-WHERE student_register.email='$email' AND student_register.password=sha1('$pass')";
+WHERE student_register.email='$email' AND student_register.password=sha1('$pass') AND student_register.ucode=1";
 
 $r = mysqli_query ($conn, $q); // Run the query.
 
 // Check the result:
 if (mysqli_num_rows($r) == 1) {
 
-// Register the values & redirect:
-	session_regenerate_id();
-			$data = mysql_fetch_assoc($r);
-			$_SESSION['SESS_USER_ID'] = $data['student_register.user_id'];
-						session_write_close();
-
 // Fetch the record:
-$row = mysqli_fetch_array ($r, MYSQLI_ASSOC);
-
+$data = mysqli_fetch_array ($r, MYSQLI_ASSOC);
 
  // Return true and the record:
-return array(true, $row);
+return array(true, $data);
 
 } else { // Not a match!
-$errors[] = 'The email and password entered do not match those on file.';
+$errors[] = 'The email and password entered do not match those on file or your account has not been verified.';
 }
 
 } // End of empty($errors) IF.

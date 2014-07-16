@@ -177,15 +177,78 @@ $r = mysqli_query ($conn, $q);
 	$optin_url = "http://".$_SERVER['HTTP_HOST']."/library/new_user.php?user=".$em."&ucode=".$ucode;
 	
 
-$body = "<h4>You have been registered on the Wazobia Portal </h4>";
-$body .= "<p>But you must validate your registration by clicking on the following link:<p>";
-$body .= $optin_url ;
-$body .= "<p><b>NOTE:</b> if the link above is not clickable, please copy and paste into your browser's address bar.</p><br>";
-$body .= "<p>Below are your login details </p>";
-$body .= "<p>Email - " . $em . "</p>";
-$body .= "<p>Password - " . $p . "</p>";
-$body .= "<p>Please change your password regularly.</p><br>";
-$body .= "<p>Best Regards</p>";
+$body = "<html><head>
+
+</head><body>
+		<div style=\"background: #eee; width:800px; margin:auto; min-height: 700px; padding:20px\">	
+		<div style=\"background: #fff; width:650px; margin:auto; min-height: 500px; border:1px solid #ddd; 
+		-moz-border-radius: 6px; border-radius:6px; -webkit-border-radius:6px;\">	
+		<div style=\"background: #396; width:450px; height: 65px; padding:10px 0 10px 200px;
+		-moz-border-radius: 6px 6px 0 0; border-radius:6px 6px 0 0; -webkit-border-radius:6px 6px 0 0;\">	
+			<img src=\"http://www.wazobia-academy.com/images/logo.png\" alt=\" \" width=\"241 \" height=\"65 \" align=\"center\" />	
+		</div>
+		
+		<div style=\"padding:20px;\">
+	
+
+			<div style=\"border:1px solid #eee; -moz-border-radius: 6px; border-radius:6px; -webkit-border-radius:6px;
+			padding:20px; margin:20px auto;\">
+				<h2 style=\"text-align:center; color:#333;\">Wazobia Academy</h2>
+				<h4>You have been registered on the Wazobia Portal </h4>
+				<p>But you must validate your registration by clicking on the following link:<p>
+				
+				" . $optin_url . "
+				
+			<p><b>NOTE:</b> if the link above is not clickable, please copy and paste into your browser's address bar.</p>
+			</div>
+
+				<div style=\"text-align:center\">
+				<table style=\"width:610px; border:1px solid #eee;\" cellspacing=\"5\" cellpadding=\"5\">
+				<tr style=\"padding:5px; border:1px solid #eee;\">
+				<th colspan=\"2\" style=\"padding:5px;\" align=\"left\">Below are your login details </th>
+				</tr>
+				<tr style=\"padding:5px;\">
+				<td align=\"right\" style=\"padding:5px; border:1px solid #eee;\"><b>Email</b></td>
+				<td align=\"left\" style=\"padding:5px; border:1px solid #eee;\">" . $em . "</td>
+				</tr>
+				
+				<tr style=\"padding:5px; border:1px solid #eee;\">
+				<td align=\"right\" style=\"padding:5px; border:1px solid #eee;\"><b>Password</b></td>
+				<td align=\"left\" style=\"padding:5px; border:1px solid #eee;\">" . $p . "</td>
+				</tr>
+				
+				<tr style=\"padding:5px; border:1px solid #eee;\">
+				<th colspan=\"2\" style=\"padding:5px;\" align=\"left\">Please change your password regularly.</th>
+				</tr>
+				</table>
+				<p>Best Regards</p>
+				</div>
+		</div>
+		</div>
+		
+	<div style=\" min-height:150px; padding-top: 30px;\">
+		<p style=\"margin: 0px; text-align: center; color: #333; font-family: 'Open Sans', sans-serif;\">
+		You have received this email because you have registered to Wazobia Academy Online Education Portal</p>
+			<ul style=\"float: center; margin: 5px 0 5px 0; text-align: center; padding:10px auto 10px auto; font-weight:bold;\">
+				<li style=\" display: inline-block;\">
+				<a style=\"text-decoration: none; font-size: 12px;  color: #0F4F0F; 
+				padding: 0 3px 0 0;\" href=\"http://www.wazobia-academy.com/library\">Classroom</a>
+				</li>
+				||
+				<li style=\" display: inline-block;\">
+				<a style=\"text-decoration: none; font-size: 12px; color: #0F4F0F; 
+				padding: 0 0 0 3px;\" href=\"http://www.wazobia-academy.com/forum\">Forum</a>
+				</li>
+			</ul>    
+			<p style=\"padding:15px 0 0 0; margin: 0px; text-align: center; color: #333; font-family: 'Open Sans', sans-serif;\">
+			&copy; 2014 
+			<a style=\"text-decoration: none; color: #0F4F0F;\" href=\"http://www.wazobia-academy.com\">Wazobia Academy</a> All rights reserved</p>
+			<p style=\"padding:15px 0 0 0; margin: 0px; text-align: center; color: #333; font-family: 'Open Sans', sans-serif;\">Powered By : 
+			<a style=\"text-decoration: none; color: #0F4F0F;\" href=\"http://www.joitsolutions.com\"> Joit Solutions</a></p>
+	</div>
+	</div>
+	</body></html>";
+
 
 $user_email = $trimmed['email'];
 

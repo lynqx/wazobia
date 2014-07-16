@@ -59,20 +59,13 @@ $q = "SELECT * FROM worker_register
   		JOIN roles ON roles.role_id = worker_roles.role_id
 		WHERE worker_register.work_email='$email' AND worker_register.work_password=sha1('$pass')";
 
-$r = mysqli_query ($conn, $q); // Run the query.
+$r = mysqli_query ($conn, $q) or trigger_error(mysqli_error($conn)); // Run the query.
 
 // Check the result:
 if (mysqli_num_rows($r) == 1) {
 
-// Register the values & redirect:
-	session_regenerate_id();
-			$data = mysql_fetch_assoc($r);
-			$_SESSION['SESS_USER_ID'] = $data['worker_register.work_id'];
-						session_write_close();
-
 // Fetch the record:
-$row = mysqli_fetch_array ($r, MYSQLI_ASSOC);
-
+$row= mysqli_fetch_array ($r, MYSQLI_ASSOC);
 
  // Return true and the record:
 return array(true, $row);

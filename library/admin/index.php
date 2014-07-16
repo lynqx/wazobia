@@ -1,8 +1,12 @@
+<?php
+ob_start();
+session_start();
+?>
+
 <?php # Script 16.5 - index.php
 // This is the main page for the site.
 // Set the page title and include the HTML header:
 
-session_start();
 include('functions/functions.php'); 
 
  $page_title = 'Admin Login || Wazobia';
@@ -27,12 +31,13 @@ if (isset($_SESSION['work_id']) && $_SESSION['roles'] == 'admin') {
 // Check if the form has been submitted:
 if (isset($_POST['submitted'])) {
 
+// Need the database connection:
+require_once ('init_connect.php');
 
 // For processing the login:
 require_once ('partials/login_functions.inc.php');
 
-// Need the database connection:
-require_once ('../../init_connect.php');
+
 
 // Check the login:
 list ($check, $data) = check_login($conn, $_POST['email'], $_POST['pass']);
@@ -99,4 +104,3 @@ $errors = $data;
 // Create the page:
 include ('partials/login_page.inc.php');
 ?>
-

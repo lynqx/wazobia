@@ -1,6 +1,9 @@
 <?php 
 ob_start();
 session_start();
+?>
+
+<?php
 include('../init_connect.php'); 
 include('functions/functions.php');
 include('functions/fns.php'); 
