@@ -202,33 +202,28 @@ if (mysqli_affected_rows($conn) == 1)
 									</div>';
 									}
 												?>
-          <div class="product-display2">
-            <img src="images/iwatch.png" alt="" align="left" />
-          </div>
-          <div class="product-description3">
-            <h3>
-			<?php echo $row1['title']; ?>
-			</h3>
-            <p class="quest">
-			<?php echo $row1['question']; ?>
-            </p>
-            
-            <div class="btn btn-sm btn-default"><h5 class="author2"><span>Posted by : </span><?php 
+												
+			<h1><?php echo $row1['title']; ?></h1>
+			<div class="pull-left topictop">
+				<p class="author2"><span style="color:#CCC6C6">BY </span> 
+								<?php 
 								$email = $row1['author'];
 								$un = explode('@', $email);
 								$uname = $un[0];
-								echo ucwords($uname); ?> </h5> &nbsp;&nbsp;&nbsp;
-								
-			<span class="btn btn-sm btn-danger">
-									<?php
+								echo ucwords($uname); ?> 
+			&nbsp;&nbsp; <i class="fa fa-circle"></i> &nbsp;&nbsp;       
+		 <span>
+			<?php
 	$days = floor($row1['TimeSpent'] / (60 * 60 * 24));
 			$remainder = $row1['TimeSpent'] % (60 * 60 * 24);
 			$hours = floor($remainder / (60 * 60));
 			$remainder = $remainder % (60 * 60);
 			$minutes = floor($remainder / 60);
 			$seconds = $remainder % 60;
-	if($days > 0)
+			if($days > 29)
 			echo date('F d Y', $row1['posted_date']);
+			elseif($days > 0)
+			echo $days . ' days ago';
 			elseif($days == 0 && $hours == 0 && $minutes == 0)
 			echo "few seconds ago";		
 			elseif($days == 0 && $hours == 0)
@@ -238,8 +233,68 @@ if (mysqli_affected_rows($conn) == 1)
 			echo '</font><br />';
 			?>
 								</span>
+								</p>
+								
+								
+								<?php
+      $q3 = "SELECT * FROM `answers`
+				WHERE answers.post_id = '$id'";
+				$r3 = @mysqli_query ($conn, $q3) or trigger_error(mysqli_error($conn));
+				?>
+			<?php $numofanswers = mysqli_num_rows($r3); ?>	
+			<p class="btn btn-sm btn-info pull-right" style="margin:0 10px 0 0;"> <i class="fa fa-comment"></i> &nbsp; <?php echo $numofanswers; ?> 
+</p>
+			
+			
+								</div>
+
+				
+          <div class="product-display2 pull-left">
+            <img src="images/iwatch.png" alt="" align="left" />
           </div>
-        </div>
+          <div class="product-description3 pull-right">
+
+			<div class="product-description4 pull-right">				
+            <p class="quest">
+			<?php echo $row1['question']; ?>
+            </p>
+            </div>
+            <span class="time pull-right">
+            	<?php echo $row1['views']; ?> Views &nbsp;&nbsp;&nbsp; <a>Like</a>
+            </span>
+            
+         <?php
+         // Count unique visitors? 1 = YES, 0 = NO
+$count_unique = 1;
+
+// Number of hours a visitor is considered as "unique"
+$unique_hours = 6;
+
+$cname = 'count';
+
+         /* If counting unique hits is enabled make sure it's a unique hit */
+        if ($count_unique == 0 || ! isset($_COOKIE[$cname]) )
+        {
+        	            // Find view, add 1 and insert back.
+			
+			$oldview = $row1['views'];
+			if ($oldview > 0) {
+			$Max_id = $oldview+1;
+			}
+			else {
+			$Max_id = 1;
+			}
+			$qview = "UPDATE posts SET views='$Max_id' WHERE posts.post_id = '$id'";
+			$rview = mysqli_query ($conn, $qview) or trigger_error("Query: $q9\n<br />MySQL Error: " . mysqli_error($conn));
+
+			/* Print the Cookie and P3P compact privacy policy */
+			setcookie($cname, 1, time()+60*60*$unique_hours);
+        }
+
+?>
+            </div>
+            
+            
         </div>
       </div><!--end of box-->
       <?php
@@ -249,7 +304,9 @@ if (mysqli_affected_rows($conn) == 1)
 				?>
 		<div class="row product-row4">
 			<?php $numofanswers = mysqli_num_rows($r3); ?>	
-			<p class="btn btn-sm btn-success"> <?php echo $numofanswers; ?> Answers </p>
+			<p class="btn btn-sm btn-success"> 
+			<?php if ($numofanswers > 0) {echo $numofanswers . '  Answers'; }
+			else { echo 'Be the first to answer this question'; } ?> </p>
 					
 					<span class="pull-right">
 						<a class="panel-minimize" ><i class="fa fa-chevron-up" id="show1"></i></a>

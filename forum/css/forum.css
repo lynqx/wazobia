@@ -56,12 +56,6 @@ html {
   margin-top: 20px;
 }
 
-.template-body .box .product-row2 .product-display2 img {
-  min-height: 200px;
-  width: 200px;
-  margin-top: 20px 5px;
-  padding:10px; float:left;
-}
 
 .template-body .box .product-description h3 {
   margin-top: 0px;
@@ -85,7 +79,12 @@ html {
 }
 
 .template-body .box .product-description3 {
-  padding:20px; float:left; border-left: 2px #ccc solid;
+  padding:0 20px 20px 20px; border-left: 2px #ccc solid; width: 700px;
+}
+
+
+.template-body .box .product-description4 {
+  padding:5px;
 }
 
 .template-body .box .product-description h5 {
@@ -112,9 +111,19 @@ html {
   outline: none;
 }
 .template-body .box .product-row2{
-  margin: 60px auto;
-  max-width: 700px;
+  margin: 10px auto;
+  max-width: 960px;
+  padding:0 20px;
 }
+.template-body .box .product-row2 h1 { font-size:50px; }
+
+.template-body .box .product-row2 .product-display2 img {
+  min-height: 200px;
+  width: 200px;
+  margin: 20px 5px;
+  padding:10px;
+}
+
 
 .template-body .box .product-row3{
   margin: 20px auto;
@@ -157,14 +166,18 @@ ul {width: 90%; padding:0; margin:0;}
 ul.topic li {list-style: none; float:left; padding:10px;}
 h5 span { color:#f00; font-weight:bold; line-height: 5px; }
 h5.author { color:#f00; font-weight:bold; line-height: 5px; margin:10px auto }
-h5.author2 { color:#f00; font-weight:bold; line-height: 5px; margin:10px auto; float:left}
+p.author2 { color:#0F4F0F; line-height: 5px; margin:10px auto; float:left; font-size: 18px; padding:0 0 0 20px; 
+text-transform: uppercase; font-variant:small-caps; font-family: 'Droid Sans', sans-serif;}
 h4.last {line-height:5px; padding:0; margin:10px auto}
 span.last {line-height:5px; padding:0; margin:10px auto; font-size:12px; font-weight:bold;}
 span.datee {line-height:5px; padding:0; margin:10px auto; font-size:12px;}
 span.dates {line-height:5px; padding:0 10px; margin:10px auto; font-size:12px;}
-p.quest { line-height: 22px; text-align:justify; width: 450px;
+p.quest { line-height: 24px; text-align:justify; width: 650px; padding:5px 0 0 0; font-size: 16px; font-family: 'Droid Sans', sans-serif;
+}
+span.time { color:#666; font-size: 13px; padding:0 20px 0 0;}
 
 .template-body .box .answerp { border-top: 2px solid #ccc; border-bottom: 2px solid #ccc; padding:20px}
+.topictop { border-top: 2px solid #ccc; border-bottom: 2px solid #ccc; width:920px; padding:5px; margin:0 0 10px 0;}
 
 }
 /* Forms

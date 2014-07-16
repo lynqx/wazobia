@@ -29,18 +29,9 @@ include('functions/fns.php');
 
 
 ?> 
-
-<?php
-if (isset($_SESSION['student_id']) || isset($_SESSION['student_id'])) {
-	
-	// you are logged in so continue to post question
-
-?>
-
     <div class="container">
     	      <div class="box">
-				
-				
+		
     	 <?php 
  
 		// Check for a valid Organisation ID, through GET or POST:
@@ -58,6 +49,12 @@ if (isset($_SESSION['student_id']) || isset($_SESSION['student_id'])) {
 		<a href=\"topics.php?subj=$subj\">$subject</a> &raquo; $topicname";
          ?>
          </div>
+         
+		<?php
+		if (isset($_SESSION['student_id']) || isset($_SESSION['student_id'])) {
+			
+		?>
+		
          <?php // code to add or edit a new organisation 
 if (isset($_POST['submitted'])) { // Handle the form.
 
@@ -232,12 +229,12 @@ if (mysqli_affected_rows($conn) == 1)
       </div><!--end of box-->
 
     <?php } else { ?>
-    	         <div class="box">
+    	
         <div class="product-one">
         <div class="row product-row2">
 
 			<div class="col-md-5 product-display">
-            <img src="images/iwatch.png" alt="">
+            <img src="images/key.png" alt="">
           	</div>
           
                     <div class="col-md-7 product-description">
