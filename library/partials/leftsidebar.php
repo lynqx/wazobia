@@ -20,7 +20,7 @@
 								<?php include('find_subjects.php'); ?>
 		                    </ul>
                     </li>
-                    <li class="submenu"><a class="dropdown" href="../forum" data-original-title="Forum"> <i class="fa fa-cog"></i><span class="hidden-minibar"> Forum </span></a>
+                    <li class="submenu"><a class="dropdown" href="../forum" data-original-title="Forum"> <i class="fa fa-reorder"></i><span class="hidden-minibar"> Forum </span></a>
                 </ul>
               </div>
             </div> <!-- /.left-sidebar -->

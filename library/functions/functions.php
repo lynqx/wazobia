@@ -28,5 +28,15 @@ function redirect_to($location = NULL) {
 	}
 }
 
+function numlesson($condition)
+		{
+			$q = "SELECT lesson_id FROM dvd_lessons WHERE dvd_id = 1";
+			if ($r = mysqli_query($conn, $q) or trigger_error(mysqli_error($conn))) {
+			$count = mysqli_num_rows($r);
+			
+			}
+				return($count);
+			
+		}
 
 ?>

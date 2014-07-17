@@ -14,13 +14,19 @@ include('functions/fns.php');
 <head>
   <meta charset="utf-8">
   <title>	
-  	<?php							
+  	<?php	
+  	$user = $_SESSION['student_id'];
+	
+	$q = "SELECT * FROM student_register WHERE student_id = '$user'";
+	$r = mysqli_query($conn, $q);
+	$row = mysqli_fetch_array($r, MYSQLI_ASSOC);
+							
 // Check for a $page_title value:
 if (!isset($page_title)) {
  $page_title = 'Wazobia Academy';
 }
 if(isset($_SESSION['firstname'])) {
-	$student = $_SESSION['firstname'] . "  " . $_SESSION['lastname'];
+	$student = $row['first_name'] . "  " . $row['last_name'];
 } else {
 	$student = "";
 }
@@ -78,9 +84,13 @@ if(strpos($page,"extended-modals") !== false ) { ?>
           <ul class="nav navbar-nav user-menu navbar-right " id="user-menu">
 
             <li><a href="#" class="user dropdown-toggle" data-toggle="dropdown"><span class="username">
-            	<img src="images/profiles/<?php echo $_SESSION['image']; ?>" class="user-avatar" alt="<?php echo $_SESSION['firstname'] . "  " . $_SESSION['lastname'] ; ?>"> <?php echo $_SESSION['firstname'] . "  " . $_SESSION['lastname'] ; ?>  </span></a>
+            	
+            	<img src="images/profiles/<?php if(isset($row['image'])) { echo $row['image']; } else { echo 'default.png'; } ?>" class="user-avatar" 
+            	alt="<?php echo $row['first_name'] . "  " . $row['last_name']; ?>">
+            	
+            	<?php echo $row['first_name'] . "  " . $row['last_name']; ?>  </span></a>
               <ul class="dropdown-menu">
-                <li><a href="#"><i class="fa fa-user"></i> My Profile</a></li>
+                <li><a href="profile.php"><i class="fa fa-user"></i> My Profile</a></li>
                 <li><a href="#"><i class="fa fa-envelope"></i> Inbox</a></li>
                 <li><a href="password.php"><i class="fa fa-edit"></i> Change Password</a></li>
                  <li><a href="#"><i class="fa fa-cogs"></i> Settings</a></li>
