@@ -16,13 +16,14 @@ include($inc_path . 'header.php');
   							<div class="col-mod-12">
   								<ul class="breadcrumb">
   									<li><a href="index.php">Library</a></li>
+  									<li class="active"><a href="dashboard.php">Administrator</a></li>
   									<li class="active"><a href="profile.php">Profile</a></li>
   								</ul>
 					<?php
 					if(isset($_GET['id']) && is_numeric($_GET['id'])) {
 						$user = $_GET['id'];
 					} else {
-					$user = $_SESSION['student_id'];
+					$user = $_SESSION['work_id'];
 					}
 					?>
 					
@@ -65,9 +66,11 @@ $mb = mysqli_real_escape_string ($conn, $trimmed['mobile']);
 
 if ($fn && $ln && $mb) { // If everything's OK...
 	
+
+
 		// Update usetr info in the database:
-		$q = "UPDATE student_register SET first_name = '$fn', last_name = '$ln', phone = '$mb'
-				WHERE student_id = '$user'
+		$q = "UPDATE worker_register SET work_first_name = '$fn', work_last_name = '$ln', work_phone = '$mb'
+				WHERE work_id = '$user'
 				LIMIT 1";
 		if ($r = mysqli_query ($conn, $q) or trigger_error(mysqli_error($conn))) {
 
@@ -121,8 +124,8 @@ if ($ad && $ct && $bio) { // If everything's OK...
 
 
 		// Update usetr info in the database:
-		$q = "UPDATE student_register SET address = '$ad', city = '$ct', bio = '$bio'
-				WHERE student_id = '$user'
+		$q = "UPDATE worker_register SET work_address = '$ad', work_city = '$ct', work_bio = '$bio'
+				WHERE work_id = '$user'
 				LIMIT 1";
 		if ($r = mysqli_query ($conn, $q) or trigger_error(mysqli_error($conn))) {
 
@@ -161,8 +164,8 @@ $ln = mysqli_real_escape_string ($conn, $trimmed['linkedin']);
 
 
 		// Update usetr info in the database:
-		$q = "UPDATE student_register SET twitter = '$tw', linkedin = '$ln'
-				WHERE student_id = '$user'
+		$q = "UPDATE worker_register SET work_twitter = '$tw', work_linkedin = '$ln'
+				WHERE work_id = '$user'
 				LIMIT 1";
 		if ($r = mysqli_query ($conn, $q) or trigger_error(mysqli_error($conn))) {
 
@@ -197,10 +200,10 @@ $fileExt = $kaboom[1];
 if (move_uploaded_file ($_FILES['upload']['tmp_name'], UPLOAD_DIR.$file)); {
 	
 	//check for previous passport and delete
-			$q9 = "SELECT image FROM student_register WHERE student_id = '$user'";
+			$q9 = "SELECT work_image FROM worker_register WHERE work_id = '$user'";
 			$r9 = mysqli_query($conn, $q9);
 			$row9 = mysqli_fetch_array($r9, MYSQLI_ASSOC);
-			$oldfile = $row9['image'];
+			$oldfile = $row9['work_image'];
 			if (isset($oldfile)) {
 				if (file_exists ('images/profiles/' . $oldfile) && is_file('images/profiles/' . $oldfile) ) {
 				unlink ('images/profiles/' . $oldfile );
@@ -226,7 +229,7 @@ $errors = array(); // Initialize error array.
 if ($file) { // If everything's OK...
 
 
-$q = "UPDATE student_register SET image='$file' WHERE student_id = '$user' LIMIT 1";
+$q = "UPDATE worker_register SET work_image='$file' WHERE work_id = '$user' LIMIT 1";
 $r = mysqli_query ($conn, $q) or trigger_error("Query: $q\n<br />MySQL Error: " . mysqli_error($conn));
 if (mysqli_affected_rows($conn) == 1) 
 { // If it ran OK.
@@ -336,8 +339,8 @@ if ($p) { // If everything's OK...
 
 
 		// Update usetr info in the database:
-		$qp = "UPDATE student_register SET password = SHA1('$p')
-				WHERE student_id = '$user'
+		$qp = "UPDATE worker_register SET work_password = SHA1('$p')
+				WHERE work_id = '$user'
 				LIMIT 1";
 		if ($rp = mysqli_query ($conn, $qp) or trigger_error(mysqli_error($conn))) {
 
@@ -401,11 +404,15 @@ if ($p) { // If everything's OK...
 												?>
 												
 					<?php
-					$q = "SELECT *, UNIX_TIMESTAMP() - last_login AS TimeSpent FROM student_register WHERE student_id = '$user'";
+					$q = "SELECT *, UNIX_TIMESTAMP() - last_login AS TimeSpent FROM worker_register 
+							JOIN worker_roles ON worker_roles.work_id = worker_register.work_id
+							JOIN roles on roles.role_id = worker_roles.role_id
+							WHERE worker_register.work_id = '$user'";
 					$r = mysqli_query($conn, $q) or trigger_error(mysqli_error($conn));
+					if (mysqli_num_rows($r) > 0) { 
 					$row = mysqli_fetch_array($r, MYSQLI_ASSOC);
 					?>
-  								<h3 class="page-header"> User Profile - <?php echo $row['first_name']. '  ' . $row['last_name']; ?> <i class="fa fa-user animated bounceInDown show-info"></i> </h3>
+  								<h3 class="page-header"> User Profile - <?php echo $row['work_first_name']. '  ' . $row['work_last_name']; ?> <i class="fa fa-user animated bounceInDown show-info"></i> </h3>
 
   								<blockquote class="page-information hidden">
   									<p>
@@ -417,35 +424,35 @@ if ($p) { // If everything's OK...
   						</div>
 
   		<div class="row profile">    						<!-- start all profile-->
-  			<?php if((isset($_GET['id']) && $_GET['id'] == $_SESSION['student_id'] ) || !isset($_GET{'id'})) {?>
+  			<?php if((isset($_GET['id']) && $_GET['id'] == $_SESSION['work_id'] ) || !isset($_GET{'id'})) {?>
   				
                   <div class="col-md-3 user-details well text-center col-sm-12" > 	 <!-- start seide bar profile-->	
-                    <img src="images/profiles/<?php if(isset($row['image'])) { echo $row['image']; } else { echo 'default.png'; } ?>" class="main-avatar" />
+                    <img src="images/profiles/<?php if(isset($row['work_image']) && $row['work_image'] != "") { echo $row['work_image']; } else { echo 'default.png'; } ?>" class="main-avatar" />
                     <div class="user-main-info">
-                      <h2 class="text-primary user-name"><?php echo $row['first_name']. '  ' . $row['last_name']; ?></h2>
-                      <h4 class="text-info user-designation"> <i class="fa fa-envelope-o"></i> <?php echo $row['email']; ?></h4>
-                      <h4 class="text-info user-designation"> <i class="fa fa-twitter"></i> <?php echo $row['twitter']; ?></h4>
-                      <h5 class="text-info user-designation"><?php echo $row['interest']; ?></h5>
+                      <h2 class="text-primary user-name"><?php echo $row['work_first_name']. '  ' . $row['work_last_name']; ?></h2>
+                      <h4 class="text-info user-designation"> <i class="fa fa-envelope-o"></i> <?php echo $row['work_email']; ?></h4>
+                      <h4 class="text-info user-designation"> <i class="fa fa-twitter"></i> <?php echo $row['work_twitter']; ?></h4>
+                      <h4 class="text-info user-designation"><i class="fa fa-hand-o-right"></i> <?php echo strtoupper($row['roles']); ?></h4>
                     </div>
                     <div class="about">
-                      <p><strong>About: </strong> <?php echo $row['bio']; ?> </p>
+                      <p><strong>About: </strong> <?php echo $row['work_bio']; ?> </p>
                     </div>
                     <ul class="list-group details-list">
                      <li class="list-group-item">
                       <span class="badge bg-info">
                       	<?php
-                    $q4 = "SELECT DISTINCT subject.subject_id, subject.subject FROM subject
-                    		JOIN lesson ON lesson.subject_id = subject.subject_id
-                    		JOIN dvd_lessons ON dvd_lessons.lesson_id = lesson.lesson_id
-                    		JOIN dvd_code ON dvd_code.dvd_id = dvd_lessons.dvd_id
-                    		JOIN dvd_code_user ON dvd_code_user.dvd_code_id = dvd_code.dvd_code_id
-                    		WHERE dvd_code_user.student_id = '$user'";
-					$r4 = mysqli_query($conn, $q4) or trigger_error(mysqli_error($conn));
-                    echo $noofsubject = mysqli_num_rows($r4);
+                   
+									$lecturer = $_SESSION['work_id'];
+									$q4 = "SELECT lesson.lesson_id, subject.subject_id, subject.subject FROM lesson
+											JOIN subject on subject.subject_id = lesson.subject_id
+											WHERE lesson.work_id = '$user'
+											ORDER BY lesson.lesson_id ASC";
+									$r4 = mysqli_query ($conn, $q4);
+									echo $numofSubjects = mysqli_num_rows($r4);
 					
                     ?>
                       	</span>
-                      	<b> Subjects Registered </b> <hr>
+                      	<b> My Subjects </b> <hr>
                       	<?php echo '<ul>';
 					while ($row4 = mysqli_fetch_array($r4, MYSQLI_ASSOC)) {
 						echo '<li>' . $row4['subject'] . '</li>';
@@ -457,38 +464,40 @@ if ($p) { // If everything's OK...
                     <li class="list-group-item">
                       <span class="badge bg-pink">
                     <?php
-                    $q = "SELECT dvd_code_user_id FROM dvd_code_user WHERE student_id = '$user'";
-					$r = mysqli_query($conn, $q) or trigger_error(mysqli_error($conn));
-                    echo $number = mysqli_num_rows($r);
-                    ?>
+									$q5 = "SELECT DISTINCT topic.topic_id, topic.topic FROM topic
+											JOIN lesson ON lesson.topic_id = topic.topic_id
+											WHERE lesson.work_id = '$user'";
+									$r5 = mysqli_query ($conn, $q5);
+									echo $numofTopics = mysqli_num_rows($r5);
+									?>
                       	</span>
-                      <b>DVD in Archive</b>
+                      <b> My Topics </b> <hr>
+                      	<?php echo '<ul>';
+					while ($row5 = mysqli_fetch_array($r5, MYSQLI_ASSOC)) {
+						echo '<li>' . $row5['topic'] . '</li>';
+					}
+					echo '</ul>';
+					?>
                     </li>
+                    
                     <li class="list-group-item">
                       <span class="badge bg-warning">
                       	<?php
-                      	$sn = array();
-                      	$q2 = "SELECT dvd_id FROM dvd_code
-                      			JOIN dvd_code_user ON dvd_code_user.dvd_code_id = dvd_code.dvd_code_id
-                      			WHERE dvd_code_user.student_id = '$user'";
-								
-						$r2 = mysqli_query($conn, $q2) or trigger_error(mysqli_error($conn));
-						while ($row2 = mysqli_fetch_array($r2, MYSQLI_ASSOC)) {
-							$condition = $row2['dvd_id'];
-							
-							//second loop
-								$q3 = "SELECT lesson_id FROM dvd_lessons WHERE dvd_id = '$condition'";
-								if ($r3 = mysqli_query($conn, $q3) or trigger_error(mysqli_error($conn))) {
-								$count = mysqli_num_rows($r3);
-									array_push($sn, $count);
-								}
-			
-						}
-						echo array_sum($sn);
-                      	?>
+                      				$q6 = "SELECT lesson.lesson_id, lesson FROM lesson
+											WHERE work_id = '$user'";
+									$r6 = mysqli_query ($conn, $q6);
+									echo $numofLessons = mysqli_num_rows($r6);
+						?>
                       	</span>
-                      <b>Lessons Watched</b>
+                      <b>My Lessons</b> <hr>
+                      	<?php echo '<ul>';
+					while ($row6 = mysqli_fetch_array($r6, MYSQLI_ASSOC)) {
+						echo '<li>' . $row6['lesson'] . '</li>';
+					}
+					echo '</ul>';
+					?>
                     </li>
+                    
                   </ul>
                 </div>  	<!-- end sidebar profile-->
                 
@@ -496,7 +505,7 @@ if ($p) { // If everything's OK...
 
                   <ul id="myTab" class="nav nav-tabs">
                     <li class="active"><a href="#view" data-toggle="tab">View Profile</a></li>
-                    <?php if((isset($_GET['id']) && $_GET['id'] == $_SESSION['student_id'] ) || !isset($_GET{'id'})) {?>
+                    <?php if((isset($_GET['id']) && $_GET['id'] == $_SESSION['work_id'] ) || !isset($_GET{'id'})) {?>
                     <li><a href="#edit" data-toggle="tab">Edit Profile</a></li>
                     <?php } ?>
                   </ul>
@@ -512,23 +521,23 @@ if ($p) { // If everything's OK...
   <ul class="list-group">
    <li class="list-group-item">
     <span class="badge bg-info">First Name</span>
-    <i class="fa fa-male"></i> <?php echo $row['first_name'];?>
+    <i class="fa fa-male"></i> <?php echo $row['work_first_name'];?>
   </li>
   <li class="list-group-item">
     <span class="badge bg-info">Last Name</span>
-    <i class="fa fa-group"></i> <?php echo $row['last_name']; ?>
+    <i class="fa fa-group"></i> <?php echo $row['work_last_name']; ?>
   </li>
   <li class="list-group-item">
     <span class="badge bg-info"> Email </span>
-    <i class="fa fa-envelope"></i> <?php echo $row['email']; ?>
+    <i class="fa fa-envelope"></i> <?php echo $row['work_email']; ?>
   </li>
   <li class="list-group-item">
     <span class="badge bg-info"> Mobile Number</span>
-    <i class="fa fa-phone"></i> <?php echo $row['phone']; ?>
+    <i class="fa fa-phone"></i> <?php echo $row['work_phone']; ?>
   </li>
   <li class="list-group-item">
     <span class="badge bg-info">Interest</span>
-    <i class="fa fa-filter"></i> <?php echo $row['interest']; ?>
+    <i class="fa fa-filter"></i> <?php //echo $row['work_interest']; ?>
   </li>
 </ul>
 </div>
@@ -544,11 +553,11 @@ if ($p) { // If everything's OK...
   <ul class="list-group">
    <li class="list-group-item">
     <span class="badge bg-info">Address</span>
-    <i class="fa fa-road"></i> <?php echo $row['address'];?>
+    <i class="fa fa-road"></i> <?php echo $row['work_address'];?>
   </li>
   <li class="list-group-item">
     <span class="badge bg-info">City</span>
-    <i class="fa fa-map-marker"></i> <?php echo $row['city']; ?>
+    <i class="fa fa-map-marker"></i> <?php echo $row['work_city']; ?>
   </li>
   
 </ul>
@@ -563,11 +572,11 @@ if ($p) { // If everything's OK...
   <ul class="list-group">
    <li class="list-group-item">
     <span class="badge bg-info">Twitter</span>
-    <i class="fa fa-twitter"></i> <?php echo $row['twitter'];?>
+    <i class="fa fa-twitter"></i> <?php echo $row['work_twitter'];?>
   </li>
   <li class="list-group-item">
     <span class="badge bg-info">LinkedIn</span>
-    <i class="fa fa-linkedin"></i> <?php echo $row['linkedin']; ?>
+    <i class="fa fa-linkedin"></i> <?php echo $row['work_linkedin']; ?>
   </li>
 </ul>
 </div>
@@ -624,7 +633,7 @@ if ($p) { // If everything's OK...
 								<div class="form-group">
 									<div class="col-lg-10 col-md-9">
 										<input type="text" class="form-control" name="firstname"
-										value = "<?php if(isset($row['first_name'])) { echo $row['first_name']; }?>">
+										value = "<?php if(isset($row['work_first_name'])) { echo $row['work_first_name']; }?>">
 									</div>
 								</div>
 							</td>
@@ -635,7 +644,7 @@ if ($p) { // If everything's OK...
 								<div class="form-group">
 									<div class="col-lg-10 col-md-9">
 										<input type="text" class="form-control" name="lastname" 
-										value = "<?php if(isset($row['last_name'])) { echo $row['last_name']; }?>">
+										value = "<?php if(isset($row['work_last_name'])) { echo $row['work_last_name']; }?>">
 									</div>
 								</div>
 							</td>
@@ -646,7 +655,7 @@ if ($p) { // If everything's OK...
 								<div class="form-group">
 									<div class="col-lg-10 col-md-9">
 										<input type="text" class="form-control" name="mobile"
-										value = "<?php if(isset($row['phone'])) { echo $row['phone']; }?>">
+										value = "<?php if(isset($row['work_phone'])) { echo $row['work_phone']; }?>">
 									</div>
 								</div>
 							</td>
@@ -675,7 +684,7 @@ if ($p) { // If everything's OK...
 								<div class="form-group">
 									<div class="col-lg-10 col-md-9">
 										<input type="text" class="form-control" name="address" 
-										value = "<?php if(isset($row['address'])) { echo $row['address']; }?>">
+										value = "<?php if(isset($row['work_address'])) { echo $row['work_address']; }?>">
 									</div>
 								</div>
 							</td>
@@ -686,7 +695,7 @@ if ($p) { // If everything's OK...
 								<div class="form-group">
 									<div class="col-lg-10 col-md-9">
 										<input type="text" class="form-control" name="city"
-										value = "<?php if(isset($row['city'])) { echo $row['city']; }?>">
+										value = "<?php if(isset($row['work_city'])) { echo $row['work_city']; }?>">
 									</div>
 								</div>
 							</td>
@@ -696,7 +705,7 @@ if ($p) { // If everything's OK...
                       		<td>
 								<div class="form-group">
 									<div class="col-lg-10 col-md-9">
-										<textarea cols="50" rows="5" class="form-control" name="bio"><?php if(isset($row['bio'])) { echo $row['bio']; }?></textarea>
+										<textarea cols="50" rows="5" class="form-control" name="bio"><?php if(isset($row['work_bio'])) { echo $row['work_bio']; }?></textarea>
 									</div>
 								</div>
 							</td>
@@ -726,7 +735,7 @@ if ($p) { // If everything's OK...
 								<div class="form-group">
 									<div class="col-lg-10 col-md-9">
 										<input type="text" class="form-control" name="twitter" 
-										value = "<?php if(isset($row['twitter'])) { echo $row['twitter']; }?>">
+										value = "<?php if(isset($row['work_twitter'])) { echo $row['work_twitter']; }?>">
 									</div>
 								</div>
 							</td>
@@ -737,7 +746,7 @@ if ($p) { // If everything's OK...
 								<div class="form-group">
 									<div class="col-lg-10 col-md-9">
 										<input type="text" class="form-control" name="linkedin"
-										value = "<?php if(isset($row['linkedin'])) { echo $row['linkedin']; }?>">
+										value = "<?php if(isset($row['work_linkedin'])) { echo $row['work_linkedin']; }?>">
 									</div>
 								</div>
 							</td>
@@ -768,7 +777,7 @@ if ($p) { // If everything's OK...
 						<tr><th colspan="2"> PROFILE PICTURE <small style="color:#FF3030"> (Please upload a JPG or PNG format) </small> </th></tr>
                       	<tr>
                       		<td colspan="2">
-								<img src="images/profiles/<?php if(isset($row['image'])) { echo $row['image']; } else { echo 'default.png'; } ?>" width="60"/>
+								<img src="images/profiles/<?php if(isset($row['work_image']) && $row['work_image'] != "") { echo $row['work_image']; } else { echo 'default.png'; } ?>" width="60"/>
 							</td>
                       	</tr>
                       	
@@ -842,32 +851,31 @@ if ($p) { // If everything's OK...
                 <?php } else { ?>
                 	
                 	<div class="col-md-12 user-details well text-center col-sm-12" > 	 <!-- start seide bar profile-->	
-                    <img src="images/profiles/<?php if(isset($row['image'])) { echo $row['image']; } else { echo 'default.png'; } ?>" class="main-avatar" />
+                    <img src="images/profiles/<?php if(isset($row['work_image'])) { echo $row['work_image']; } else { echo 'default.png'; } ?>" class="main-avatar" />
                     <div class="user-main-info">
-                      <h2 class="text-primary user-name"><?php echo $row['first_name']. '  ' . $row['last_name']; ?></h2>
-                      <h4 class="text-info user-designation"> <i class="fa fa-envelope-o"></i> <?php echo $row['email']; ?></h4>
-                      <h4 class="text-info user-designation"> <i class="fa fa-twitter"></i> <?php echo $row['twitter']; ?></h4>
-                      <h5 class="text-info user-designation"><?php echo $row['interest']; ?></h5>
+                      <h2 class="text-primary user-name"><?php echo $row['work_first_name']. '  ' . $row['work_last_name']; ?></h2>
+                      <h4 class="text-info user-designation"> <i class="fa fa-envelope-o"></i> <?php echo $row['work_email']; ?></h4>
+                      <h4 class="text-info user-designation"> <i class="fa fa-twitter"></i> <?php echo $row['work_twitter']; ?></h4>
+                      <h4 class="text-info user-designation"><i class="fa fa-hand-o-right"></i> <?php echo strtoupper($row['roles']); ?></h4>
                     </div>
                     <div class="about">
-                      <p><strong>About: </strong> <?php echo $row['bio']; ?> </p>
+                      <p><strong>About: </strong> <?php echo $row['work_bio']; ?> </p>
                     </div>
                     <ul class="list-group details-list">
                      <li class="list-group-item">
                       <span class="badge bg-info">
                       	<?php
-                    $q4 = "SELECT DISTINCT subject.subject_id, subject.subject FROM subject
-                    		JOIN lesson ON lesson.subject_id = subject.subject_id
-                    		JOIN dvd_lessons ON dvd_lessons.lesson_id = lesson.lesson_id
-                    		JOIN dvd_code ON dvd_code.dvd_id = dvd_lessons.dvd_id
-                    		JOIN dvd_code_user ON dvd_code_user.dvd_code_id = dvd_code.dvd_code_id
-                    		WHERE dvd_code_user.student_id = '$user'";
-					$r4 = mysqli_query($conn, $q4) or trigger_error(mysqli_error($conn));
-                    echo $noofsubject = mysqli_num_rows($r4);
+                   
+									$lecturer = $_SESSION['work_id'];
+									$q4 = "SELECT DISTINCT subject.subject_id, subject.subject FROM subject
+											JOIN lesson on lesson.subject_id = subject.subject_id
+											WHERE lesson.work_id = '$user'";
+									$r4 = mysqli_query ($conn, $q4);
+									echo $numofSubjects = mysqli_num_rows($r4);
 					
                     ?>
                       	</span>
-                      	<b> Subjects Registered </b> <hr>
+                      	<b> My Subjects </b> <hr>
                       	<?php echo '<ul>';
 					while ($row4 = mysqli_fetch_array($r4, MYSQLI_ASSOC)) {
 						echo '<li>' . $row4['subject'] . '</li>';
@@ -879,41 +887,46 @@ if ($p) { // If everything's OK...
                     <li class="list-group-item">
                       <span class="badge bg-pink">
                     <?php
-                    $q = "SELECT dvd_code_user_id FROM dvd_code_user WHERE student_id = '$user'";
-					$r = mysqli_query($conn, $q) or trigger_error(mysqli_error($conn));
-                    echo $number = mysqli_num_rows($r);
-                    ?>
+									$q5 = "SELECT DISTINCT topic.topic_id, topic.topic FROM topic
+											JOIN lesson ON lesson.topic_id = topic.topic_id
+											WHERE lesson.work_id = '$user'";
+									$r5 = mysqli_query ($conn, $q5);
+									echo $numofTopics = mysqli_num_rows($r5);
+									?>
                       	</span>
-                      <b>DVD in Archive</b>
+                      <b> My Topics </b> <hr>
+                      	<?php echo '<ul>';
+					while ($row5 = mysqli_fetch_array($r5, MYSQLI_ASSOC)) {
+						echo '<li>' . $row5['topic'] . '</li>';
+					}
+					echo '</ul>';
+					?>
                     </li>
+                    
                     <li class="list-group-item">
                       <span class="badge bg-warning">
                       	<?php
-                      	$sn = array();
-                      	$q2 = "SELECT dvd_id FROM dvd_code
-                      			JOIN dvd_code_user ON dvd_code_user.dvd_code_id = dvd_code.dvd_code_id
-                      			WHERE dvd_code_user.student_id = '$user'";
-								
-						$r2 = mysqli_query($conn, $q2) or trigger_error(mysqli_error($conn));
-						while ($row2 = mysqli_fetch_array($r2, MYSQLI_ASSOC)) {
-							$condition = $row2['dvd_id'];
-							
-							//second loop
-								$q3 = "SELECT lesson_id FROM dvd_lessons WHERE dvd_id = '$condition'";
-								if ($r3 = mysqli_query($conn, $q3) or trigger_error(mysqli_error($conn))) {
-								$count = mysqli_num_rows($r3);
-									array_push($sn, $count);
-								}
-			
-						}
-						echo array_sum($sn);
-                      	?>
+                      				$q6 = "SELECT lesson.lesson_id, lesson FROM lesson
+											WHERE work_id = '$user'";
+									$r6 = mysqli_query ($conn, $q6);
+									echo $numofLessons = mysqli_num_rows($r6);
+						?>
                       	</span>
-                      <b>Lessons Watched</b>
+                      <b>My Lessons</b> <hr>
+                      	<?php echo '<ul>';
+					while ($row6 = mysqli_fetch_array($r6, MYSQLI_ASSOC)) {
+						echo '<li>' . $row6['lesson'] . '</li>';
+					}
+					echo '</ul>';
+					?>
                     </li>
+                    
                   </ul>
                 </div>  	<!-- end sidebar profile-->
-                	<?php } ?>
+                	<?php }
+                	} else {
+                		redirect_to('error.php');
+                	} ?>
                 
                 </div>  	<!-- end all profile-->
 

@@ -93,7 +93,6 @@ if(strpos($page,"extended-modals") !== false ) { ?>
                 <li><a href="profile.php"><i class="fa fa-user"></i> My Profile</a></li>
                 <li><a href="#"><i class="fa fa-envelope"></i> Inbox</a></li>
                 <li><a href="password.php"><i class="fa fa-edit"></i> Change Password</a></li>
-                 <li><a href="#"><i class="fa fa-cogs"></i> Settings</a></li>
                 <li class="divider"></li>
                 <?php 
                 if(isset($_SESSION['student_id'])) {
@@ -226,7 +225,7 @@ if(strpos($page,"extended-modals") !== false ) { ?>
                     <li><a href="#" class="btn bg-primary">View All</a></li>
                   </ul>
                 </li>
-                <li><a href="#" class="settings"><i class="fa fa-cogs settings-toggle"></i><span class="badge bg-info">20</span></a></li>
+                <li><a href="#" class="settings"><i class="fa fa-question-circle settings-toggle"></i><span class="badge bg-info">20</span></a></li>
               </ul>
             </div><!-- /.navbar-collapse -->
           </nav> <!-- /.navbar -->

@@ -15,7 +15,7 @@ include($inc_path . 'header.php'); ?>
 // where to redirect if rejected
 $redirect = 'index.php';
 // if session variable not set, redirect to login page
-if (!isset($_SESSION['student_id'])) {
+if (!isset($_SESSION['work_id'])) {
 header("Location: $redirect");
 exit;
 }
@@ -23,7 +23,7 @@ exit;
 
 <?php
 // Check if the form has been submitted:
-$student = $_SESSION['student_id'];
+$admin = $_SESSION['work_id'];
 if (isset($_POST['submitted'])) {
 
 require_once ('../init_connect.php');
@@ -46,7 +46,7 @@ $errors[] = '<p class="error"> - You forgot to enter your new password.</p>';
 if (empty($errors)) { // If everything's OK.
 
 // Make the UPDATE query:
- 	$q = "UPDATE student_register SET password=SHA1('$np') WHERE student_id=$student";
+ 	$q = "UPDATE worker_register SET work_password=SHA1('$np') WHERE work_id='$student' LIMIT 1";
 	$r = @mysqli_query($conn, $q);
 
 if (mysqli_affected_rows($conn) == 1) { // If it ran OK.
@@ -71,7 +71,7 @@ if (mysqli_affected_rows($conn) == 1) { // If it ran OK.
   							<div class="col-mod-12">
 
   								<ul class="breadcrumb">
-  									<li><a href="index.php">Classroom</a></li>
+  									<li><a href="index.php">Administrator</a></li>
   									<li class="active"><a href="student_area.php">Change Password</a></li>
   								</ul>
 

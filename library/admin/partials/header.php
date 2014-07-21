@@ -5,7 +5,7 @@ include('../init_connect.php');
 include('functions/functions.php');
 include('functions/fns.php'); 
 
-	/* redirect when student not log in */
+	/* redirect when admin not log in */
 	if (!isset($_SESSION['work_id']))
 	{
 		// Redirect:
@@ -23,20 +23,24 @@ include('functions/fns.php');
 <head>
   <meta charset="utf-8">
   <title>	
-  	<?php							
+  	<?php	
+	
+	$q = "SELECT * FROM worker_register WHERE work_id = '$admin'";
+	$r = mysqli_query($conn, $q);
+	$row = mysqli_fetch_array($r, MYSQLI_ASSOC);
+							
 // Check for a $page_title value:
 if (!isset($page_title)) {
  $page_title = 'Wazobia Academy';
 }
-if(isset($_SESSION['firstname'])) {
-	$student = $_SESSION['firstname'] . "  " . $_SESSION['lastname'];
+if(isset($_SESSION['work_id'])) {
+	$admin = $row['work_first_name'] . "  " . $row['work_last_name'];
 } else {
-	$student = "";
+	$admin = "";
 }
-	 echo $page_title . " | | " . $student;
-
+	 echo $page_title . " | | " . $admin;
+$admin
 	 ?>
-
 </title>
 <link rel="shortcut icon" href="../images/favicon.ico"  />
 
@@ -86,14 +90,17 @@ if(strpos($page,"extended-modals") !== false ) { ?>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav user-menu navbar-right " id="user-menu">
 
-            <li><a href="#" class="user dropdown-toggle" data-toggle="dropdown"><span class="username">
-            	<img src="images/profiles/<?php echo $_SESSION['image']; ?>" class="user-avatar" alt="<?php echo $_SESSION['firstname'] . "  " . $_SESSION['lastname'] ; ?>">
-            	 <?php echo $_SESSION['firstname'] . '  ' . $_SESSION['lastname'] ; ?>  </span></a>
+            <li>
+            	<a href="#" class="user dropdown-toggle" data-toggle="dropdown"><span class="username">
+            	<img src="images/profiles/<?php if(isset($row['work_image']) && $row['work_image'] != "") { echo $row['work_image']; } else { echo 'default.png'; } ?>" class="user-avatar" 
+            	alt="<?php echo $row['work_first_name'] . "  " . $row['work_last_name']; ?>">
+            	
+            	<?php echo $row['work_first_name'] . "  " . $row['work_last_name']; ?>  </span>
+            	</a>
               <ul class="dropdown-menu">
-                <li><a href="#"><i class="fa fa-user"></i> My Profile</a></li>
+                <li><a href="profile.php "><i class="fa fa-user"></i> My Profile</a></li>
                 <li><a href="#"><i class="fa fa-envelope"></i> Inbox</a></li>
                 <li><a href="password.php"><i class="fa fa-edit"></i> Change Password</a></li>
-                <li><a href="#"><i class="fa fa-cogs"></i> Settings</a></li>
                 <li class="divider"></li>
                 <?php 
                 if(isset($_SESSION['work_id'])) {
@@ -225,7 +232,7 @@ if(strpos($page,"extended-modals") !== false ) { ?>
                     <li><a href="#" class="btn bg-primary">View All</a></li>
                   </ul>
                 </li>
-                <li><a href="#" class="settings"><i class="fa fa-cogs settings-toggle"></i><span class="badge bg-info">20</span></a></li>
+                <li><a href="#" class="settings"><i class="fa fa-question-circle settings-toggle"></i><span class="badge bg-info">20</span></a></li>
               </ul>
             </div><!-- /.navbar-collapse -->
           </nav> <!-- /.navbar -->
@@ -246,7 +253,7 @@ if(strpos($page,"extended-modals") !== false ) { ?>
                     <?php //buildMenu($menuList); ?>
                     
                     <?php 
-                    if (isset($_SESSION['work_id']) && $_SESSION['roles'] == 'admin') { // admin access panel
+                    if (isset($_SESSION['work_id']) && $_SESSION['roles'] == 'administrator') { // admin access panel
                     ?>
                     <li class="submenu"><a class="dropdown" href="admin_area.php" data-original-title="Dashboard"> <i class="fa fa-dashboard"></i><span class="hidden-minibar"> Dashboard </span></a></li>
                     <li class="submenu"><a class="dropdown" href="organisation.php" data-original-title="Add Organisation"> <i class="fa fa-briefcase"></i><span class="hidden-minibar"> Organization </span></a></li>
@@ -277,6 +284,7 @@ if(strpos($page,"extended-modals") !== false ) { ?>
                    		<li class="submenu"><a class="dropdown" href="add_dvd_pack.php" data-original-title="Add DVD Pack"> <i class="fa fa-plus"></i><span class="hidden-minibar"> Add DVD Pack</span></a></li>
                    		<li class="submenu"><a class="dropdown" href="view_dvd_pack.php" data-original-title="View DVD Pack"> <i class="fa fa-plus"></i><span class="hidden-minibar"> View DVD Pack </span></a></li>
                    		<li class="submenu"><a class="dropdown" href="add_dvd_inventory.php" data-original-title="Add DVD to Inventory"> <i class="fa fa-plus"></i><span class="hidden-minibar"> Add DVD to Inventory </span></a></li>
+                   		<li class="submenu"><a class="dropdown" href="generate.php" data-original-title="Generate Code"> <i class="fa fa-plus"></i><span class="hidden-minibar"> Generate Code </span></a></li>
                     	</ul>
                     </li>
                     <li class="submenu"><a class="dropdown" href="pay_instructors.php" data-original-title="Pay Instructors"> <i class="fa">&#8358;</i><span class="hidden-minibar"> Pay Instructors </span></a></li>

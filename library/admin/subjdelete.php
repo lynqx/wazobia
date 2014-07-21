@@ -1,7 +1,7 @@
 <?php 
 
   include ('../functions/functions.php');
-if (isset($_SESSION['work_id']) && $_SESSION['roles'] != 'admin') {
+if (isset($_SESSION['work_id']) && $_SESSION['roles'] != 'administrator') {
 	redirect_to('error.php');
 }
 

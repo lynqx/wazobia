@@ -5,7 +5,7 @@
 /* 26062014*/
 /* redirected to when student logs in */
 
-$page_title = "Add Subjects";
+$page_title = "Generate DVD Codes";
 $path = "";
 $inc_path = $path."partials/";
 include($inc_path . 'header.php');
@@ -21,49 +21,44 @@ if (isset($_POST['submitted'])) { // Handle the form.
 $trimmed = array_map('trim', $_POST);
 
 // Assume invalid values:
-$organisation = $subject = $subject_code = FALSE;
+$dvd = $noofcode = FALSE;
 
 $errors = array();
 
 // Check for the organisation:
-if (isset($_POST['organisation']) && ($_POST['organisation'] != "")){
-$organisation= mysqli_real_escape_string ($conn, $trimmed['organisation']);
+if (isset($_POST['dvd']) && ($_POST['dvd'] != "")){
+$dvd= mysqli_real_escape_string ($conn, $trimmed['dvd']);
 } else {
-$errors[] = 'Please enter the organisation!</p>';
+$errors[] = 'Please select the DVD title!</p>';
 }
 
 // Check for the subject:
-if (isset($_POST['subject']) && ($_POST['subject'] != "")){
-$subject= mysqli_real_escape_string ($conn, $trimmed['subject']);
+if (isset($_POST['noofcode']) && ($_POST['noofcode'] != "")){
+$noofcode= mysqli_real_escape_string ($conn, $trimmed['noofcode']);
 } else {
-$errors[] = 'Please enter the subject!</p>';
+$errors[] = 'Please enter the amount of code to be generated!</p>';
 }
 
-$subject_code = substr($subject, 0, 3);
-$subject_code = strtoupper($subject_code);
+if ($dvd && $noofcode) { // If everything's OK...
 
-if ($organisation && $subject && $subject_code) { // If everything's OK...
-
-
-// Add the subject to the database:
-
-$q = "INSERT INTO `subject` (organisation_id, subject_codes, subject, date) VALUES ('$organisation', '$subject_code', '$subject',  NOW())";
+for ($i=1; $i<=$noofcode; $i++) {
+// Add the codes to the database in a loop:
+$ran = uniqid();
+$rand = date('Y').$ran;
+$q = "INSERT INTO `dvd_code` (dvd_id, dvd_available, dvd_code) VALUES ('$dvd', 1, '$rand')";
 $r = mysqli_query ($conn, $q) or trigger_error("Query: $q\n<br />MySQL Error: " . mysqli_error($conn));
 
-if (mysqli_affected_rows($conn) == 1)
-{ // If it ran OK then add other details to biodata table.
+				}
+				
+	// If it ran OK then add other details to biodata table.
 
 	//Set display property and confirmation message of the message container to 'block'
 					$success_display = 'block';
-					$success_msg = '<h4 style="color: #008080"> SUCCESS! Subject saved successfully.</h4>';
+					$success_msg = '<h4 style="color: #008080"> SUCCESS! DVD codes generated and saved successfully.</h4>';
 					
 					} else { // db error.
-						$err_msg = 'Subject could not be saved due to a system error. We apologize for any inconvenience</p>';
+						$err_msg = 'Something went wrong. We apologize for any inconvenience</p>';
 					}
-
-								} else { // If one of the data tests failed.
-								$datatest = 'Please re-enter the details appropriately and try again.</p>';
-								}
 
 } // End of the main Submit conditional.
 
@@ -77,16 +72,16 @@ if (mysqli_affected_rows($conn) == 1)
 
   								<ul class="breadcrumb">
   									<li><a href="index.php">Admin</a></li>
-  									<li class="active">Subjects</li>
-  									<li class="active"><a href="language.php">Add Subjects</a></li>
+  									<li class="active">DVD</li>
+  									<li class="active"><a href="generate.php">Generate DVD Codes</a></li>
   								</ul>
 
 
-  								<h3 class="page-header animated bounceInRight show-info" ><i class="fa fa-spin fa-spinner"></i> Add Subjects <i class="fa fa-plus-square animated bounceInDown show-info"></i> </h3>
+  								<h3 class="page-header animated bounceInRight show-info" ><i class="fa fa-spin fa-spinner"></i> Generate DVD Codes <i class="fa fa-plus-square animated bounceInDown show-info"></i> </h3>
 
   								<blockquote class="page-information hidden">
   									<p>
-  										<b>Add Subjects Page</b> Page to add subjects into each organisation.
+  										<b>Generate DVD Codes Page</b> Page to Generate DVD Codes into each organisation.
   									</p>
   								</blockquote>
 
@@ -99,19 +94,17 @@ if (mysqli_affected_rows($conn) == 1)
   								<div class="panel panel-cascade">
   									<div class="panel-heading">
   										<h3 class="panel-title text-primary">
-  											Add Subjects
+  											Generate DVD Codes
   										</h3>
   									</div>
   									<div class="panel-body panel-border">
   									
   									<?php 
-        	
-        	
-        	
-									// block to output success message	
+  									
+     									// block to output success message	
 											   	if(!empty($success_msg)) {
 												echo '<div class="alert alert-info alert-dismissable">
-          										 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+           										<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 														<p><h4><i class="fa fa-heart"></i> Successful!</h4>' . $success_msg . '</p></div>';
 													}
 												?>
@@ -122,6 +115,9 @@ if (mysqli_affected_rows($conn) == 1)
           										 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 														<p><h4><i class="fa fa-asterisk"></i> Error!</h4>' . $err_msg . '</p></div>';
 													}
+        	
+        							// block to output success message	
+								
 									// This page prints any errors associated with logging in
 									// and it creates the entire login page, including the form.
 									
@@ -141,22 +137,21 @@ if (mysqli_affected_rows($conn) == 1)
 									</div>';
 									}
 												?>
-									<form class="form-horizontal cascade-forms" method="post" action="add_subjects.php">
+									<form class="form-horizontal cascade-forms" method="post" action="generate.php">
 
   										<div class="form-group">
-										<label for="selectlanguage" class="col-lg-2 col-md-3 control-label"> Language </label>
+										<label for="selectlanguage" class="col-lg-2 col-md-3 control-label"> DVD Title</label>
 									<?php // code to select language
 				         								// Make the query to view table details:
-														$q = "SELECT * FROM language";
+														$q = "SELECT * FROM dvd";
 														$r = @mysqli_query ($conn, $q) or trigger_error("Query: $q\n<br />MySQL Error: " . mysqli_error($conn));;
 										   	        ?>
-													<select data-placeholder="Choose a language..." class="chosen-select" style="width:350px;" tabindex="2"
-													onchange="getData('targetDiv', this.value);">
+													<select data-placeholder="Choose a DVD..." class="chosen-select" style="width:350px;" tabindex="2" name="dvd">
 														<option value=""></option>
 													<?php // iterate the table rows <tr>
 													while ($row = mysqli_fetch_array($r, MYSQLI_ASSOC)) {
 													?>
-														<option value="<?php echo $row['language_id']; ?>"> <?php echo $row['language']; ?> </option>
+														<option value="<?php echo $row['dvd_id']; ?>"> <?php echo $row['dvd_title']; ?> </option>
 														<?php } //end select subject while ?>
 											 		</select>
 											 		</div>
@@ -164,16 +159,15 @@ if (mysqli_affected_rows($conn) == 1)
 									<div class="form-group" id="targetDiv">
 									</div>
 																		
-								<div class="form-group" id="hidden_subj" style="display:none">
-												<label for="organisation" class="col-lg-2 col-md-3 control-label">Subject</label>
-												<div class="col-lg-10 col-md-9">
-													<input type="text" class="form-control form-cascade-control" id="pulser" name="subject" >
+								<div class="form-group">
+												<label for="organisation" class="col-lg-2 col-md-3 control-label">Number of Codes to Generate</label>
+												<div class="col-lg-4 col-md-3">
+													<input type="number" class="form-control" id="pulser" name="noofcode" >
 												</div>
 								</div>
 											
 											<div class="form-actions">
 											<input type="hidden" name="submitted" value="TRUE" />
-											
 											<input type="submit" value="Submit" class="btn bg-primary text-white btn-lg">
 											
 											</div>

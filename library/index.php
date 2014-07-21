@@ -264,7 +264,8 @@ $header .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
  					// Finish the page:
 					 //Set display property and confirmation message of the message container to 'block'
 					$success_display = 'block';
-					$success_msg = '<h4 style="color: #008080"> SUCCESS! Your Account has been created successfully.</h4>';
+					$success_msg = '<h4 style="color: #008080"> SUCCESS! Your Account has been created successfully.</h4> <br>
+								<p> Please check your email for further instructions to verify and activate your account </p>';
 					
 					} else { // The email address is not available.
 							$err_msg = 'The student has already been registered. Please use a unique email address</p>';

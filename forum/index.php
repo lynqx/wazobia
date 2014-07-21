@@ -119,7 +119,7 @@ include('partials/header.php');
              <th colspan="2">Forums</th>
              <th>Topics</th>
              <th>Posts</th>
-             <th>Last Post</th>
+             <th>Last Question</th>
            </tr>	
          </tfoot>
        </table>

@@ -72,7 +72,7 @@ $_SESSION['start'] = time();
 // Store the HTTP_USER_AGENT:
 $_SESSION['agent'] = md5($_SERVER ['HTTP_USER_AGENT']);
 
-if ($_SESSION['roles'] == 'admin') {
+if ($_SESSION['roles'] == 'administrator') {
 // Redirect:
 $url = absolute_url ('admin_area.php');
 header("Location: $url");

@@ -308,4 +308,51 @@ function monthsGen()
 	}
 }
 
+function postAnswer($connection, $answer)
+{
+	$insert = "INSERT INTO exercise_answers (answers) VALUES ('$answer')";
+	if(mysqli_query($connection, $insert))
+	{
+		$lastid = mysqli_insert_id($connection);
+		return($lastid);
+	}
+	else
+	echo ('<b style=\"color: red; \">FAILED! Error occured while posting an answer!</b>');
+}
+
+function postQuestion($connection, 
+					$lessonid, 
+					$exercise_answers_id, 
+					$question, 
+					$tip, 
+					$exhibit_ref
+					)
+{
+	$insert = "INSERT INTO exercise_question (lesson_id, exercise_answers_id, question, tip, exhibit_ref) VALUES ('$lessonid', '$exercise_answers_id', '$question', '$tip', '$exhibit_ref')";
+	
+	if(mysqli_query($connection, $insert))
+	{
+		$lastid = mysqli_insert_id($connection);
+		return($lastid);
+	}
+	else
+	echo ('<b style=\"color: red; \">FAILED! Error occured while posting a question!</b>');
+
+}
+
+
+function postIds($connection,
+				$questionid,
+				$answersid)
+{
+	$insert = "INSERT INTO question_answer (exercise_question_id, exercise_answers_id) VALUES ('$questionid', '$answersid')";
+	if(mysqli_query($connection, $insert))
+	{
+		$lastid = mysqli_insert_id($connection);
+		return($lastid);
+	}
+	else
+	echo ('<b style=\"color: red; \">FAILED! Error occured while posting question and answers ids!</b>');
+}
+
 
