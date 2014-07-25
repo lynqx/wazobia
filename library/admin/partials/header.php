@@ -295,8 +295,9 @@ if(strpos($page,"extended-modals") !== false ) { ?>
                     ?>
                     
                     <li class="submenu"><a class="dropdown" href="lecturer_area.php" data-original-title="Dashboard"> <i class="fa fa-dashboard"></i><span class="hidden-minibar"> Dashboard </span></a></li>
-                    <li class="submenu"><a class="dropdown" href="view_instructors_payment.php" data-original-title="Add Organisation"> <i class="fa fa-briefcase"></i><span class="hidden-minibar"> View Payments </span></a></li>
-                    <li class="submenu"><a class="dropdown" href="account_details.php" data-original-title="Account Details"> <i class="fa fa-folder-open"></i><span class="hidden-minibar"> Account Details </span></a>
+                    <li class="submenu"><a class="dropdown" href="view_instructors_payment.php" data-original-title="View Payment History"> <i class="fa fa-briefcase"></i><span class="hidden-minibar"> View Payment History </span></a></li>
+                    <li class="submenu"><a class="dropdown" href="view_questions.php" data-original-title="View_Questions"> <i class="fa fa-question-circle"></i><span class="hidden-minibar"> View Questions </span></a></li>
+					<li class="submenu"><a class="dropdown" href="account_details.php" data-original-title="Account Details"> <i class="fa fa-folder-open"></i><span class="hidden-minibar"> Account Details </span></a>
                     	
 					<?php	
                     }

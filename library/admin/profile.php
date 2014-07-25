@@ -288,8 +288,8 @@ default:
 print 'A system error occurred.';
 break;
 } // End of switch.
-echo '</p></div>';
  print '</strong></p>';
+echo '</p></div>';
 
 } // End of error IF.
 

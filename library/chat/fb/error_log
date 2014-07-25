@@ -1,0 +1,6 @@
+[06-May-2010 16:45:23] PHP Notice:  Could not connect to MySQL: Access denied for user 'root'@'localhost' (using password: NO) in /home/hackme/public_html/demo/twitter style pagination/facebook style/database_connection.php on line 16
+[06-May-2010 16:45:23] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, boolean given in /home/hackme/public_html/demo/twitter style pagination/facebook style/facebook_style_pagination.php on line 125
+[06-May-2010 16:45:23] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, null given in /home/hackme/public_html/demo/twitter style pagination/facebook style/facebook_style_pagination.php on line 126
+[06-May-2010 16:46:20] PHP Notice:  Could not connect to MySQL: Access denied for user 'root'@'localhost' (using password: NO) in /home/hackme/public_html/demo/twitter style pagination/facebook style/database_connection.php on line 16
+[06-May-2010 16:46:20] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, boolean given in /home/hackme/public_html/demo/twitter style pagination/facebook style/facebook_style_pagination.php on line 125
+[06-May-2010 16:46:20] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, null given in /home/hackme/public_html/demo/twitter style pagination/facebook style/facebook_style_pagination.php on line 126

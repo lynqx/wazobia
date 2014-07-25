@@ -43,8 +43,8 @@ if ($dvd && $noofcode) { // If everything's OK...
 
 for ($i=1; $i<=$noofcode; $i++) {
 // Add the codes to the database in a loop:
-$ran = uniqid();
-$rand = date('Y').$ran;
+echo $ran = rand(uniqid(), TRUE);
+echo $rand = date('Y').$ran;
 $q = "INSERT INTO `dvd_code` (dvd_id, dvd_available, dvd_code) VALUES ('$dvd', 1, '$rand')";
 $r = mysqli_query ($conn, $q) or trigger_error("Query: $q\n<br />MySQL Error: " . mysqli_error($conn));
 
@@ -177,43 +177,7 @@ $r = mysqli_query ($conn, $q) or trigger_error("Query: $q\n<br />MySQL Error: " 
   									</div> <!-- /panel body -->	
   								</div>	
   							</div>
-  						</div>
 
 
 <?php include('partials/footer.php'); ?>
 
-<script language = "javascript">
-var XMLHttpRequestObject = false;
-if (window.XMLHttpRequest) {
-XMLHttpRequestObject = new XMLHttpRequest();
-} else if (window.ActiveXObject) {
-XMLHttpRequestObject = new ActiveXObject("Microsoft.XMLHTTP");
-}
-
-function getData(divID, lang)
-{
-	
-	var url = "ajax/select_organisation.php?lang="+lang;
-if(XMLHttpRequestObject) {
-var obj = document.getElementById(divID);
-XMLHttpRequestObject.open("GET", url, true);
-XMLHttpRequestObject.onreadystatechange = function()
-{
-if (XMLHttpRequestObject.readyState == 4 &&
-XMLHttpRequestObject.status == 200) {
-obj.innerHTML = XMLHttpRequestObject.responseText;
-}
-}
-XMLHttpRequestObject.send(null);
-}
-}
-</script>
-
-<script language = "javascript">
-
-function showsubj() {
-	
-	var elem = document.getElementById('hidden_subj');
-		elem.style.display = "block";
-}
-</script>

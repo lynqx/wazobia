@@ -33,15 +33,27 @@ if(!empty($lesson_id))
 		exit();
 	}
 	$doc_folder = "docs";
+	$nolesson = "nolesson.php";
+	$nopdf = "nopdf.php";
 	
-	$lesson_html = getColumnValue($conn, 'file_name_html', 'lesson_note', 'lesson_id', $lesson_id);
+	//$lesson_html = getColumnValue($conn, 'file_name_html', 'lesson_note', 'lesson_id', $lesson_id);
 	$lesson_pdf = getColumnValue($conn, 'file_name', 'lesson_note', 'lesson_id', $lesson_id);
 	$lesson_title = ucwords(getColumnValue($conn, 'lesson', 'lesson', 'lesson_id', $lesson_id));
-
+	
+	/*
+	if(!empty($lesson_html))
 	$html_file = $doc_folder."/".$lesson_html;
+	else
+	$html_file = $doc_folder."/".$nolesson;
+	*/
+	
 	$pdf_file = $doc_folder."/".$lesson_pdf;
 	$test_link = "test.php?lesson=$lesson_title&id=$lesson_id&t_start=YES";
+	
+	if(!empty($lesson_pdf))
 	$pdf_link = "$doc_folder/$lesson_pdf";
+	else
+	$pdf_link = "$doc_folder/$nopdf";
 
 
 }
@@ -90,16 +102,21 @@ else
 										</div>
 										
 										<div style="clear: both;"></div>
-										
-										<div style="clear:both;"></div>
 
 											<!-- CONTENT GOES IN HERE -->
-											<?php include($html_file); ?>
+											<?php //include($html_file); ?>
+										
+										<div style="height: 600px; width: 960px; margin-top: 10px; ">
+											<embed src="<?php echo $pdf_file; ?>" width="100%" height="100%" />
+										</div>
+										
 										
 										<div class="pull-right">
 											<a target="_blank" href="<?php echo $pdf_link; ?>" class="btn btn-success btn-animate-demo">Download PDF Version</a> &nbsp; 
 											<a href="<?php echo $test_link; ?>" class="btn btn-info btn-animate-demo">Take Test</a>
 										</div>
+										<div style="clear: both;"></div>
+										
   									</div> <!-- /panel body -->	
   								</div>	
   							</div>

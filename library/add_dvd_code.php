@@ -92,7 +92,7 @@ header('location: index.php');
 		<div class="panel panel-cascade">
 			<div class="panel-heading">
 				<h3 class="panel-title">
-					Enter Your Dvd Code
+					Enter Your DVD Code
 					<span class="pull-right">
 						<!-- <a  href="#" class="panel-minimize"><i class="fa fa-chevron-up"></i></a> -->
 						<!--  <a  href="#"  class="panel-close"><i class="fa fa-times"></i></a> -->

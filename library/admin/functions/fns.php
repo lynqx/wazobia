@@ -310,6 +310,8 @@ function monthsGen()
 
 function postAnswer($connection, $answer)
 {
+	$answer = mysqli_real_escape_string($connection, $answer);
+	
 	$insert = "INSERT INTO exercise_answers (answers) VALUES ('$answer')";
 	if(mysqli_query($connection, $insert))
 	{
@@ -328,6 +330,12 @@ function postQuestion($connection,
 					$exhibit_ref
 					)
 {
+	$lessonid = mysqli_real_escape_string($connection, $lessonid);
+	$exercise_answers_id = mysqli_real_escape_string($connection, $exercise_answers_id);
+	$question = mysqli_real_escape_string($connection, $question);
+	$tip = mysqli_real_escape_string($connection, $tip);
+	$exhibit_ref = mysqli_real_escape_string($connection, $exhibit_ref);
+	
 	$insert = "INSERT INTO exercise_question (lesson_id, exercise_answers_id, question, tip, exhibit_ref) VALUES ('$lessonid', '$exercise_answers_id', '$question', '$tip', '$exhibit_ref')";
 	
 	if(mysqli_query($connection, $insert))
@@ -345,6 +353,9 @@ function postIds($connection,
 				$questionid,
 				$answersid)
 {
+	$questionid = mysqli_real_escape_string($connection, $questionid);
+	$answersid = mysqli_real_escape_string($connection, $answersid);
+	
 	$insert = "INSERT INTO question_answer (exercise_question_id, exercise_answers_id) VALUES ('$questionid', '$answersid')";
 	if(mysqli_query($connection, $insert))
 	{
@@ -354,5 +365,51 @@ function postIds($connection,
 	else
 	echo ('<b style=\"color: red; \">FAILED! Error occured while posting question and answers ids!</b>');
 }
+
+
+
+	function doOptionsJoin($connection, $fromColumn, $fromColumnid, $fromTable, $joinTable, $workid, $target)
+	{
+		$sel1 = "SELECT DISTINCT $fromTable.$fromColumn, $fromTable.$fromColumnid  
+			FROM $fromTable  
+			JOIN $joinTable  
+			ON $fromTable.$fromColumnid=$joinTable.$fromColumnid   
+			WHERE work_id='$workid'
+			ORDER BY $fromTable.$fromColumn DESC";
+		$rslt1 = mysqli_query($connection, $sel1) or die('<span style=\"color: red; \">Sorry! But I cannot fetch '.$target.' at this time.</span>');
+	
+		if(mysqli_num_rows($rslt1)==0)
+		echo "<option value=\"\">No ".$target." found!</option>";
+		else
+		{
+			while($rows1 = mysqli_fetch_row($rslt1))
+			{
+				echo "<option value=\"$rows1[1] \">".ucwords($rows1[0])."</option>\n";
+			}
+			mysqli_free_result($rslt1);
+		}
+	}
+	
+	
+	function doOptions($connection, $fromColumn, $fromColumnid, $fromTable, $workid, $orgid, $sbjid, $tpcid, $target)
+	{
+		$sel1 = "SELECT DISTINCT $fromTable.$fromColumn, $fromTable.$fromColumnid  
+			FROM $fromTable 
+			WHERE work_id='$workid' AND organisation_id='$orgid' AND subject_id='$sbjid' AND topic_id='$tpcid' 
+			ORDER BY $fromTable.$fromColumn DESC";
+		$rslt1 = mysqli_query($connection, $sel1) or die('<span style=\"color: red; \">Sorry! But I cannot fetch '.$target.' at this time.</span>');
+	
+		if(mysqli_num_rows($rslt1)==0)
+		echo "<option value=\"\">No ".$target." found!</option>";
+		else
+		{
+			while($rows1 = mysqli_fetch_row($rslt1))
+			{
+				echo "<option value=\"$rows1[1] \">".ucwords($rows1[0])."</option>\n";
+			}
+			mysqli_free_result($rslt1);
+		}
+	}
+	
 
 

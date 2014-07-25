@@ -263,6 +263,13 @@ if (mysqli_affected_rows($conn) == 1)
 												</div>
 											</div>
 											
+											<div class="form-group">
+												<label for="lesson" class="col-lg-2 col-md-3 control-label">Lesson Note <small>(PDF only) </small></label>
+												<div class="col-lg-10 col-md-9">
+													<input type="file" class="form-control form-cascade-control" id="pulser" name="upload" >
+												</div>
+											</div>
+											
 											
 											<div class="form-actions">
 											<input type="hidden" name="submitted" value="TRUE" />

@@ -214,7 +214,7 @@ if (mysqli_affected_rows($conn) == 1)
 			&nbsp;&nbsp; <i class="fa fa-circle"></i> &nbsp;&nbsp;       
 		 <span>
 			<?php
-	$days = floor($row1['TimeSpent'] / (60 * 60 * 24));
+			$days = floor($row1['TimeSpent'] / (60 * 60 * 24));
 			$remainder = $row1['TimeSpent'] % (60 * 60 * 24);
 			$hours = floor($remainder / (60 * 60));
 			$remainder = $remainder % (60 * 60);
@@ -319,9 +319,10 @@ $cname = 'count';
       // Make the query to view table details:
 				$q2 = "SELECT *, UNIX_TIMESTAMP() - answers.date AS TimeSpent FROM `answers`
 				WHERE answers.post_id = '$id'
-				ORDER BY answer_id DESC";
+				ORDER BY answer_id ASC";
 				$r2 = @mysqli_query ($conn, $q2) or trigger_error(mysqli_error($conn));
 				while ($row2 = mysqli_fetch_array($r2, MYSQLI_ASSOC)) {
+					$msg_id=$row['answer_id'];
 					?>
 			<div class="row product-row3">
 			<div class="product-display3">
@@ -359,6 +360,12 @@ $cname = 'count';
 				<?php
 				}
 				?>
+				
+				  
+  <div class="facebook_style" id="facebook_style">
+  <a id="<?php echo $msg_id; ?>" href="#" class="load_more" >Show Older Posts <img src="arrow1.png" /> </a>
+  </div>
+  
 				</div>
 				<?php if (isset($_SESSION['student_id']) || isset($_SESSION['work_id'])) {
 					
@@ -443,3 +450,55 @@ function refreshCaptcha()
 		 });
 
          </script>
+         
+<script type="text/javascript">
+$(function() {
+
+
+$('.load_more').live("click",function() {
+
+
+var last_msg_id = $(this).attr("id");
+
+
+
+if(last_msg_id!='end'){
+    
+    var form_data = {
+    	"lastmsg="+ last_msg_id,
+    	"subjid="+ subj_id
+    };
+    
+  $.ajax({
+type: "POST",
+url: "facebook_style_ajax_more.php",
+data: form_data, 
+
+beforeSend:  function() {
+$('a.load_more').append('<img src="facebook_style_loader.gif" />');
+  
+},
+success: function(html){
+    $(".facebook_style").remove();
+$("ol#updates").append(html);
+
+
+}
+});
+  
+}
+
+
+ 
+ 
+ 
+
+
+
+return false;
+
+
+});
+});
+
+</script>

@@ -65,6 +65,7 @@
 <script src="<?php echo $path; ?>js/nvd3/sample.nvd3.js"></script>
 
 <script src="<?php echo $path; ?>js/bootstrap-tour.js"></script>
+<script src="<?php echo $path; ?>js/chat.js"></script>
 
 <!-- Core Jquery File  =============================-->
 <script src="<?php echo $path; ?>js/core.js"></script>

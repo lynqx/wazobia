@@ -154,7 +154,7 @@ if (isset($_SESSION['work_id']) && $_SESSION['roles'] != 'administrator') {
 								</button>
 								<ul class="dropdown-menu" role="menu">
 									<li><a href="add_to_dvd.php?id=<?php echo urlencode($row1['lesson_id']); ?>">Add lesson to DVD</a></li>
-									<li><a href="add_lesson_note.php?id=<?php echo urlencode($row1['lesson_id']); ?>">Add Lesson Note</a></li>
+									<li><a href="lesson_note.php?id=<?php echo urlencode($row1['lesson_id']); ?>">Add Lesson Note</a></li>
 									<li class="divider"></li>
 								</ul>
 							</div>
