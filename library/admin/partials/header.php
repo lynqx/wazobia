@@ -277,10 +277,10 @@ if(strpos($page,"extended-modals") !== false ) { ?>
                     	</ul>
                     </li>
                     
-                    <li class="submenu"><a class="dropdown" href="#" data-original-title="Lessons"> <i class="fa fa-dot-circle-o"></i><span class="hidden-minibar"> DVD <span class="badge bg-success2 pull-right">1</span></span></a>
+                    <li class="submenu"><a class="dropdown" href="#" data-original-title="Lessons"> <i class="fa fa-dot-circle-o"></i><span class="hidden-minibar"> DVD <span class="badge bg-success2 pull-right">6</span></span></a>
                     	<ul>
                    		<li class="submenu"><a class="dropdown" href="add_dvd.php" data-original-title="Add DVD"> <i class="fa fa-plus"></i><span class="hidden-minibar"> Add DVD </span></a></li>
-                   		<li class="submenu"><a class="dropdown" href="view_dvd.php" data-original-title="View DVD"> <i class="fa fa-plus"></i><span class="hidden-minibar"> View DVD </span></a></li>
+                   		<li class="submenu"><a class="dropdown" href="#" data-original-title="View DVD"> <i class="fa fa-plus"></i><span class="hidden-minibar"> View DVD </span></a></li>
                    		<li class="submenu"><a class="dropdown" href="add_dvd_pack.php" data-original-title="Add DVD Pack"> <i class="fa fa-plus"></i><span class="hidden-minibar"> Add DVD Pack</span></a></li>
                    		<li class="submenu"><a class="dropdown" href="view_dvd_pack.php" data-original-title="View DVD Pack"> <i class="fa fa-plus"></i><span class="hidden-minibar"> View DVD Pack </span></a></li>
                    		<li class="submenu"><a class="dropdown" href="add_dvd_inventory.php" data-original-title="Add DVD to Inventory"> <i class="fa fa-plus"></i><span class="hidden-minibar"> Add DVD to Inventory </span></a></li>

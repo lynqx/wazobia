@@ -23,7 +23,7 @@ if (isset($_POST['submitted'])) { // Handle the form.
 $trimmed = array_map('trim', $_POST);
 
 // Assume invalid values:
-$dvdpack = FALSE;
+$dvdpack = $pack_price = $desc = FALSE;
 
 $errors = array();
 
@@ -36,12 +36,29 @@ $errors[] = 'Please enter the DVD Pack name!</p>';
 }
 
 
+// Check for the subject:
+if (isset($_POST['pack_price']) && (is_numeric($_POST['pack_price']))){
+$pack_price= mysqli_real_escape_string ($conn, $trimmed['pack_price']);
+} else {
+$errors[] = 'Please enter the DVD Pack price!</p>';
+}
 
-if ($dvdpack) { // If everything's OK...
+
+// Check for the subject:
+if (isset($_POST['description']) && ($_POST['description'] != "")){
+$desc= mysqli_real_escape_string ($conn, $trimmed['description']);
+} else {
+$errors[] = 'Please enter the DVD description or summary!</p>';
+}
+
+
+
+if ($dvdpack && $pack_price && $desc) { // If everything's OK...
 
 // Add the DVD pack name
 
-$q = "INSERT INTO `dvd_subject_pack` (subject_pack_name, date) VALUES ('$dvdpack', NOW())";
+$q = "INSERT INTO `dvd_subject_pack` (subject_pack_name, dvd_pack_price, dvd_pack_info, date) 
+		VALUES ('$dvdpack', '$pack_price', '$desc', NOW())";
 $r = mysqli_query ($conn, $q);
 
 if (mysqli_affected_rows($conn) == 1)
@@ -90,11 +107,7 @@ if (mysqli_affected_rows($conn) == 1)
   						<div class="row">
   							<div class="col-md-12">
   								<div class="panel panel-cascade">
-  									<div class="panel-heading">
-  										<h3 class="panel-title text-primary">
-  											Add Lesson to DVD
-  										</h3>
-  									</div>
+  								
   									<div class="panel-body panel-border">
   									
   									<?php 
@@ -143,7 +156,21 @@ if (mysqli_affected_rows($conn) == 1)
 								<div class="form-group">
 												<label for="organisation" class="col-lg-2 col-md-3 control-label">DVD Pack Name</label>
 												<div class="col-lg-10 col-md-9">
-												<input type="text" class="form-control form-cascade-control" id="pulser" name="dvd_pack" >
+												<input type="text" class="form-control" name="dvd_pack" >
+												</div>
+								</div>
+								
+								<div class="form-group">
+												<label for="organisation" class="col-lg-2 col-md-3 control-label">DVD Pack Price</label>
+												<div class="col-lg-10 col-md-9">
+												<input type="text" class="form-control" name="pack_price" >
+												</div>
+								</div>
+								
+								<div class="form-group">
+												<label for="organisation" class="col-lg-2 col-md-3 control-label">Description</label>
+												<div class="col-lg-10 col-md-9">
+												<textarea name="description" cols="108" rows="3"></textarea>
 												</div>
 								</div>
   									

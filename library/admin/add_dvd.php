@@ -40,12 +40,13 @@ $subject= mysqli_real_escape_string ($conn, $trimmed['subject']);
 $errors[] = 'Please select the subject!</p>';
 }
 
-// Check for the subject:
+// Check for the dvd pack name:
 if (isset($_POST['dvdpack']) && ($_POST['dvdpack'] != "")){
 $dvdpack= mysqli_real_escape_string ($conn, $trimmed['dvdpack']);
 } else {
-$errors[] = 'Please selct the DVD PACK!</p>';
+$errors[] = 'Please select the DVD PACK!</p>';
 }
+
 
 
 if ($subject && $code && $dvdpack) { // If everything's OK...
@@ -174,6 +175,7 @@ if (mysqli_affected_rows($conn) == 1)
 											 		
 									<div id="targetDiv">
 									</div>
+
 																													
 											<div class="form-actions">
 											<input type="hidden" name="submitted" value="TRUE" />

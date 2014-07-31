@@ -37,27 +37,34 @@ if (isset($_POST['submitted'])) { // Handle the form.
 $trimmed = array_map('trim', $_POST);
 
 // Assume invalid values:
-$lesson = $dvd = FALSE;
+$lesson = $dvd = $info = FALSE;
 
 $errors = array();
 
 
-// Check for the subject:
+// Check for the lesson id:
 if (isset($_POST['lesson']) && ($_POST['lesson'] != "")){
 $lesson= mysqli_real_escape_string ($conn, $trimmed['lesson']);
 } else {
 $errors[] = 'No Lesson was selected!</p>';
 }
 
-// Check for the subject:
+// Check for the dvd id:
 if (isset($_POST['dvd']) && ($_POST['dvd'] != "")){
 $dvd= mysqli_real_escape_string ($conn, $trimmed['dvd']);
 } else {
-$errors[] = 'Please selct the DVD title!</p>';
+$errors[] = 'Please select the DVD title!</p>';
+}
+
+// Check for the dvd lesson info:
+if (isset($_POST['info']) && ($_POST['info'] != "")){
+$info= mysqli_real_escape_string ($conn, $trimmed['info']);
+} else {
+$errors[] = 'Please enter the DVD Lesson Information!</p>';
 }
 
 
-if ($lesson && $dvd) { // If everything's OK...
+if ($lesson && $dvd && $info) { // If everything's OK...
 
 $q2 = "SELECT * FROM dvd_lessons WHERE dvd_id = '$dvd' AND lesson_id='$lesson'";
 $r2 = mysqli_query ($conn, $q2);
@@ -65,7 +72,7 @@ if (mysqli_affected_rows($conn) == 0) { //lesson has not been previously added. 
 
 // Add the lesson to the DVD
 
-$q3 = "INSERT INTO `dvd_lessons` (dvd_id, lesson_id, date) VALUES ('$dvd', '$lesson',  NOW())";
+$q3 = "INSERT INTO `dvd_lessons` (dvd_id, lesson_id, dvd_lesson_info, date) VALUES ('$dvd', '$lesson', '$info', NOW())";
 $r3 = mysqli_query ($conn, $q3);
 
 if (mysqli_affected_rows($conn) == 1)
@@ -174,7 +181,7 @@ if (mysqli_affected_rows($conn) == 1)
 												<label for="organisation" class="col-lg-2 col-md-3 control-label">Lesson</label>
 												<div class="col-lg-10 col-md-9">
 												<input type="hidden" name="lesson" value="<?php echo $row['lesson_id']; ?>" />
-												<input type="text" class="form-control form-cascade-control" id="pulser"
+												<input type="text" class="form-control"
 												value="<?php echo $row['lesson']; ?>" readonly >
 												</div>
 								</div>
@@ -195,9 +202,13 @@ if (mysqli_affected_rows($conn) == 1)
 											 		</select>
 											
 										</div>
-											 		
-									<div id="targetDiv">
-									</div>
+
+								<div class="form-group">
+												<label for="organisation" class="col-lg-2 col-md-3 control-label">DVD Lesson Information</label>
+												<div class="col-lg-10 col-md-9">
+												<textarea name="info" cols="108" rows="3" class="form-control"></textarea>
+												</div>
+								</div>
 																													
 											<div class="form-actions">
 											<input type="hidden" name="submitted" value="TRUE" />

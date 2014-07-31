@@ -9,59 +9,47 @@ include ('includes/header.php');
 
       <!-- Indicators -->
       <ol class="carousel-indicators">
-        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+      	<?php
+        	$q = "SELECT * FROM product_summary";
+			$r = mysqli_query($conn, $q);
+			$count = mysqli_num_rows($r);
+			for($i=1; $i <= $count; $i++) {
+		?>
+		
+        <li data-target="#carousel-example-generic" data-slide-to=" <?php echo $i; ?>" class="<?php if($i == 1) {echo 'active'; } ?>">
+        	
+        </li>
+        <?php } ?>
+
       </ol>
 
       <!-- Slider Content (Wrapper for slides )-->
       <div class="container">
         <div class="carousel-inner">
-          <div class="item active">
+        	
+        	<?php
+			while ($row = mysqli_fetch_array($r)) {
+				$id = $row['summary_id'];
+        	?>
+        	
+          <div class="item <?php if($id == 1) { echo "active"; } ?>">
             <div class="row">
               <div class="col-md-6 slider-caption animated ">
-                <h1 class="animated flash text-info">Proudly Nigeria</h1>
-                <p class="animated fadeIn">Wazobia Academy is built with all the tribes in Nigeria in mind. 
-                	Education is a right for all not minding tribal or cultural differences</p>
-                <a href="/library/index.php" class=" btn btn-info animated fadeInUpBig ">Access Classroom</a>
+                <h1 class="animated flash text-info"><?php echo $row['title']; ?></h1>
+                <p class="animated fadeIn"><?php echo $row['summary']; ?></p>
+                <a href="<?php echo $row['url']; ?>" class=" btn btn-info animated fadeInUpBig "><?php echo $row['title']; ?></a>
                 
               </div>
               <div class="col-md-6">
-                <img src="images/slider/wazobia 1.png" width="100%" class="animated fadeInRightBig" alt="...">
+                <img src="images/slider/<?php echo $row['image']; ?>" width="100%" class="animated fadeInRightBig" alt="...">
               </div>
               
             </div>
           </div>
 
-          <div class="item ">
-            <div class="row">
-              <div class="col-md-6 slider-caption animated ">
-                <h1 class="animated flash">Education, The best legacy</h1>
-                <p class="animated fadeIn">Accessible to all and sundry</p>
-                <a href="library/index.php" class=" btn btn-info animated fadeInUpBig ">Access Library</a>
-                
-              </div>
-              <div class="col-md-6">
-                <img src="images/slider/wazobia 2.png" class="animated fadeInRightBig" alt="...">
-              </div>
-              
-            </div>
-          </div>
-          
-          <div class="item ">
-            <div class="row">
-              <div class="col-md-6 slider-caption animated ">
-                <h1 class="animated flash">Think... Learn... Grow...</h1>
-                <p class="animated fadeIn">Accessible to all and sundry</p>
-                <a href="<?php echo $baseurl; ?>library/index.php#register" class=" btn btn-info animated fadeInUpBig ">Register For Free</a>
-                
-              </div>
-              <div class="col-md-6">
-                <img src="images/slider/wazobia 3.png" class="animated fadeInRightBig" alt="...">
-              </div>
-              
-            </div>
-          </div>
+		<?php } ?>
+		
+
         </div>
 
         <!-- Slider Content (Wrapper for slides )-->
