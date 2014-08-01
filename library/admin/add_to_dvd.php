@@ -30,7 +30,7 @@ if (isset($_SESSION['work_id']) && $_SESSION['roles'] != 'administrator') {
 		?>
 		
 		
- <?php // code to add or edit a new organisation 
+<?php // code to add or edit a new organisation 
 if (isset($_POST['submitted'])) { // Handle the form.
 
 // Trim all the incoming data:

@@ -289,6 +289,7 @@ if(strpos($page,"extended-modals") !== false ) { ?>
                     </li>
                     <li class="submenu"><a class="dropdown" href="pay_instructors.php" data-original-title="Pay Instructors"> <i class="fa">&#8358;</i><span class="hidden-minibar"> Pay Instructors </span></a></li>
                     <li class="submenu"><a class="dropdown" href="view_students.php" data-original-title="Manage Students"> <i class="fa fa-plus"></i><span class="hidden-minibar"> Manage Students  </span></a></li>
+                    <li class="submenu"><a class="dropdown" href="view_contact.php" data-original-title="View Site Enquiries"> <i class="fa fa-plus"></i><span class="hidden-minibar"> View Site Enquiries </span></a></li>
                     
                     <?php 
                     } elseif (isset($_SESSION['work_id']) && $_SESSION['roles'] == 'lecturer') { // lecturer sidebar panel acces

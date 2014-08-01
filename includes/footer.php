@@ -12,7 +12,7 @@
             <div class="site-description">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus</div>
           </div>
           <div class="col-md-4">
-            <h5 class="footer-heading"> &copy; <?php echo date('Y'); ?> || Joit Solutions</h5>
+            <h5> &copy; <?php echo date('Y'); ?> || Joit Solutions</h5>
             
           </div>
           <div class="col-md-4">

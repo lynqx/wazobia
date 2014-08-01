@@ -8,6 +8,7 @@ include('database_connection.php');
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>An Alternative to pagination : Facebook Style</title>
 <script type="text/javascript" src="jquery-1.3.2.min.js"></script>
+
 <script type="text/javascript">
 $(function() {
 

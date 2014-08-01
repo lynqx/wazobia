@@ -83,17 +83,10 @@ if (!isset($page_title)) {
              -->
              
             </li>
-            <li <?php if ($page == 'product') echo 'class="active"'; ?>><a href="product.php">Products<b class="caret"></b></a></li>
+            <li <?php if ($page == 'product') echo 'class="active"'; ?>><a href="products.php">Products<b class="caret"></b></a></li>
             <li <?php if ($page == 'forum') echo 'class="active"'; ?>><a href="forum">Forum<b class="caret"></b></a></li>
-                       
-            <li <?php if ($page == 'report' || $page == 'comment' || $page == 'faq') echo 'class="active"'; ?>><a href="#">Help</a>
-            	<ul class="dropdown-menu">
-                <li><a href="help.php">Report A Problem</a></li>
-                <li><a href="comment.php">Comments & Suggestion</a></li>
-                <li><a href="faq.php">FAQ</a></li>
-              </ul>
-            </li>
-            <li <?php if ($page == 'contact') echo 'class="active"'; ?>><a href="contact.php">Contact Us</a></li>
+            <li <?php if ($page == 'faq') echo 'class="active"'; ?>><a href="faq.php">FAQ<b class="caret"></b></a></li>
+            <li <?php if ($page == 'contact') echo 'class="active"'; ?>><a href="contact.php">Contact Us<b class="caret"></b></a></li>
            
           </ul>
         </div><!-- /.navbar-collapse -->

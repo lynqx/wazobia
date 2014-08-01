@@ -10,7 +10,8 @@ include ('includes/header.php');
       <!-- Indicators -->
       <ol class="carousel-indicators">
       	<?php
-        	$q = "SELECT * FROM product_summary";
+        	$q = "SELECT * FROM product_summary
+        			JOIN dvd_subject_pack ON dvd_subject_pack.dvd_pack_id = product_summary.dvd_pack_id";
 			$r = mysqli_query($conn, $q);
 			$count = mysqli_num_rows($r);
 			for($i=1; $i <= $count; $i++) {
@@ -35,9 +36,9 @@ include ('includes/header.php');
           <div class="item <?php if($id == 1) { echo "active"; } ?>">
             <div class="row">
               <div class="col-md-6 slider-caption animated ">
-                <h1 class="animated flash text-info"><?php echo $row['title']; ?></h1>
-                <p class="animated fadeIn"><?php echo $row['summary']; ?></p>
-                <a href="<?php echo $row['url']; ?>" class=" btn btn-info animated fadeInUpBig "><?php echo $row['title']; ?></a>
+                <h1 class="animated flash text-info"><?php echo $row['subject_pack_name']; ?></h1>
+                <p class="animated fadeIn"><?php echo $row['dvd_pack_info']; ?></p>
+                <a href="products.php?pack=<?php echo $row['dvd_pack_id']; ?>" class=" btn btn-info animated fadeInUpBig "><?php echo $row['subject_pack_name']; ?></a>
                 
               </div>
               <div class="col-md-6">
@@ -71,115 +72,81 @@ include ('includes/header.php');
           <div class="col-md-4 feature">
             <div class="feature-icon"><i class="fa fa-user"></i></div>
             <div class="feature-description">
-              <h5>Clean User Interface</h5>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, quisquam, quae dicta fuga iste sed eaque consectetur vitae .</p>
+              <h5>Study</h5>
+              <p>With materials from us, study well for your exams.</p>
             </div>
           </div>
           <div class="col-md-4 feature">
             <div class="feature-icon"><i class="fa fa-desktop"></i></div>
             <div class="feature-description">
-              <h5>Responsive</h5>
+              <h5>Prepare</h5>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui, veritatis tempora sint reiciendis alias quia consectetur! !</p>
             </div>
           </div>
           <div class="col-md-4 feature">
             <div class="feature-icon"><i class="fa fa-edit"></i></div>
             <div class="feature-description">
-              <h5>Customise Easily</h5>
+              <h5>Succeed</h5>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui, veritatis tempora sint reiciendis alias quia consectetur! !</p>
             </div>
           </div>
         </div>
       </div>  
     </div>
+    
     <div class="background-inverse">
-      
     <div class="container choose-us">
       <div class="row">
-        <div class="col-md-6"><img src="images/responsive.png" width="100%" alt=""> </div>
         <div class="col-md-6">
-          <h3>Why Choose Cascade?</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde, repudiandae, provident, ab, modi velit quisquam voluptas perferendis corporis aliquid sed a vel numquam expedita aspernatur suscipit consequuntur deleniti autem vitae?</p>
+			<video width="100%" controls autoplay>
+			  <source src="viddys/aye.mp4" type="video/mp4">
+			  <object data="viddys/aye.mp4" width="100%">
+			  </object>
+			</video>
+		</div>
+		
+        <div class="col-md-6">
+          <h3>The Calculus</h3>
+          <p>Watch free trailer of <b style="color:#396">THE CALCULUS</b> series</p>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam, tenetur, eveniet ut temporibus quam nobis perspiciatis expedita repudiandae dicta animi corrupti minus itaque quod eum obcaecati nihil numquam reiciendis libero.</p>
           <ul class="list-inline check-list">
-            <li class="col-md-4">Responsive <i class="fa fa-check"></i></li>
-            <li class="col-md-4">Bootstrap 3.0 <i class="fa fa-check"></i></li>
-            <li class="col-md-4">Less Css  <i class="fa fa-check"></i></li>
+            <li class="col-md-4">Objectives <i class="fa fa-check"></i></li>
+            <li class="col-md-4">Objectives <i class="fa fa-check"></i></li>
+            <li class="col-md-4">Objectives <i class="fa fa-check"></i></li>
             <li class="col-md-4">PHP Version <i class="fa fa-check"></i></li>
             <li class="col-md-4">Easy Menu builder <i class="fa fa-check"></i></li>
             <li class="col-md-4">Pixel Perfect <i class="fa fa-check"></i></li>
-            <li class="col-md-4">Unlimited colors <i class="fa fa-check"></i></li>
-            <li class="col-md-4">Fully Documented <i class="fa fa-check"></i></li>
-            <li class="col-md-4">Font Awesome <i class="fa fa-check"></i></li>
           </ul>
         </div>
       </div>
-    </div>
-    </div>
-    
-    <div class="services">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4 service-item">
-            <div class="service-icon"><i class="fa fa-user"></i></div>
-            <div class="service-description">
-              <h5>Clean User Interface</h5>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, quisquam, quae dicta fuga iste sed eaque consectetur vitae .</p>
-            </div>
-          </div>
-          <div class="col-md-4 service-item">
-            <div class="service-icon"><i class="fa fa-mobile"></i></div>
-            <div class="service-description">
-              <h5>Responsive</h5>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui, veritatis tempora sint reiciendis alias quia consectetur! !</p>
-            </div>
-          </div>
-          <div class="col-md-4 service-item">
-            <div class="service-icon"><i class="fa fa-edit"></i></div>
-            <div class="service-description">
-              <h5>Customise Easily</h5>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui, veritatis tempora sint reiciendis alias quia consectetur! !</p>
-            </div>
-          </div>
+      
+      <hr>
+            <div class="row">
+        <div class="col-md-6">
+			<video width="100%" controls>
+			  <source src="viddys/aye.mp4" type="video/mp4">
+			  <object data="viddys/aye.mp4" width="100%">
+			  </object>
+			</video>
+		</div>
+		
+        <div class="col-md-6">
+          <h3>Quantum Physics</h3>
+          <p>Watch free trailer of <b style="color:#396">experimental definitions of Physics</b> and the ultimate series</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam, tenetur, eveniet ut temporibus quam nobis perspiciatis expedita repudiandae dicta animi corrupti minus itaque quod eum obcaecati nihil numquam reiciendis libero.</p>
+          <ul class="list-inline check-list">
+            <li class="col-md-4">Objectives <i class="fa fa-check"></i></li>
+            <li class="col-md-4">Objectives <i class="fa fa-check"></i></li>
+            <li class="col-md-4">Objectives <i class="fa fa-check"></i></li>
+            <li class="col-md-4">PHP Version <i class="fa fa-check"></i></li>
+            <li class="col-md-4">Easy Menu builder <i class="fa fa-check"></i></li>
+            <li class="col-md-4">Pixel Perfect <i class="fa fa-check"></i></li>
+          </ul>
         </div>
-        <div class="row">
-          <div class="col-md-4 service-item">
-            <div class="service-icon"><i class="fa fa-user"></i></div>
-            <div class="service-description">
-              <h5>Clean User Interface</h5>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, quisquam, quae dicta fuga iste sed eaque consectetur vitae .</p>
-            </div>
-          </div>
-          <div class="col-md-4 service-item">
-            <div class="service-icon"><i class="fa fa-mobile"></i></div>
-            <div class="service-description">
-              <h5>Responsive</h5>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui, veritatis tempora sint reiciendis alias quia consectetur! !</p>
-            </div>
-          </div>
-          <div class="col-md-4 service-item">
-            <div class="service-icon"><i class="fa fa-edit"></i></div>
-            <div class="service-description">
-              <h5>Customise Easily</h5>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui, veritatis tempora sint reiciendis alias quia consectetur! !</p>
-            </div>
-          </div>
-        </div>
-
       </div>
+      
+      
     </div>
-
-
-    <div class="clients">
-      <div class="container">
-        <ul class="list-inline">
-          <li><img src="images/clents/dribbble.png" alt=""></li>
-          <li><img src="images/clents/envato.png" alt=""></li>
-          <li><img src="images/clents/evernote.png" alt=""></li>
-          <li><img src="images/clents/microsoft.png" alt=""></li>
-          <li><img src="images/clents/netflix.png" alt=""></li>
-        </ul>
-      </div>
     </div>
 
     <div class="testimonials">
@@ -194,6 +161,19 @@ include ('includes/header.php');
         </div>
       </div>
       </div>
+      
+      
+    <div class="clients">
+      <div class="container">
+        <ul class="list-inline">
+          <li><img src="images/clents/dribbble.png" alt=""></li>
+          <li><img src="images/clents/envato.png" alt=""></li>
+          <li><img src="images/clents/evernote.png" alt=""></li>
+          <li><img src="images/clents/microsoft.png" alt=""></li>
+          <li><img src="images/clents/netflix.png" alt=""></li>
+        </ul>
+      </div>
+    </div>
     
 
 <?php
