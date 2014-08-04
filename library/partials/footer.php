@@ -1,6 +1,18 @@
-<div class="footer">
-  							© <?php echo date('Y'); ?> <a href="http://joitsolutions.com">Joit Solutions</a>
+						<div class="footer">
+							<?php if (isset($_SESSION['student_id'])) { ?>
+								
+								<div class="site-description">
+  									<a href="testimonials.php"> <i class="fa fa-bullhorn"></i> &nbsp;  Tell us how we are doing </a>
+  								</div>
+							<?php } ?>
+  							
+  		
+  		© <?php echo date('Y'); ?> <a href="http://joitsolutions.com">Joit Solutions</a>
+  		
   						</div>
+  						
+  		
+
 
   					</div> <!-- /.content -->
 

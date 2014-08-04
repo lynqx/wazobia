@@ -319,7 +319,7 @@ body {
   opacity: 1.0;
 }
 .testimonials {
-  margin-top: 96px;
+  margin-top: 36px;
   margin-bottom: 50px;
 }
 .testimonials h3 {
@@ -349,7 +349,7 @@ body {
   content: open-quote;
 }
 .testimonials .qoute p:after {
-  content: open-quote;
+   content:close-quote
 }
 .footer {
   background: url(../images/footerBg.jpg);

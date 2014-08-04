@@ -152,28 +152,22 @@ include ('includes/header.php');
     <div class="testimonials">
       <div class="container">
         <h3>Testimonials</h3>
+        <?php
+        $status = 1;
+        $q2 = "SELECT * FROM testimonials WHERE status = '$status' ORDER BY RAND()";
+		$r2 = mysqli_query($conn, $q2);
+		$row2 = mysqli_fetch_array($r2, MYSQLI_ASSOC);
+        ?>
         <div class="qoute">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente, dolorum nam illum cupiditate distinctio facilis blanditiis rerum officiis soluta animi corrupti quibusdam nulla doloribus et laborum minus itaque magnam temporibus.</p>
-          <div class="client-details">
-            <img src="images/team/one.png" alt="">
-            Joel Helin, <span>Product Designer</span>
+          <p> <?php echo $row2['content']; ?>. </p>
+          <div class="client-details pull-right"> <b style="font-size: 18px">
+            - <?php echo ucwords($row2['fullname']); ?></b> &nbsp;,&nbsp; <span><?php echo ucwords($row2['location']); ?></span>
           </div>
         </div>
       </div>
       </div>
       
-      
-    <div class="clients">
-      <div class="container">
-        <ul class="list-inline">
-          <li><img src="images/clents/dribbble.png" alt=""></li>
-          <li><img src="images/clents/envato.png" alt=""></li>
-          <li><img src="images/clents/evernote.png" alt=""></li>
-          <li><img src="images/clents/microsoft.png" alt=""></li>
-          <li><img src="images/clents/netflix.png" alt=""></li>
-        </ul>
-      </div>
-    </div>
+
     
 
 <?php

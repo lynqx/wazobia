@@ -9,7 +9,7 @@
           <div class="col-md-4">
           	
           <a class="navbar-brand" href="index.php"></a>
-            <div class="site-description">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus</div>
+            <div class="site-description">Talk talk talk Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, magni, nostrum consectetur atque provident pariatur tenetur deleniti</div>
           </div>
           <div class="col-md-4">
             <h5> &copy; <?php echo date('Y'); ?> || Joit Solutions</h5>

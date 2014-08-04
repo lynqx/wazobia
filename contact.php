@@ -103,8 +103,8 @@ $header .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 
   <div class="map">
     <div class="container">
-      <iframe style="width:100%;border:none;" height="350" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=New+York,+NY,+United+States&amp;aq=0&amp;oq=new+yo&amp;sll=38.671014,-99.426083&amp;sspn=0.007363,0.016512&amp;t=m&amp;ie=UTF8&amp;hq=&amp;hnear=New+York&amp;z=14&amp;iwloc=A&amp;output=embed"></iframe>
-    </div>
+<!--      <iframe style="width:100%;border:none;" height="350" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=New+York,+NY,+United+States&amp;aq=0&amp;oq=new+yo&amp;sll=38.671014,-99.426083&amp;sspn=0.007363,0.016512&amp;t=m&amp;ie=UTF8&amp;hq=&amp;hnear=New+York&amp;z=14&amp;iwloc=A&amp;output=embed"></iframe> -->
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15825.63507367138!2d3.9158040000000094!3d7.419931849999985!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwMjUnMTEuOCJOIDPCsDU0JzU2LjkiRQ!5e0!3m2!1sen!2sng!4v1407154830327" width="100%" height="350" frameborder="0" style="border:0"></iframe>    </div>
   </div>
 
   <div class="container contact">

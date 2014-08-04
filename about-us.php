@@ -39,26 +39,7 @@ include ('includes/header.php');
       </div>
     </div>
 
-      <div class="container text-center">
-        <div class="row">
-          <div class="col-md-3">
-            <div class="chart" data-percent="73">73</div>
-            <h5>Web Design</h5>
-          </div>
-          <div class="col-md-3">
-            <div class="chart" data-percent="58">58</div>
-            <h5>Security</h5>
-          </div>
-          <div class="col-md-3">
-            <div class="chart" data-percent="60">60</div>
-            <h5>Identity</h5>
-          </div>
-          <div class="col-md-3">
-            <div class="chart" data-percent="90">90</div>
-            <h5>Marketing</h5>
-          </div>
-        </div>
-      </div>
+     
     </div>
 
 
@@ -69,58 +50,29 @@ include ('includes/header.php');
           <p>A quick talk with our designers and developers, feel free to follow them on socials</p>
         </div>
         <div class="row">
+        	<?php
+        	$q = "SELECT * FROM worker_register
+        			JOIN worker_roles ON worker_roles.work_id = worker_register.work_id
+        			WHERE worker_roles.role_id = 3
+        			ORDER BY RAND()
+        			LIMIT 4";
+			$r = mysqli_query($conn, $q);
+			while ($row = mysqli_fetch_array($r, MYSQLI_ASSOC)) {
+        	?>
           <div class="col-md-3">
             <div class="team-member">
-              <img src="images/team/one.png" alt="">  
-              <h3>John Deo</h3>
-              UI/UX Designer
+              <img src="library/admin/images/profiles/<?php if(!empty($row['work_image'])) { echo $row['work_image']; } else echo "default.png"; ?>" alt="">  
+              <h3 style="color:#0F4F0F"><?php echo $row['work_first_name'] . " ". $row['work_last_name']; ?></h3>
+              <?php echo $row['work_email']; ?>
               <ul class="list-inline">
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
                 <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                <li><a href="#"><i class="fa fa-tumblr"></i></a></li>
+                <li><a href="https://twitter.com/<?php echo $row['work_twitter']; ?>" target="_BLANK"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
               </ul>
             </div>
           </div>
-          <div class="col-md-3">
-            <div class="team-member">
-              <img src="images/team/two.png" alt="">  
-              <h3>John Deo</h3>
-              UI/UX Designer
-              <ul class="list-inline">
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                <li><a href="#"><i class="fa fa-tumblr"></i></a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="team-member">
-              <img src="images/team/three.png" alt="">  
-              <h3>John Deo</h3>
-              UI/UX Designer
-              <ul class="list-inline">
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                <li><a href="#"><i class="fa fa-tumblr"></i></a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="team-member">
-              <img src="images/team/four.png" alt="">  
-              <h3>John Deo</h3>
-              UI/UX Designer
-              <ul class="list-inline">
-                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                <li><a href="#"><i class="fa fa-tumblr"></i></a></li>
-              </ul>
-            </div>
-          </div>
+          <?php } ?>
+     
         </div>
       </div>
       </div>
